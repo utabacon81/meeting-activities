@@ -33,7 +33,7 @@
   --dot: #18233a; --next: #d9581f; --line: #3d6fb8;
   --h1: rgba(242,183,5,.55); --h2: rgba(79,160,230,.45); --h3: rgba(235,110,150,.42); --h4: rgba(80,190,120,.45); --h5: rgba(170,120,230,.42); --h6: rgba(245,140,60,.45); --h7: rgba(60,190,190,.45);
   --t1: #fff1c2; --t2: #d9ecff; --t3: #ffd9e4; --t4: #d6f2df; --t5: #eadcff; --t6: #ffe0c7; --t7: #cff1f1; --t8: #f0f0c8;
-  --tone0: #dce8fb; --tone1: #e3f2e6; --tone2: #ece4fb; --tone3: #fbefd9; --tone4: #fbe0e6; --tone5: #dff3f3; --tone6: #f3ecd9;
+  --tone0: #dce8fb; --tone1: #e3f2e6; --tone2: #ece4fb; --tone3: #fbefd9; --tone4: #fbe0e6; --tone5: #dff3f3; --tone6: #f3ecd9; --tone7: #e4ecfb; --tone8: #fbe7d6;
   --guide: #dfe5ef; --dash: #6b7a92;
   --text: system-ui, -apple-system, 'Segoe UI', sans-serif;
   --display: 'Fredoka', 'Trebuchet MS', sans-serif;
@@ -46,7 +46,7 @@
     --dot: #e8edf7; --next: #ff8a4f; --line: #7fb0f0;
     --h1: rgba(242,183,5,.45); --h2: rgba(79,160,230,.45); --h3: rgba(235,110,150,.45); --h4: rgba(80,190,120,.45); --h5: rgba(170,120,230,.45); --h6: rgba(245,140,60,.45); --h7: rgba(60,190,190,.45);
     --t1: #4a3d10; --t2: #1d3550; --t3: #4a2232; --t4: #1d3d29; --t5: #33275a; --t6: #4a2e18; --t7: #173f40; --t8: #3c3c18;
-    --tone0: #1c2c4a; --tone1: #1a3328; --tone2: #2a2346; --tone3: #3a2f18; --tone4: #44222c; --tone5: #15383a; --tone6: #3a3420; --guide: #26334f; --dash: #8fa0bd;
+    --tone0: #1c2c4a; --tone1: #1a3328; --tone2: #2a2346; --tone3: #3a2f18; --tone4: #44222c; --tone5: #15383a; --tone6: #3a3420; --tone7: #1e2b48; --tone8: #3e2a1c; --guide: #26334f; --dash: #8fa0bd;
     color-scheme: dark;
   }
 }
@@ -56,7 +56,7 @@
   --dot: #e8edf7; --next: #ff8a4f; --line: #7fb0f0;
   --h1: rgba(242,183,5,.45); --h2: rgba(79,160,230,.45); --h3: rgba(235,110,150,.45); --h4: rgba(80,190,120,.45); --h5: rgba(170,120,230,.45); --h6: rgba(245,140,60,.45); --h7: rgba(60,190,190,.45);
   --t1: #4a3d10; --t2: #1d3550; --t3: #4a2232; --t4: #1d3d29; --t5: #33275a; --t6: #4a2e18; --t7: #173f40; --t8: #3c3c18;
-  --tone0: #1c2c4a; --tone1: #1a3328; --tone2: #2a2346; --tone3: #3a2f18; --tone4: #44222c; --tone5: #15383a; --tone6: #3a3420; --guide: #26334f; --dash: #8fa0bd;
+  --tone0: #1c2c4a; --tone1: #1a3328; --tone2: #2a2346; --tone3: #3a2f18; --tone4: #44222c; --tone5: #15383a; --tone6: #3a3420; --tone7: #1e2b48; --tone8: #3e2a1c; --guide: #26334f; --dash: #8fa0bd;
   color-scheme: dark;
 }
 html, body { height: 100%; }
@@ -68,7 +68,10 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .brand { display: flex; align-items: center; gap: 8px; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; padding: 4px 6px; border-radius: 12px; min-height: 44px; }
 .brand .logo { width: 34px; height: 34px; color: #ffffff; }
 .brand b { font-family: var(--display); font-weight: 700; font-size: 19px; white-space: nowrap; }
-.nav { margin-left: auto; display: flex; gap: 6px; }
+.nav { margin-left: auto; display: flex; gap: 6px; min-width: 0; overflow-x: auto; scrollbar-width: none; padding-block: 2px; }
+.nav::-webkit-scrollbar { display: none; }
+.navbtn { flex: none; }
+.brand, .meetpill { flex: none; }
 .navbtn { border: 0; background: rgba(255,255,255,.08); color: #dfe8f7; border-radius: 12px; min-height: 46px; min-width: 46px; padding: 6px 12px; display: flex; align-items: center; gap: 6px;
   font-family: var(--display); font-weight: 600; font-size: 15px; cursor: pointer; }
 .navbtn .gi { width: 26px; height: 26px; flex: none; }
@@ -76,7 +79,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .navbtn:focus-visible, .brand:focus-visible, .pickgame:focus-visible { outline: 3px solid var(--sel); outline-offset: 2px; }
 @media (max-width: 1100px) { .navbtn span { display: none; } .navbtn { padding: 6px 10px; } }
 @media (max-width: 460px) { .brand b { display: none; } }
-.view { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.view { flex: 1; min-height: 0; min-width: 0; display: flex; flex-direction: column; overflow: clip; }
+.view > section { min-width: 0; overflow-x: clip; }
 .view > section { flex: 1; min-height: 0; }
 #home { overflow-y: auto; display: flex; flex-direction: column; align-items: center; gap: 22px;
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 32px; }
@@ -98,6 +102,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .pickgame[data-tone="4"] .big { background: var(--tone4); }
 .pickgame[data-tone="5"] .big { background: var(--tone5); }
 .pickgame[data-tone="6"] .big { background: var(--tone6); }
+.pickgame[data-tone="7"] .big { background: var(--tone7); }
+.pickgame[data-tone="8"] .big { background: var(--tone8); }
 .pickgame strong { font-family: var(--display); font-weight: 700; font-size: 24px; }
 .pickgame small { color: var(--muted); font-size: 16px; }
 .meetsel { width: min(100%, 900px); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
@@ -514,6 +520,100 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 @media (max-width: 560px) {#game-color .sw { width: 38px; height: 38px; }
 #game-color .tool { min-width: 46px; min-height: 46px; }}
 @media (prefers-reduced-motion: reduce) {#game-color .sw { transition: none; }}
+#game-puzzle {
+  background: var(--bg); color: var(--ink); font-family: var(--display);
+  display: flex; flex-direction: column; gap: 8px; overflow: hidden; box-sizing: border-box;
+  padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)); padding-block: 8px;
+  -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none;
+}
+#game-puzzle .top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+#game-puzzle h1 { margin: 0; font-weight: 700; font-size: clamp(20px, 5vw, 28px); white-space: nowrap; }
+#game-puzzle .strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; flex: 1 1 300px; min-width: 0; scrollbar-width: thin; }
+#game-puzzle .thumb { flex: none; border: 3px solid var(--edge); border-radius: 12px; padding: 0; width: 80px; height: 60px; cursor: pointer; overflow: hidden; background: #ffffff; }
+#game-puzzle .thumb canvas, #game-puzzle .thumb img { width: 100%; height: 100%; display: block; }
+#game-puzzle .thumb[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+#game-puzzle .thumb.mine { position: relative; }
+#game-puzzle .thumb.mine::after { content: ""; position: absolute; right: 4px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: var(--sel); border: 2px solid #ffffff; }
+#game-puzzle .seg { display: flex; border: 2px solid var(--edge); border-radius: 12px; overflow: hidden; }
+#game-puzzle .seg button { border: 0; background: var(--panel); color: var(--muted); font-family: var(--display); font-weight: 600; font-size: 15px; padding: 0 12px; min-height: 42px; min-width: 44px; cursor: pointer; }
+#game-puzzle .seg button[aria-pressed="true"] { background: var(--accent); color: #ffffff; }
+#game-puzzle .seg button:focus-visible, #game-puzzle .thumb:focus-visible, #game-puzzle .hold:focus-visible, #game-puzzle .done-box button:focus-visible { outline: 3px solid var(--sel); outline-offset: 2px; }
+#game-puzzle .play { position: relative; flex: 1; min-height: 0; touch-action: none; }
+#game-puzzle .board { position: absolute; border-radius: 8px; background: var(--panel); box-shadow: 0 0 0 3px var(--edge); }
+#game-puzzle .board canvas { width: 100%; height: 100%; display: block; opacity: .18; border-radius: 8px; }
+#game-puzzle .board.noghost canvas { opacity: 0; }
+#game-puzzle .piece { position: absolute; touch-action: none; cursor: grab; filter: drop-shadow(0 3px 4px rgba(0,0,0,.25)); transform-origin: center; transition: transform .15s ease; }
+#game-puzzle .piece.placed { filter: none; cursor: default; }
+#game-puzzle .piece.drag { cursor: grabbing; filter: drop-shadow(0 10px 12px rgba(0,0,0,.3)); }
+#game-puzzle .piece.snap { animation: pz-snap .3s ease; }
+@keyframes pz-snap { 50% { transform: scale(1.06); } }
+#game-puzzle .bottom { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; align-items: center; }
+#game-puzzle .status { font-weight: 600; color: var(--muted); font-size: 16px; font-variant-numeric: tabular-nums; }
+#game-puzzle .status b { color: var(--ink); }
+#game-puzzle .hold { position: relative; overflow: hidden; border: 0; border-radius: 999px; background: var(--bar); color: var(--muted); font-family: var(--display); font-weight: 600; font-size: 15px; padding: 0 16px; min-height: 44px; cursor: pointer; touch-action: none; }
+#game-puzzle .hold .fill { position: absolute; inset: 0; background: var(--sel); transform-origin: left; transform: scaleX(0); opacity: .55; }
+#game-puzzle .hold .lbl { position: relative; }
+#game-puzzle .ghostBtn { border: 2px solid var(--edge); background: var(--panel); color: var(--ink); border-radius: 999px; min-height: 44px; padding: 0 16px; font-family: var(--display); font-weight: 600; font-size: 15px; cursor: pointer; }
+#game-puzzle .ghostBtn[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+#game-puzzle .done-box { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; display: flex; justify-content: center;
+  padding: 14px max(16px, env(safe-area-inset-right, 0px)) max(18px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+#game-puzzle .done-box[hidden] { display: none; }
+#game-puzzle .done-box > div { background: var(--panel); border: 2px solid var(--edge); border-radius: 20px; padding: 14px 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px; box-shadow: 0 8px 30px rgba(0,0,0,.18); }
+#game-puzzle .done-box strong { font-size: 24px; color: var(--win); }
+#game-puzzle .done-box button { border: 0; border-radius: 999px; background: var(--accent); color: #ffffff; font-family: var(--display); font-weight: 600; font-size: 18px; padding: 12px 22px; min-height: 50px; cursor: pointer; }
+#game-puzzle .stars { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 21; }
+#game-puzzle .stars i { position: absolute; top: -40px; width: 24px; height: 24px; background: var(--sel);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); animation: pz-fall linear forwards; }
+@keyframes pz-fall { to { transform: translateY(110vh) rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {#game-puzzle .piece.snap { animation: none; }
+#game-puzzle .stars { display: none; }}
+#game-spot {
+  background: var(--bg); color: var(--ink); font-family: var(--display);
+  display: flex; flex-direction: column; gap: 8px; overflow: hidden; box-sizing: border-box;
+  padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)); padding-block: 8px;
+  -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none;
+}
+#game-spot .top { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+#game-spot h1 { margin: 0; font-weight: 700; font-size: clamp(20px, 5vw, 28px); }
+#game-spot .found { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; min-width: 0; }
+#game-spot .found i { width: 20px; height: 20px; border-radius: 50%; border: 3px solid var(--edge); background: var(--panel); }
+#game-spot .found i.on { background: var(--win); border-color: var(--win); }
+#game-spot .seg { display: flex; border: 2px solid var(--edge); border-radius: 12px; overflow: hidden; }
+#game-spot .seg button { border: 0; background: var(--panel); color: var(--muted); font-family: var(--display); font-weight: 600; font-size: 15px; padding: 0 11px; min-height: 42px; cursor: pointer; }
+#game-spot .seg { flex-wrap: wrap; }
+#game-spot .seg button[aria-pressed="true"] { background: var(--accent); color: #ffffff; }
+#game-spot .tip { margin: 0; text-align: center; color: var(--muted); font-size: 15px; }
+#game-spot .area { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; gap: 12px; }
+#game-spot .area.tall { flex-direction: column; }
+#game-spot .pic { position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 0 0 3px var(--edge); background: #ffffff; touch-action: manipulation; cursor: pointer; flex: none; }
+#game-spot .pic canvas, #game-spot .pic svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+#game-spot .pic svg { pointer-events: none; }
+#game-spot .ring { fill: none; stroke: var(--win); stroke-width: 5; }
+#game-spot .ring.hint { stroke: var(--sel); stroke-dasharray: 10 8; animation: sd-pulse 1s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes sd-pulse { 50% { transform: scale(1.12); } }
+#game-spot .miss { fill: none; stroke: #d64545; stroke-width: 5; stroke-linecap: round; animation: sd-fade .8s ease forwards; }
+@keyframes sd-fade { to { opacity: 0; } }
+#game-spot .loading { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-weight: 600; }
+#game-spot .bottom { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+#game-spot .btn { border: 2px solid var(--edge); background: var(--panel); color: var(--ink); border-radius: 999px; min-height: 46px; padding: 0 18px; font-family: var(--display); font-weight: 600; font-size: 16px; cursor: pointer; }
+#game-spot .hold { position: relative; overflow: hidden; border: 0; border-radius: 999px; background: var(--bar); color: var(--muted); font-family: var(--display); font-weight: 600; font-size: 15px; padding: 0 16px; min-height: 46px; cursor: pointer; touch-action: none; }
+#game-spot .hold .fill { position: absolute; inset: 0; background: var(--sel); transform-origin: left; transform: scaleX(0); opacity: .55; }
+#game-spot .hold .lbl { position: relative; }
+#game-spot .seg button:focus-visible, #game-spot .btn:focus-visible, #game-spot .hold:focus-visible, #game-spot .done-box button:focus-visible { outline: 3px solid var(--sel); outline-offset: 2px; }
+#game-spot .done-box { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; display: flex; justify-content: center;
+  padding: 14px max(16px, env(safe-area-inset-right, 0px)) max(18px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+#game-spot .done-box[hidden] { display: none; }
+#game-spot .done-box > div { background: var(--panel); border: 2px solid var(--edge); border-radius: 20px; padding: 14px 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px; box-shadow: 0 8px 30px rgba(0,0,0,.18); }
+#game-spot .done-box strong { font-size: 24px; color: var(--win); }
+#game-spot .done-box button { border: 0; border-radius: 999px; background: var(--accent); color: #ffffff; font-family: var(--display); font-weight: 600; font-size: 18px; padding: 12px 22px; min-height: 50px; cursor: pointer; }
+#game-spot .stars { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 21; }
+#game-spot .stars i { position: absolute; top: -40px; width: 24px; height: 24px; background: var(--sel);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); animation: sd-fall linear forwards; }
+@keyframes sd-fall { to { transform: translateY(110vh) rotate(360deg); } }
+@media (max-width: 520px), (max-height: 640px) {#game-spot .tip { display: none; }
+#game-spot .found i { width: 16px; height: 16px; border-width: 2px; }}
+@media (prefers-reduced-motion: reduce) {#game-spot .ring.hint, #game-spot .miss { animation: none; }
+#game-spot .stars { display: none; }}
 #game-notes {
   background: var(--bg); color: var(--ink); font-family: var(--text);
   display: flex; flex-direction: column; overflow-y: auto; box-sizing: border-box;
@@ -556,13 +656,13 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 <header class="appbar">
   <button type="button" class="brand" data-go="home" aria-label="Home"><svg viewBox="0 0 64 64" aria-hidden="true" class="logo"><path d="M32 22c-7-5-18-5-26-1v34c8-4 19-4 26 1 7-5 18-5 26-1V21c-8-4-19-4-26 1zM32 22v34" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><path d="M32 3l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" fill="var(--sel)"/></svg><b>Meeting Activities</b></button>
   <button type="button" class="meetpill" data-go="home" id="meetPill" aria-label="Change meeting"></button>
-  <nav class="nav" aria-label="Games"><button type="button" class="navbtn" data-go="bingo" aria-label="Bingo"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="48" height="48" rx="8"/><path d="M24 8v48M40 8v48M8 24h48M8 40h48"/><circle cx="32" cy="32" r="5" fill="currentColor"/></svg><span>Bingo</span></button><button type="button" class="navbtn" data-go="count" aria-label="Count the Word"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 46c-6-4-10-11-10-19a20 20 0 0 1 40 0c0 9-6 12-9 16-3 3-3 6-3 9a8 8 0 0 1-14 4"/><path d="M24 27a8 8 0 0 1 16 0c0 5-5 6-5 10"/></svg><span>Count the Word</span></button><button type="button" class="navbtn" data-go="words" aria-label="Word Search"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="27" cy="27" r="16"/><path d="M39 39l15 15"/><path d="M20 27h14"/></svg><span>Word Search</span></button><button type="button" class="navbtn" data-go="memory" aria-label="Memory Match"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="14" width="22" height="34" rx="4"/><rect x="34" y="14" width="22" height="34" rx="4"/><path d="M14 31l4 4 7-8"/></svg><span>Memory Match</span></button><button type="button" class="navbtn" data-go="dots" aria-label="Dot to Dot"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="48" r="3" fill="currentColor"/><circle cx="24" cy="18" r="3" fill="currentColor"/><circle cx="40" cy="38" r="3" fill="currentColor"/><circle cx="54" cy="12" r="3" fill="currentColor"/><path d="M12 48L24 18l16 20L54 12"/></svg><span>Dot to Dot</span></button><button type="button" class="navbtn" data-go="trace" aria-label="Trace the Word"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 54L24 12l14 42M15 40h18"/><path d="M44 50l10-30 4 2-10 30-5 3z"/></svg><span>Trace the Word</span></button><button type="button" class="navbtn" data-go="color" aria-label="Coloring"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6C17 6 6 17 6 31c0 13 10 25 22 25 4 0 5-3 4-6s1-6 5-6h7c7 0 14-6 14-14C58 17 46 6 32 6z"/><circle cx="20" cy="26" r="3.5" fill="currentColor"/><circle cx="30" cy="17" r="3.5" fill="currentColor"/><circle cx="43" cy="20" r="3.5" fill="currentColor"/></svg><span>Coloring</span></button><button type="button" class="navbtn" data-go="notes" aria-label="Meeting Notes"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="6" width="40" height="52" rx="5"/><path d="M20 20h24M20 30h24M20 40h16"/></svg><span>Meeting Notes</span></button></nav>
+  <nav class="nav" aria-label="Games"><button type="button" class="navbtn" data-go="bingo" aria-label="Bingo"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="48" height="48" rx="8"/><path d="M24 8v48M40 8v48M8 24h48M8 40h48"/><circle cx="32" cy="32" r="5" fill="currentColor"/></svg><span>Bingo</span></button><button type="button" class="navbtn" data-go="count" aria-label="Count the Word"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 46c-6-4-10-11-10-19a20 20 0 0 1 40 0c0 9-6 12-9 16-3 3-3 6-3 9a8 8 0 0 1-14 4"/><path d="M24 27a8 8 0 0 1 16 0c0 5-5 6-5 10"/></svg><span>Count the Word</span></button><button type="button" class="navbtn" data-go="words" aria-label="Word Search"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="27" cy="27" r="16"/><path d="M39 39l15 15"/><path d="M20 27h14"/></svg><span>Word Search</span></button><button type="button" class="navbtn" data-go="memory" aria-label="Memory Match"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="14" width="22" height="34" rx="4"/><rect x="34" y="14" width="22" height="34" rx="4"/><path d="M14 31l4 4 7-8"/></svg><span>Memory Match</span></button><button type="button" class="navbtn" data-go="dots" aria-label="Dot to Dot"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="48" r="3" fill="currentColor"/><circle cx="24" cy="18" r="3" fill="currentColor"/><circle cx="40" cy="38" r="3" fill="currentColor"/><circle cx="54" cy="12" r="3" fill="currentColor"/><path d="M12 48L24 18l16 20L54 12"/></svg><span>Dot to Dot</span></button><button type="button" class="navbtn" data-go="trace" aria-label="Trace the Word"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 54L24 12l14 42M15 40h18"/><path d="M44 50l10-30 4 2-10 30-5 3z"/></svg><span>Trace the Word</span></button><button type="button" class="navbtn" data-go="color" aria-label="Coloring"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6C17 6 6 17 6 31c0 13 10 25 22 25 4 0 5-3 4-6s1-6 5-6h7c7 0 14-6 14-14C58 17 46 6 32 6z"/><circle cx="20" cy="26" r="3.5" fill="currentColor"/><circle cx="30" cy="17" r="3.5" fill="currentColor"/><circle cx="43" cy="20" r="3.5" fill="currentColor"/></svg><span>Coloring</span></button><button type="button" class="navbtn" data-go="puzzle" aria-label="Puzzles"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 18h12a6 6 0 1 1 12 0h12v12a6 6 0 1 1 0 12v12H34a6 6 0 1 0-12 0H10V42a6 6 0 1 0 0-12z"/></svg><span>Puzzles</span></button><button type="button" class="navbtn" data-go="spot" aria-label="Spot the Difference"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="14" width="24" height="30" rx="4"/><rect x="36" y="14" width="24" height="30" rx="4"/><circle cx="48" cy="29" r="6"/><path d="M16 24v10M48 50v6"/></svg><span>Spot the Difference</span></button><button type="button" class="navbtn" data-go="notes" aria-label="Meeting Notes"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="6" width="40" height="52" rx="5"/><path d="M20 20h24M20 30h24M20 40h16"/></svg><span>Meeting Notes</span></button></nav>
 </header>
 <div class="view">
 <section id="home">
   <div class="hello"><svg viewBox="0 0 64 64" aria-hidden="true" class="logo"><path d="M32 22c-7-5-18-5-26-1v34c8-4 19-4 26 1 7-5 18-5 26-1V21c-8-4-19-4-26 1zM32 22v34" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><path d="M32 3l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" fill="var(--sel)"/></svg><h1>Meeting Activities</h1><p>Which meeting are you at?</p></div>
   <div class="meetsel" id="meetSel" role="group" aria-label="Which meeting"></div>
-  <div class="choices"><button type="button" class="pickgame" data-go="bingo" data-tone="0"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="48" height="48" rx="8"/><path d="M24 8v48M40 8v48M8 24h48M8 40h48"/><circle cx="32" cy="32" r="5" fill="currentColor"/></svg><strong>Bingo</strong><small>Listen and tap</small></button><button type="button" class="pickgame" data-go="count" data-tone="1"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 46c-6-4-10-11-10-19a20 20 0 0 1 40 0c0 9-6 12-9 16-3 3-3 6-3 9a8 8 0 0 1-14 4"/><path d="M24 27a8 8 0 0 1 16 0c0 5-5 6-5 10"/></svg><strong>Count the Word</strong><small>Tap each time you hear it</small></button><button type="button" class="pickgame" data-go="words" data-tone="2"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="27" cy="27" r="16"/><path d="M39 39l15 15"/><path d="M20 27h14"/></svg><strong>Word Search</strong><small>Find the hidden words</small></button><button type="button" class="pickgame" data-go="memory" data-tone="3"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="14" width="22" height="34" rx="4"/><rect x="34" y="14" width="22" height="34" rx="4"/><path d="M14 31l4 4 7-8"/></svg><strong>Memory Match</strong><small>Flip and find pairs</small></button><button type="button" class="pickgame" data-go="dots" data-tone="4"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="48" r="3" fill="currentColor"/><circle cx="24" cy="18" r="3" fill="currentColor"/><circle cx="40" cy="38" r="3" fill="currentColor"/><circle cx="54" cy="12" r="3" fill="currentColor"/><path d="M12 48L24 18l16 20L54 12"/></svg><strong>Dot to Dot</strong><small>Connect the numbers</small></button><button type="button" class="pickgame" data-go="trace" data-tone="5"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 54L24 12l14 42M15 40h18"/><path d="M44 50l10-30 4 2-10 30-5 3z"/></svg><strong>Trace the Word</strong><small>Trace Bible words</small></button><button type="button" class="pickgame" data-go="color" data-tone="6"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6C17 6 6 17 6 31c0 13 10 25 22 25 4 0 5-3 4-6s1-6 5-6h7c7 0 14-6 14-14C58 17 46 6 32 6z"/><circle cx="20" cy="26" r="3.5" fill="currentColor"/><circle cx="30" cy="17" r="3.5" fill="currentColor"/><circle cx="43" cy="20" r="3.5" fill="currentColor"/></svg><strong>Coloring</strong><small>Color Bible pictures</small></button></div>
+  <div class="choices"><button type="button" class="pickgame" data-go="bingo" data-tone="0"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="48" height="48" rx="8"/><path d="M24 8v48M40 8v48M8 24h48M8 40h48"/><circle cx="32" cy="32" r="5" fill="currentColor"/></svg><strong>Bingo</strong><small>Listen and tap</small></button><button type="button" class="pickgame" data-go="count" data-tone="1"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 46c-6-4-10-11-10-19a20 20 0 0 1 40 0c0 9-6 12-9 16-3 3-3 6-3 9a8 8 0 0 1-14 4"/><path d="M24 27a8 8 0 0 1 16 0c0 5-5 6-5 10"/></svg><strong>Count the Word</strong><small>Tap each time you hear it</small></button><button type="button" class="pickgame" data-go="words" data-tone="2"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="27" cy="27" r="16"/><path d="M39 39l15 15"/><path d="M20 27h14"/></svg><strong>Word Search</strong><small>Find the hidden words</small></button><button type="button" class="pickgame" data-go="memory" data-tone="3"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="14" width="22" height="34" rx="4"/><rect x="34" y="14" width="22" height="34" rx="4"/><path d="M14 31l4 4 7-8"/></svg><strong>Memory Match</strong><small>Flip and find pairs</small></button><button type="button" class="pickgame" data-go="dots" data-tone="4"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="48" r="3" fill="currentColor"/><circle cx="24" cy="18" r="3" fill="currentColor"/><circle cx="40" cy="38" r="3" fill="currentColor"/><circle cx="54" cy="12" r="3" fill="currentColor"/><path d="M12 48L24 18l16 20L54 12"/></svg><strong>Dot to Dot</strong><small>Connect the numbers</small></button><button type="button" class="pickgame" data-go="trace" data-tone="5"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 54L24 12l14 42M15 40h18"/><path d="M44 50l10-30 4 2-10 30-5 3z"/></svg><strong>Trace the Word</strong><small>Trace Bible words</small></button><button type="button" class="pickgame" data-go="color" data-tone="6"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6C17 6 6 17 6 31c0 13 10 25 22 25 4 0 5-3 4-6s1-6 5-6h7c7 0 14-6 14-14C58 17 46 6 32 6z"/><circle cx="20" cy="26" r="3.5" fill="currentColor"/><circle cx="30" cy="17" r="3.5" fill="currentColor"/><circle cx="43" cy="20" r="3.5" fill="currentColor"/></svg><strong>Coloring</strong><small>Color Bible pictures</small></button><button type="button" class="pickgame" data-go="puzzle" data-tone="7"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 18h12a6 6 0 1 1 12 0h12v12a6 6 0 1 1 0 12v12H34a6 6 0 1 0-12 0H10V42a6 6 0 1 0 0-12z"/></svg><strong>Puzzles</strong><small>Put the picture together</small></button><button type="button" class="pickgame" data-go="spot" data-tone="8"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="14" width="24" height="30" rx="4"/><rect x="36" y="14" width="24" height="30" rx="4"/><circle cx="48" cy="29" r="6"/><path d="M16 24v10M48 50v6"/></svg><strong>Spot the Difference</strong><small>Find what changed</small></button></div>
   <button type="button" class="notescard" data-go="notes"><svg viewBox="0 0 64 64" aria-hidden="true" class="nb" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="6" width="40" height="52" rx="5"/><path d="M20 20h24M20 30h24M20 40h16"/></svg><span><strong>Meeting Notes</strong><small>Follow along, mark scriptures and save your notes. For older kids and teens.</small></span></button>
   <p class="note">Quiet games for meetings and assemblies, updated each week from the meeting schedule. A personal family project, not an official jw.org site. Progress is saved on this device.</p>
 </section>
@@ -778,6 +878,49 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 <div class="palette" id="cl-palette" role="group" aria-label="Colors"></div>
 <div class="toast" id="cl-toast" hidden></div>
 </section>
+<section class="game" id="game-puzzle" hidden aria-label="puzzle">
+<div class="top">
+  <h1>Puzzles</h1>
+  <div class="strip" id="pz-strip" role="group" aria-label="Pick a picture"></div>
+  <div class="seg" role="group" aria-label="How many pieces" id="pz-sizes">
+    <button type="button" data-n="8" aria-pressed="true">8</button>
+    <button type="button" data-n="12" aria-pressed="false">12</button>
+    <button type="button" data-n="16" aria-pressed="false">16</button>
+    <button type="button" data-n="24" aria-pressed="false">24</button>
+  </div>
+</div>
+<div class="play" id="pz-play" aria-label="Puzzle"></div>
+<div class="bottom">
+  <span class="status" aria-live="polite"><b id="pz-placed">0</b> of <span id="pz-totalP">4</span> pieces</span>
+  <button type="button" class="hold" id="pz-mixBtn"><span class="fill"></span><span class="lbl">Hold to mix up again</span></button>
+</div>
+<div class="done-box" id="pz-doneBox" hidden><div><strong>You finished the puzzle!</strong><button type="button" id="pz-nextBtn">Next picture</button></div></div>
+<div class="stars" id="pz-stars"></div>
+</section>
+<section class="game" id="game-spot" hidden aria-label="spot">
+<div class="top">
+  <h1>Spot the Difference</h1>
+  <div class="found" id="sd-dots" aria-live="polite" aria-label="Differences found"></div>
+  <div class="seg" role="group" aria-label="How many differences" id="sd-levels">
+    <button type="button" data-n="3" aria-pressed="false">Easy</button>
+    <button type="button" data-n="5" aria-pressed="false">Medium</button>
+    <button type="button" data-n="7" aria-pressed="true">Hard</button>
+    <button type="button" data-n="9" aria-pressed="false">Harder</button>
+    <button type="button" data-n="12" aria-pressed="false">Hardest</button>
+  </div>
+</div>
+<p class="tip" id="sd-tip">The pictures are almost the same. Tap the things that are different!</p>
+<div class="area" id="sd-area">
+  <div class="pic" id="sd-picA" aria-label="First picture"><canvas id="sd-cA" width="600" height="450"></canvas><svg id="sd-sA" viewBox="0 0 600 450" aria-hidden="true"></svg></div>
+  <div class="pic" id="sd-picB" aria-label="Second picture"><canvas id="sd-cB" width="600" height="450"></canvas><svg id="sd-sB" viewBox="0 0 600 450" aria-hidden="true"></svg><div class="loading" id="sd-loading">Getting ready...</div></div>
+</div>
+<div class="bottom">
+  <button type="button" class="btn" id="sd-hintBtn">Show me one</button>
+  <button type="button" class="hold" id="sd-newBtn"><span class="fill"></span><span class="lbl">Hold for a new picture</span></button>
+</div>
+<div class="done-box" id="sd-doneBox" hidden><div><strong>You found them all!</strong><button type="button" id="sd-nextBtn">Next picture</button></div></div>
+<div class="stars" id="sd-stars"></div>
+</section>
 <section class="game" id="game-notes" hidden aria-label="notes">
 <div class="book">
   <section class="card head">
@@ -808,7 +951,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 </div>
 
 <script src="content.js?v=76bfae2d"></script>
-<script src="core.js?v=a48b422f"></script>
+<script src="core.js?v=8e93b130"></script>
 <script>
 /* bingo */
 (function () {
@@ -1981,99 +2124,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   const W = 1200, H = 900, SX = W / 800, SY = H / 600;
   const KEY = 'bible-coloring-v1';
 
-  // ---------- shape helpers (800 x 600 page units) ----------
-  const C = (x, y, r) => `M${x - r} ${y}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0Z`;
-  const E = (x, y, rx, ry) => `M${x - rx} ${y}a${rx} ${ry} 0 1 0 ${2 * rx} 0a${rx} ${ry} 0 1 0 ${-2 * rx} 0Z`;
-  const R = (x, y, w, h) => `M${x} ${y}h${w}v${h}h${-w}Z`;
-  const P = (...a) => { let s = `M${a[0]} ${a[1]}`; for (let i = 2; i < a.length; i += 2) s += `L${a[i]} ${a[i + 1]}`; return s + 'Z'; };
-  const L = (...a) => { let s = `M${a[0]} ${a[1]}`; for (let i = 2; i < a.length; i += 2) s += `L${a[i]} ${a[i + 1]}`; return s; };
-  function bumpy(cx, cy, rx, ry, n, b) {
-    const pts = [];
-    for (let i = 0; i < n; i++) { const a = Math.PI * 2 * i / n; pts.push([(cx + rx * Math.cos(a)).toFixed(1), (cy + ry * Math.sin(a)).toFixed(1)]); }
-    let s = `M${pts[0][0]} ${pts[0][1]}`;
-    for (let i = 1; i <= n; i++) { const p = pts[i % n]; s += `A${b} ${b} 0 0 1 ${p[0]} ${p[1]}`; }
-    return s + 'Z';
-  }
-  const leg = (x, y, w, h) => `M${x} ${y}v${h}a${w / 2} ${w / 3} 0 0 0 ${w} 0v${-h}`;
-  function wave(y, amp, n) {
-    const seg = 792 / n; let s = `M4 ${y}q${seg / 2} ${-amp} ${seg} 0`;
-    for (let i = 1; i < n; i++) s += `t${seg} 0`;
-    return s;
-  }
-  function starPath(x, y, R1) {
-    const a = [];
-    for (let i = 0; i < 10; i++) { const t = -Math.PI / 2 + Math.PI * i / 5; const r = i % 2 ? R1 * .45 : R1; a.push((x + r * Math.cos(t)).toFixed(1), (y + r * Math.sin(t)).toFixed(1)); }
-    return P(...a);
-  }
-  const SHAPES = {
-    sun: () => { const o = [C(0, 0, 44)]; for (let i = 0; i < 12; i++) { const t = Math.PI * 2 * i / 12; o.push(L(Math.cos(t) * 56, Math.sin(t) * 56, Math.cos(t) * 80, Math.sin(t) * 80)); } return o; },
-    cloud: () => ['M-60 20h120a25 25 0 0 0 -8 -40a32 32 0 0 0 -52 -16a30 30 0 0 0 -50 18a22 22 0 0 0 -10 38Z'],
-    bird: () => ['M-20 0q10 -12 20 0q10 -12 20 0'],
-    flower: () => { const o = []; for (let i = 0; i < 5; i++) { const t = -Math.PI / 2 + Math.PI * 2 * i / 5; o.push(C(Math.cos(t) * 15, -62 + Math.sin(t) * 15, 12)); } o.push(C(0, -62, 9), L(0, -48, 0, 0), 'M0 -20q18 -16 28 -6q-12 14 -28 6Z'); return o; },
-    tree: () => [P(-18, 0, -14, -95, 14, -95, 18, 0), bumpy(0, -165, 92, 76, 10, 30), C(-40, -170, 9), C(30, -140, 9), C(20, -200, 9), C(-15, -125, 9)],
-    palm: () => ['M-10 0q-4 -80 6 -150h10q-6 70 12 150Z', 'M4 -150q-60 -30 -110 10q50 -10 110 -10Z', 'M4 -150q-40 -60 -100 -60q60 20 100 60Z', 'M6 -150q40 -60 100 -50q-60 10 -100 50Z', 'M6 -150q60 -20 100 20q-50 -10 -100 -20Z', C(-4, -142, 9), C(14, -140, 9)],
-    sheep: () => [bumpy(0, -52, 56, 34, 10, 16), E(54, -64, 21, 15), E(44, -77, 10, 5), C(60, -67, 3), leg(-38, -30, 11, 26), leg(-14, -24, 11, 20), leg(12, -24, 11, 20), leg(32, -30, 11, 26)],
-    lion: () => [E(78, -55, 88, 44), leg(18, -34, 22, 28), leg(52, -26, 22, 20), leg(100, -26, 22, 20), leg(134, -34, 22, 28), 'M162 -66q30 -10 30 -42', E(194, -116, 11, 14), bumpy(0, -92, 62, 62, 12, 20), C(0, -90, 40), C(-30, -124, 11), C(30, -124, 11), C(-14, -98, 5), C(14, -98, 5), P(-9, -82, 9, -82, 0, -72), 'M0 -72v8M0 -64q-10 8 -18 2M0 -64q10 8 18 2'],
-    person: () => [C(0, -150, 24), 'M-27 -150q0 -34 27 -34q27 0 27 34q-8 -16 -27 -16q-19 0 -27 16Z', C(-8, -150, 2.5), C(8, -150, 2.5), 'M-8 -138q8 6 16 0', P(-26, -124, 26, -124, 44, 0, -44, 0), L(-38, -78, 38, -78), 'M-26 -118q-30 30 -10 50q8 4 14 -4q-10 -16 6 -34Z', 'M26 -118q30 30 10 50q-8 4 -14 -4q10 -16 -6 -34Z', E(-18, 4, 15, 7), E(18, 4, 15, 7)],
-    fish: () => [E(0, 0, 60, 30), P(55, 0, 95, -28, 95, 28), C(-32, -6, 6), 'M-16 -24q12 24 0 48', 'M-5 -28q15 -24 32 -2Z'],
-    ark: () => [P(-220, 0, 220, 0, 170, 80, -170, 80), L(-210, 27, 210, 27), L(-190, 54, 190, 54), R(-140, -100, 280, 100), P(-165, -100, 0, -170, 165, -100), R(-30, -82, 60, 40), L(0, -82, 0, -42), R(-115, -72, 50, 72)],
-    boat: () => [P(-95, 0, 95, 0, 68, 42, -68, 42), L(0, 0, 0, -135), P(6, -130, 86, -18, 6, -18), P(-6, -110, -6, -18, -66, -18)],
-    basket: () => ['M-75 -8q75 46 150 0l16 -38h-182Z', 'M-82 -26q82 34 164 0', 'M-40 -46l4 50M0 -46v58M40 -46l-4 50'],
-    rock: () => [bumpy(0, 0, 56, 30, 7, 16)],
-    note: () => [E(0, 0, 10, 8), L(9, 0, 9, -40, 26, -34)],
-    tablet: () => ['M-38 0V-92a38 38 0 0 1 76 0V0Z', 'M-24 -80h48M-24 -62h48M-24 -44h48M-24 -26h36']
-  };
-  function put(name, x, y, s = 1, flip = false) { return SHAPES[name]().map(d => ({ d, m: [flip ? -s : s, 0, 0, s, x, y] })); }
-  const g = (...ds) => ds.map(d => ({ d, m: [1, 0, 0, 1, 0, 0] }));
-  const FRAME = R(4, 4, 792, 592);
-
-  const SCENES = [
-    { id: 'ark', name: "Noah's ark", parts: () => [
-      ...g(FRAME, wave(470, 14, 8), wave(530, 12, 8),
-        'M40 300A130 130 0 0 1 300 300', 'M60 300A110 110 0 0 1 280 300', 'M80 300A90 90 0 0 1 260 300', 'M100 300A70 70 0 0 1 240 300', L(40, 300, 300, 300),
-        'M540 170q20 -10 40 0q10 -26 32 -30q-5 20 -16 32q16 5 26 0q-10 16 -42 16q-30 0 -40 -18Z'),
-      ...put('cloud', 64, 312, .9), ...put('cloud', 280, 312, .9), ...put('ark', 430, 400), ...put('sun', 690, 95), ...put('cloud', 560, 80), ...put('bird', 400, 120), ...put('bird', 460, 150, .8)] },
-    { id: 'daniel', name: 'Daniel and the lions', parts: () => [
-      ...g(FRAME, L(4, 520, 796, 520), 'M40 520L40 300Q40 70 400 70Q760 70 760 300L760 520', C(400, 130, 28),
-        'M385 160L330 300M415 160L470 300'),
-      ...put('lion', 150, 512, 1.05), ...put('lion', 720, 515, .8, true), ...put('person', 460, 512, 1.2), ...put('rock', 70, 565), ...put('rock', 730, 565, .9), ...put('rock', 400, 570, .7)] },
-    { id: 'jonah', name: 'Jonah and the big fish', parts: () => [
-      ...g(FRAME, wave(250, 14, 8),
-        'M210 430q20 -90 160 -90q110 0 150 60l70 -50l-10 70l20 70l-80 -40q-40 50 -150 50q-140 0 -160 -70Z',
-        C(270, 405, 10), 'M210 430q40 20 90 10', 'M400 460q30 30 60 10', 'M330 330q-6 -30 0 -50M350 332q8 -28 26 -40M312 336q-14 -24 -30 -30',
-        C(560, 360, 10), C(585, 330, 7), C(600, 305, 5), 'M60 596q-20 -40 0 -80q20 -40 0 -80', 'M110 596q20 -40 0 -70q-20 -30 0 -60', 'M740 596q-20 -40 0 -80q20 -40 0 -80'),
-      ...put('boat', 600, 232), ...put('sun', 110, 95), ...put('cloud', 330, 90), ...put('fish', 640, 520, .6), ...put('fish', 140, 300, .45, true)] },
-    { id: 'paradise', name: 'Paradise', parts: () => [
-      ...g(FRAME, 'M4 300L120 200L220 290L330 170L470 300L600 210L796 320', 'M4 420Q200 340 420 420T796 400'),
-      ...put('sun', 690, 85, .9), ...put('tree', 120, 470), ...put('lion', 300, 545, .85), ...put('sheep', 600, 548, 1.15, true),
-      ...put('flower', 730, 590, .85), ...put('flower', 480, 594, .7), ...put('flower', 40, 594, .7), ...put('bird', 440, 110), ...put('bird', 500, 140, .8)] },
-    { id: 'moses', name: 'Baby Moses', parts: () => [
-      ...g(FRAME, 'M4 330Q400 300 796 340', wave(420, 10, 8), wave(510, 10, 8),
-        E(40, 280, 10, 40), L(40, 320, 40, 360), E(72, 270, 10, 44), L(72, 314, 72, 362), E(104, 284, 10, 38), L(104, 322, 104, 360), E(136, 274, 10, 42), L(136, 316, 136, 362), E(168, 288, 10, 36), L(168, 324, 168, 360),
-        C(470, 345, 24), 'M410 355q60 -30 120 0'),
-      ...put('basket', 470, 400, 1.2), ...put('palm', 690, 340), ...put('sun', 120, 85, .9), ...put('cloud', 360, 90), ...put('bird', 520, 150)] },
-    { id: 'david', name: 'David the shepherd', parts: () => [
-      ...g(FRAME, 'M4 380Q300 300 520 360T796 330', 'M352 470V300q0 -30 22 -30q22 0 22 22'),
-      ...put('person', 300, 470, 1.2), ...put('tree', 690, 370, .85), ...put('sheep', 480, 505), ...put('sheep', 610, 545, 1.15), ...put('sheep', 150, 565, .9, true),
-      ...put('note', 410, 220), ...put('note', 450, 180, .8), ...put('sun', 110, 90, .85), ...put('cloud', 520, 100)] },
-    { id: 'creation', name: 'Jehovah made it all', parts: () => [
-      ...g(FRAME, C(400, 320, 150), bumpy(350, 270, 60, 40, 8, 18), bumpy(450, 380, 50, 60, 8, 18), bumpy(330, 400, 30, 22, 6, 10),
-        'M140 80a60 60 0 1 0 0 120a45 45 0 1 1 0 -120Z',
-        starPath(260, 90, 18), starPath(620, 300, 16), starPath(110, 300, 14), starPath(700, 500, 20), starPath(150, 500, 16), starPath(560, 70, 12), starPath(330, 540, 12)),
-      ...put('sun', 670, 120), ...put('fish', 560, 540, .5), ...put('bird', 240, 210), ...put('bird', 600, 210, .8)] },
-    { id: 'loaves', name: 'Loaves and fishes', parts: () => [
-      ...g(FRAME, 'M4 300Q400 220 796 300', L(4, 440, 796, 440),
-        E(300, 330, 46, 26), E(390, 318, 46, 26), E(480, 330, 46, 26), E(345, 300, 40, 22), E(435, 300, 40, 22)),
-      ...put('basket', 395, 450, 2.3), ...put('fish', 210, 530, .9), ...put('fish', 600, 535, .9, true), ...put('sun', 680, 90, .8), ...put('cloud', 140, 100)] },
-    { id: 'hall', name: 'Kingdom Hall', parts: () => [
-      ...g(FRAME, L(4, 470, 796, 470), R(180, 250, 440, 220), P(150, 250, 400, 150, 650, 250), R(300, 200, 200, 34),
-        R(360, 360, 80, 110), L(400, 360, 400, 470), R(220, 300, 90, 70), L(265, 300, 265, 370), L(220, 335, 310, 335), R(490, 300, 90, 70), L(535, 300, 535, 370), L(490, 335, 580, 335),
-        'M360 470L300 596M440 470L500 596'),
-      ...put('tree', 90, 470, .8), ...put('tree', 720, 470, .8), ...put('person', 600, 570, .7), ...put('person', 660, 575, .5), ...put('person', 200, 575, .65), ...put('sun', 690, 80, .7), ...put('cloud', 120, 90)] },
-    { id: 'sinai', name: 'The Ten Commandments', parts: () => [
-      ...g(FRAME, L(4, 470, 796, 470), 'M4 470L250 160L330 240L420 120L796 470', 'M600 60l-30 50h24l-20 44 48 -62h-26l20 -32Z'),
-      ...put('cloud', 420, 120, 1.1), ...put('cloud', 230, 150, .9), ...put('tablet', 355, 575, 1.15), ...put('tablet', 445, 575, 1.15), ...put('sun', 110, 85, .8)] }
-  ];
+  const SCENES = MA.scenes;
 
   const PALETTE = ['#e53935', '#fb8c00', '#fdd835', '#9ccc65', '#43a047', '#26a69a', '#4fc3f7', '#1e88e5', '#283593', '#8e24aa', '#f06292', '#f8bbd0',
     '#8d6e63', '#5d4037', '#ffe0b2', '#f1c27d', '#c68642', '#bdbdbd', '#212121', '#ffffff'];
@@ -2085,18 +2136,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   let custom = [];
   try { custom = JSON.parse(localStorage.getItem(KEY + ':custom')) || []; } catch (e) {}
 
-  function drawScene(ctx, scene, w, h) {
-    ctx.save(); ctx.clearRect(0, 0, w, h);
-    ctx.strokeStyle = '#111111'; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-    const sx = w / 800, sy = h / 600;
-    for (const p of scene.parts()) {
-      const [a, , , d, e, f] = p.m;
-      ctx.setTransform(sx * a, 0, 0, sy * d, sx * e, sy * f);
-      ctx.lineWidth = 5 / Math.abs(d);
-      ctx.stroke(new Path2D(p.d));
-    }
-    ctx.restore();
-  }
+  const drawScene = (ctx, scene, w, h) => MA.drawScene(ctx, scene, w, h);
   function buildWall() {
     const d = lx.getImageData(0, 0, W, H).data;
     wall = new Uint8Array(W * H);
@@ -2325,6 +2365,433 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   fit();
   open(last || SCENES[0].id);
 })();
+/* puzzle */
+(function () {
+  const $ = id => document.getElementById('pz-' + id);
+  const __root = document.getElementById('game-puzzle');
+  const KEY = 'picture-puzzles-v2';
+  const IW = 800, IH = 600;
+  let st = { pic: null, n: 8, done: 0 };
+  try { const s = JSON.parse(localStorage.getItem(KEY)); if (s) st = Object.assign(st, s); } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
+
+  const play = $('play');
+  let picture = null, pieces = [], board = null, geo = null, placed = 0;
+  const GRID = { 8: [4, 2], 12: [4, 3], 16: [4, 4], 24: [6, 4] };
+
+  // pictures: every scene, painted in color; scenes he colored in the Coloring game get his colors
+  function colored(sceneId) { try { return localStorage.getItem('bible-coloring-v1:page:' + sceneId); } catch (e) { return null; } }
+  function pictures() {
+    return MA.scenes.map(s => ({ id: s.id, name: s.name, scene: s, mine: !!colored(s.id) }));
+  }
+  function render(pic, w, h, cb) {
+    const mine = colored(pic.id);
+    if (!mine) { const c = MA.paintScene(pic.scene, w, h); cb(c); return; }
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    const x = c.getContext('2d');
+    const im = new Image();
+    im.onload = () => {
+      x.fillStyle = '#ffffff'; x.fillRect(0, 0, w, h);
+      x.drawImage(im, 0, 0, w, h);
+      const l = document.createElement('canvas'); l.width = w; l.height = h;
+      MA.drawScene(l.getContext('2d'), pic.scene, w, h);
+      x.drawImage(l, 0, 0);
+      cb(c);
+    };
+    im.onerror = () => cb(MA.paintScene(pic.scene, w, h));
+    im.src = mine;
+  }
+
+  function paintStrip() {
+    const strip = $('strip'); strip.innerHTML = '';
+    pictures().forEach(p => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'thumb' + (p.mine ? ' mine' : '');
+      b.setAttribute('aria-label', p.name + (p.mine ? ', your coloring' : ''));
+      b.setAttribute('aria-pressed', p.id === st.pic);
+      render(p, 160, 120, c => b.appendChild(c));
+      b.addEventListener('click', () => { st.pic = p.id; save(); start(); });
+      strip.appendChild(b);
+    });
+  }
+
+  // jigsaw edges: each inside edge gets a bump that goes out of one piece and into its neighbour
+  function edges(cols, rows) {
+    const h = [], v = [];
+    for (let r = 0; r <= rows; r++) { h.push([]); for (let c = 0; c < cols; c++) h[r].push(r === 0 || r === rows ? 0 : (Math.random() < .5 ? 1 : -1)); }
+    for (let r = 0; r < rows; r++) { v.push([]); for (let c = 0; c <= cols; c++) v[r].push(c === 0 || c === cols ? 0 : (Math.random() < .5 ? 1 : -1)); }
+    return { h, v };
+  }
+  function side(p, x0, y0, x1, y1, bump) {
+    // draw from (x0,y0) to (x1,y1); bump > 0 pushes to the left of the direction of travel
+    if (!bump) { p.lineTo(x1, y1); return; }
+    const dx = x1 - x0, dy = y1 - y0, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L, nx = uy * bump, ny = -ux * bump;
+    const at = (t, o) => [x0 + dx * t + nx * o * L, y0 + dy * t + ny * o * L];
+    const a = at(.36, 0), b = at(.32, .2), c = at(.5, .26), d = at(.68, .2), e = at(.64, 0);
+    p.lineTo(a[0], a[1]);
+    p.bezierCurveTo(...at(.40, .08), ...at(.28, .16), ...b);
+    p.bezierCurveTo(...at(.36, .27), ...at(.44, .27), ...c);
+    p.bezierCurveTo(...at(.56, .27), ...at(.64, .27), ...d);
+    p.bezierCurveTo(...at(.72, .16), ...at(.60, .08), ...e);
+    p.lineTo(x1, y1);
+  }
+
+  // copy part of the picture, trimming anything outside it (Safari draws nothing if the source runs off the edge)
+  function crop(x, img, sx, sy, k, dx, dy, dw, dh) {
+    let sw = dw * k, sh = dh * k;
+    if (sx < 0) { dx -= sx / k; dw += sx / k; sw += sx; sx = 0; }
+    if (sy < 0) { dy -= sy / k; dh += sy / k; sh += sy; sy = 0; }
+    if (sx + sw > img.width) { const o = sx + sw - img.width; sw -= o; dw -= o / k; }
+    if (sy + sh > img.height) { const o = sy + sh - img.height; sh -= o; dh -= o / k; }
+    if (sw > 0 && sh > 0) x.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
+  }
+  function layout() {
+    const W = play.clientWidth, H = play.clientHeight;
+    if (!W || !H) return null;
+    const wide = W > H * 1.15;
+    // board takes most of the space; pieces sit around it
+    let bw, bh, bx, by, tray;
+    if (wide) { bh = Math.min(H * 0.92, (W * 0.6) * 0.75); bw = bh / 0.75; bx = 10; by = (H - bh) / 2; tray = { x: bx + bw + 16, y: 6, w: W - bw - 32, h: H - 12 }; }
+    else { bw = Math.min(W - 20, H * 0.55 / 0.75); bh = bw * 0.75; bx = (W - bw) / 2; by = 6; tray = { x: 6, y: by + bh + 12, w: W - 12, h: H - bh - 18 }; }
+    return { W, H, bw, bh, bx, by, tray };
+  }
+
+  function start() {
+    $('doneBox').hidden = true;
+    const pics = pictures();
+    let pic = pics.find(p => p.id === st.pic) || pics[0];
+    st.pic = pic.id; save();
+    __root.querySelectorAll('#pz-sizes button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.n === st.n));
+    [...$('strip').children].forEach(b => b.setAttribute('aria-pressed', b.getAttribute('aria-label').startsWith(pic.name)));
+    render(pic, IW, IH, c => { picture = c; build(); });
+  }
+
+  function build() {
+    play.innerHTML = ''; pieces = []; placed = 0;
+    geo = layout(); if (!geo || !picture) return;
+    const [cols, rows] = GRID[st.n] || GRID[8];
+    const cw = geo.bw / cols, ch = geo.bh / rows, pad = Math.max(cw, ch) * 0.3;
+    board = document.createElement('div'); board.className = 'board noghost';
+    Object.assign(board.style, { left: geo.bx + 'px', top: geo.by + 'px', width: geo.bw + 'px', height: geo.bh + 'px' });
+    const gc = document.createElement('canvas'); gc.width = 400; gc.height = 300; gc.getContext('2d').drawImage(picture, 0, 0, 400, 300);
+    board.appendChild(gc); play.appendChild(board);
+    const E = edges(cols, rows);
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+      const cv = document.createElement('canvas');
+      const pw = cw + pad * 2, ph = ch + pad * 2;
+      cv.width = Math.round(pw * dpr); cv.height = Math.round(ph * dpr);
+      cv.style.width = pw + 'px'; cv.style.height = ph + 'px';
+      cv.className = 'piece';
+      cv.setAttribute('role', 'img'); cv.setAttribute('aria-label', `Puzzle piece, row ${r + 1}, column ${c + 1}`);
+      const x = cv.getContext('2d'); x.scale(dpr, dpr);
+      const path = new Path2D();
+      const L = pad, T = pad, Rr = pad + cw, B = pad + ch;
+      path.moveTo(L, T);
+      side(path, L, T, Rr, T, -E.h[r][c]);       // top edge is shared with the piece above, so its bump is mirrored
+      side(path, Rr, T, Rr, B, E.v[r][c + 1]);   // right, going down: positive bump points right (out)
+      side(path, Rr, B, L, B, E.h[r + 1][c]);    // bottom, going left: positive bump points down (out)
+      side(path, L, B, L, T, -E.v[r][c]);        // left edge is shared with the piece to the left, so mirrored
+      path.closePath();
+      // neighbours share each edge, so flip the sign on the far side
+      x.save(); x.clip(path);
+      crop(x, picture, (c * cw - pad) * IW / geo.bw, (r * ch - pad) * IH / geo.bh, IW / geo.bw, 0, 0, pw, ph);
+      x.restore();
+      x.lineWidth = 2; x.strokeStyle = 'rgba(255,255,255,.85)'; x.stroke(path);
+      x.lineWidth = 1; x.strokeStyle = 'rgba(0,0,0,.25)'; x.stroke(path);
+      const home = { x: geo.bx + c * cw - pad, y: geo.by + r * ch - pad };
+      const piece = { el: cv, home, done: false, w: pw, h: ph };
+      pieces.push(piece);
+      play.appendChild(cv);
+    }
+    scatter();
+    paintStatus();
+  }
+
+  // waiting pieces sit in a tidy grid beside the board, shrunk to fit; they grow to full size when picked up
+  function scatter() {
+    const t = geo.tray, todo = pieces.filter(p => !p.done);
+    if (!todo.length) return;
+    const pw = todo[0].w, ph = todo[0].h, n = todo.length;
+    let best = null;
+    for (let cols = 1; cols <= n; cols++) {
+      const rows = Math.ceil(n / cols), sc = Math.min(1, (t.w / cols) / pw, (t.h / rows) / ph);
+      if (!best || sc > best.sc) best = { cols, rows, sc };
+    }
+    const order = todo.slice().sort(() => Math.random() - .5);
+    const cw = t.w / best.cols, chh = t.h / best.rows;
+    order.forEach((p, i) => {
+      const c = i % best.cols, r = (i / best.cols) | 0;
+      const cx = t.x + cw * (c + .5), cy = t.y + chh * (r + .5);
+      p.sc = best.sc * 0.96;
+      move(p, cx - p.w / 2, cy - p.h / 2);
+      p.el.style.transform = `scale(${p.sc})`;
+      p.el.style.zIndex = 2 + i;
+    });
+  }
+  function move(p, x, y) { p.x = x; p.y = y; p.el.style.left = x + 'px'; p.el.style.top = y + 'px'; }
+
+  let drag = null, topZ = 50;
+  play.addEventListener('pointerdown', e => {
+    const el = e.target.closest('.piece'); if (!el) return;
+    const p = pieces.find(q => q.el === el); if (!p || p.done) return;
+    e.preventDefault();
+    const r = play.getBoundingClientRect();
+    drag = { p, id: e.pointerId, dx: e.clientX - r.left - p.x, dy: e.clientY - r.top - p.y };
+    try { el.setPointerCapture(e.pointerId); } catch (x) {}
+    el.classList.add('drag'); el.style.zIndex = ++topZ; el.style.transform = 'scale(1)';
+  });
+  play.addEventListener('pointermove', e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const r = play.getBoundingClientRect();
+    const x = Math.max(-drag.p.w * .4, Math.min(geo.W - drag.p.w * .6, e.clientX - r.left - drag.dx));
+    const y = Math.max(-drag.p.h * .4, Math.min(geo.H - drag.p.h * .6, e.clientY - r.top - drag.dy));
+    move(drag.p, x, y);
+  });
+  function drop(e) {
+    if (!drag || (e && e.pointerId !== drag.id)) return;
+    const p = drag.p; drag = null;
+    p.el.classList.remove('drag');
+    const near = Math.hypot(p.x - p.home.x, p.y - p.home.y) < Math.min(p.w, p.h) * 0.28;
+    if (near) {
+      move(p, p.home.x, p.home.y); p.done = true; placed++;
+      p.el.classList.add('placed', 'snap'); p.el.style.zIndex = 1; p.el.style.transform = '';
+      paintStatus();
+      if (placed === pieces.length) finish();
+    } else {
+      // left outside the board: shrink back to tray size where it was dropped
+      const cx = p.x + p.w / 2, cy = p.y + p.h / 2;
+      const onBoard = cx > geo.bx && cx < geo.bx + geo.bw && cy > geo.by && cy < geo.by + geo.bh;
+      p.el.style.transform = onBoard ? 'scale(1)' : `scale(${p.sc || 1})`;
+    }
+  }
+  play.addEventListener('pointerup', drop);
+  play.addEventListener('pointercancel', drop);
+
+  function paintStatus() { $('placed').textContent = placed; $('totalP').textContent = pieces.length; }
+  function finish() {
+    st.done++; save();
+    board.querySelector('canvas').style.opacity = '1';
+    $('doneBox').hidden = false; $('nextBtn').focus();
+    const s = $('stars');
+    for (let k = 0; k < 22; k++) { const i = document.createElement('i'); i.style.left = Math.random() * 100 + '%'; i.style.animationDuration = (1.8 + Math.random() * 1.6) + 's'; i.style.animationDelay = Math.random() * .5 + 's'; s.appendChild(i); setTimeout(() => i.remove(), 4200); }
+  }
+  $('nextBtn').addEventListener('click', () => {
+    const pics = pictures(); const i = pics.findIndex(p => p.id === st.pic);
+    st.pic = pics[(i + 1) % pics.length].id; save(); start();
+  });
+  __root.querySelectorAll('#pz-sizes button').forEach(b => b.addEventListener('click', () => { st.n = +b.dataset.n; save(); start(); }));
+
+  (function holdButton(btn, action) {
+    const fill = btn.querySelector('.fill'); let t0 = 0, raf = 0;
+    function tick(t) { const p = Math.min(1, (t - t0) / 1000); fill.style.transform = `scaleX(${p})`; if (p >= 1) { stop(); action(); return; } raf = requestAnimationFrame(tick); }
+    function go(e) { if ((e && e.repeat) || raf) return; t0 = performance.now(); raf = requestAnimationFrame(tick); }
+    function stop() { cancelAnimationFrame(raf); raf = 0; fill.style.transform = 'scaleX(0)'; }
+    btn.addEventListener('pointerdown', e => { e.preventDefault(); try { btn.setPointerCapture(e.pointerId); } catch (x) {} go(); });
+    btn.addEventListener('pointerup', stop); btn.addEventListener('pointercancel', stop); btn.addEventListener('lostpointercapture', stop);
+    btn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(e); } });
+    btn.addEventListener('keyup', e => { if (e.key === 'Enter' || e.key === ' ') stop(); });
+    btn.addEventListener('contextmenu', e => e.preventDefault());
+  })($('mixBtn'), () => { if (picture) build(); });
+
+  // rebuild when the screen size changes (unless he is partway through)
+  let lastSize = '';
+  window.addEventListener('resize', () => {
+    const size = play.clientWidth + 'x' + play.clientHeight;
+    if (size === lastSize || !play.clientWidth) return;
+    lastSize = size;
+    if (!picture) { paintStrip(); start(); return; }
+    if (placed === 0) build();
+  });
+  let shown = false;
+  function boot() { if (shown || !play.clientWidth) return; shown = true; lastSize = play.clientWidth + 'x' + play.clientHeight; paintStrip(); start(); }
+  window.addEventListener('resize', boot);
+  boot();
+})();
+/* spot */
+(function () {
+  const $ = id => document.getElementById('sd-' + id);
+  const __root = document.getElementById('game-spot');
+  const W = 600, H = 450, SW = 300, SH = 225;
+  const KEY = 'spot-difference-v2';
+  let st = { n: 7, last: [], wins: 0 };
+  try { const s = JSON.parse(localStorage.getItem(KEY)); if (s) st = Object.assign(st, s); } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
+  const SMALL = ['bird', 'cloud', 'flower', 'fish', 'note', 'rock', 'sun', 'sheep', 'tree', 'palm', 'person', 'boat', 'tablet', 'basket'];
+  const ADD = [['bird', .9], ['flower', .7], ['fish', .5], ['note', .9], ['cloud', .7]];
+  let game = null;
+
+  function px(c) { return c.getContext('2d', { willReadFrequently: true }).getImageData(0, 0, c.width, c.height).data; }
+  // groups of changed pixels between two paintings, as boxes in 600 x 450 units
+  function diffBoxes(a, b, w, h) {
+    const cell = Math.max(4, Math.round(w / 60)), gw = Math.ceil(w / cell), gh = Math.ceil(h / cell);
+    const grid = new Uint16Array(gw * gh);
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+      const i = (y * w + x) * 4;
+      if (Math.abs(a[i] - b[i]) + Math.abs(a[i + 1] - b[i + 1]) + Math.abs(a[i + 2] - b[i + 2]) > 60) grid[((y / cell) | 0) * gw + ((x / cell) | 0)]++;
+    }
+    const on = new Uint8Array(gw * gh); for (let i = 0; i < on.length; i++) on[i] = grid[i] > 1 ? 1 : 0;
+    const seen = new Uint8Array(gw * gh), boxes = [];
+    for (let s = 0; s < on.length; s++) {
+      if (!on[s] || seen[s]) continue;
+      const q = [s]; seen[s] = 1; let x0 = gw, x1 = 0, y0 = gh, y1 = 0, n = 0;
+      while (q.length) {
+        const i = q.pop(), x = i % gw, y = (i / gw) | 0; n++;
+        if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;
+        for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) {
+          const xx = x + dx, yy = y + dy; if (xx < 0 || yy < 0 || xx >= gw || yy >= gh) continue;
+          const j = yy * gw + xx; if (on[j] && !seen[j]) { seen[j] = 1; q.push(j); }
+        }
+      }
+      const k = W / w;
+      boxes.push({ x0: x0 * cell * k, y0: y0 * cell * k, x1: (x1 + 1) * cell * k, y1: (y1 + 1) * cell * k, n });
+    }
+    return boxes;
+  }
+  const ok = b => { const bw = b.x1 - b.x0, bh = b.y1 - b.y0; return bw * bh < W * H * 0.2 && bw > 6 && bh > 6; };
+  const clone = m => ({ skip: new Set(m.skip), recolor: m.recolor.slice(), extra: m.extra.slice() });
+  const pick = a => a[Math.floor(Math.random() * a.length)];
+
+  function makeGame(scene, want) {
+    const base = MA.paintScene(scene, SW, SH);
+    const baseData = px(base);
+    const groups = {};
+    for (const p of MA.sceneParts(scene)) if (p.g && SMALL.includes(p.k)) groups[p.g] = p.k;
+    const groupIds = Object.keys(groups).map(Number);
+    const maxArea = want >= 9 ? 0.03 : 0.07;
+    const regions = base.regions.filter(r => r && r.size > SW * SH * 0.002 && r.size < SW * SH * maxArea);
+    const tiny = ['bird', 'flower', 'fish', 'note', 'rock'];
+    if (want >= 9) { const small = Object.keys(groups).map(Number).filter(g => tiny.includes(groups[g])); if (small.length >= 3) groupIds.splice(0, groupIds.length, ...small); }
+    let mods = { skip: new Set(), recolor: [], extra: [] }, count = 0;
+    for (let tries = 0; tries < 40 + want * 14 && count < want; tries++) {
+      const m = clone(mods);
+      const kind = Math.random();
+      if (kind < 0.4 && groupIds.length) {
+        const g = pick(groupIds); if (m.skip.has(g)) continue; m.skip.add(g);
+      } else if (kind < 0.75 && regions.length) {
+        const r = pick(regions);
+        const x = (r.seed % SW) * 800 / SW, y = ((r.seed / SW) | 0) * 600 / SH;
+        const pal = ['#e63946', '#2a9d8f', '#8338ec', '#ff006e', '#3a86ff', '#ffbe0b', '#06d6a0', '#fb5607'];
+        m.recolor.push({ x: x + 1, y: y + 1, color: pick(pal) });
+      } else {
+        const [name, s] = pick(ADD);
+        // find open sky or ground for the new thing
+        let spot = null;
+        for (let k = 0; k < 30 && !spot; k++) {
+          const x = 90 + Math.random() * 620, y = 70 + Math.random() * 470;
+          const lab = base.labels, big = base.regions;
+          const at = (xx, yy) => lab[Math.min(SH - 1, Math.max(0, Math.round(yy * SH / 600))) * SW + Math.min(SW - 1, Math.max(0, Math.round(xx * SW / 800)))];
+          const id = at(x, y); if (!id || big[id].size < SW * SH * 0.08) continue;
+          let clear = true;
+          for (let dx = -70; dx <= 70 && clear; dx += 14) for (let dy = -80; dy <= 20 && clear; dy += 14) if (at(x + dx, y + dy) !== id) clear = false;
+          if (clear) spot = { x, y };
+        }
+        if (!spot) continue;
+        m.extra.push({ name, x: spot.x, y: spot.y, s });
+      }
+      const c = MA.paintScene(scene, SW, SH, m);
+      const boxes = diffBoxes(baseData, px(c), SW, SH);
+      if (boxes.length === count + 1 && boxes.every(ok)) { mods = m; count++; }
+    }
+    const A = MA.paintScene(scene, W, H), B = MA.paintScene(scene, W, H, mods);
+    const boxes = diffBoxes(px(A), px(B), W, H).filter(ok).map(b => Object.assign(b, { found: false }));
+    return { scene, A, B, boxes };
+  }
+
+  function paintDots() {
+    const d = $('dots'); const n = game ? game.boxes.length : st.n;
+    const f = game ? game.boxes.filter(b => b.found).length : 0;
+    d.innerHTML = Array.from({ length: n }, (_, i) => `<i class="${i < f ? 'on' : ''}"></i>`).join('');
+    d.setAttribute('aria-label', `${f} of ${n} differences found`);
+  }
+  function ringFor(b, cls) {
+    const cx = (b.x0 + b.x1) / 2, cy = (b.y0 + b.y1) / 2, rx = Math.max(22, (b.x1 - b.x0) / 2 + 12), ry = Math.max(22, (b.y1 - b.y0) / 2 + 12);
+    return `<ellipse class="${cls}" cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}"/>`;
+  }
+  function paintRings(hintBox) {
+    const html = game.boxes.filter(b => b.found).map(b => ringFor(b, 'ring')).join('') + (hintBox ? ringFor(hintBox, 'ring hint') : '');
+    $('sA').innerHTML = html; $('sB').innerHTML = html;
+  }
+
+  function newGame() {
+    $('doneBox').hidden = true;
+    $('loading').hidden = false;
+    const scenes = MA.scenes.filter(s => !st.last.includes(s.id));
+    const order = (scenes.length ? scenes : MA.scenes).slice().sort(() => Math.random() - .5);
+    __root.querySelectorAll('#sd-levels button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.n === st.n));
+    setTimeout(() => {
+      // some pictures have room for fewer changes; try another picture if this one came up short
+      game = null;
+      for (const scene of order.slice(0, 3)) {
+        const g = makeGame(scene, st.n);
+        if (!game || g.boxes.length > game.boxes.length) game = g;
+        if (game.boxes.length >= st.n) break;
+      }
+      st.last = st.last.concat(game.scene.id).slice(-4); save();
+      $('cA').getContext('2d').drawImage(game.A, 0, 0);
+      $('cB').getContext('2d').drawImage(game.B, 0, 0);
+      $('loading').hidden = true;
+      paintRings(); paintDots();
+    }, 30);
+  }
+
+  function tap(e, which) {
+    if (!game) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - r.left) * W / r.width, y = (e.clientY - r.top) * H / r.height;
+    const pad = 22;
+    const hit = game.boxes.find(b => !b.found && x >= b.x0 - pad && x <= b.x1 + pad && y >= b.y0 - pad && y <= b.y1 + pad);
+    if (hit) {
+      hit.found = true; paintRings(); paintDots();
+      if (game.boxes.every(b => b.found)) {
+        st.wins++; save();
+        $('doneBox').hidden = false; $('nextBtn').focus();
+        const s = $('stars');
+        for (let k = 0; k < 22; k++) { const i = document.createElement('i'); i.style.left = Math.random() * 100 + '%'; i.style.animationDuration = (1.8 + Math.random() * 1.6) + 's'; i.style.animationDelay = Math.random() * .5 + 's'; s.appendChild(i); setTimeout(() => i.remove(), 4200); }
+      }
+    } else if (!game.boxes.some(b => b.found && x >= b.x0 - pad && x <= b.x1 + pad && y >= b.y0 - pad && y <= b.y1 + pad)) {
+      const svg = which === 'A' ? $('sA') : $('sB');
+      const m = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      m.setAttribute('class', 'miss'); m.setAttribute('d', `M${x - 12} ${y - 12}l24 24M${x + 12} ${y - 12}l-24 24`);
+      svg.appendChild(m); setTimeout(() => m.remove(), 850);
+    }
+  }
+  $('picA').addEventListener('pointerdown', e => tap(e, 'A'));
+  $('picB').addEventListener('pointerdown', e => tap(e, 'B'));
+  $('hintBtn').addEventListener('click', () => {
+    if (!game) return;
+    const b = game.boxes.find(x => !x.found); if (!b) return;
+    paintRings(b); clearTimeout(game.ht); game.ht = setTimeout(() => paintRings(), 2500);
+  });
+  $('nextBtn').addEventListener('click', newGame);
+  __root.querySelectorAll('#sd-levels button').forEach(b => b.addEventListener('click', () => { st.n = +b.dataset.n; save(); newGame(); }));
+
+  (function holdButton(btn, action) {
+    const fill = btn.querySelector('.fill'); let t0 = 0, raf = 0;
+    function tick(t) { const p = Math.min(1, (t - t0) / 1000); fill.style.transform = `scaleX(${p})`; if (p >= 1) { stop(); action(); return; } raf = requestAnimationFrame(tick); }
+    function go(e) { if ((e && e.repeat) || raf) return; t0 = performance.now(); raf = requestAnimationFrame(tick); }
+    function stop() { cancelAnimationFrame(raf); raf = 0; fill.style.transform = 'scaleX(0)'; }
+    btn.addEventListener('pointerdown', e => { e.preventDefault(); try { btn.setPointerCapture(e.pointerId); } catch (x) {} go(); });
+    btn.addEventListener('pointerup', stop); btn.addEventListener('pointercancel', stop); btn.addEventListener('lostpointercapture', stop);
+    btn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(e); } });
+    btn.addEventListener('keyup', e => { if (e.key === 'Enter' || e.key === ' ') stop(); });
+    btn.addEventListener('contextmenu', e => e.preventDefault());
+  })($('newBtn'), newGame);
+
+  function fit() {
+    const a = $('area'); const AW = a.clientWidth, AH = a.clientHeight;
+    if (!AW || !AH) return;
+    const side = Math.min((AW - 12) / 2, AH * 4 / 3), stack = Math.min(AW, (AH - 12) / 2 * 4 / 3);
+    const tall = stack > side;
+    a.classList.toggle('tall', tall);
+    const w = tall ? stack : side;
+    ['picA', 'picB'].forEach(id => { $(id).style.width = w + 'px'; $(id).style.height = w * 0.75 + 'px'; });
+    if (!game && !fit.started) { fit.started = true; newGame(); }
+  }
+  window.addEventListener('resize', fit);
+  paintDots();
+  fit();
+})();
 /* notes */
 (function () {
   const $ = id => document.getElementById('nt-' + id);
@@ -2449,7 +2916,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 </script>
 <script>
 (function () {
-  const views = ['home', 'bingo', 'count', 'words', 'memory', 'dots', 'trace', 'color', 'notes'];
+  const views = ['home', 'bingo', 'count', 'words', 'memory', 'dots', 'trace', 'color', 'puzzle', 'spot', 'notes'];
   function paintMeetings() {
     const cur = MA.current();
     const box = document.getElementById('meetSel');
