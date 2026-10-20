@@ -825,7 +825,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     </div>
     <form class="namebox" id="tw-namebox" hidden>
       <label for="tw-nameInput">Name to trace</label>
-      <input id="tw-nameInput" maxlength="10" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Type a name">
+      <input id="tw-nameInput" maxlength="12" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Type a name">
       <button type="submit" class="go">Trace it</button>
     </form>
   </div>
@@ -2086,7 +2086,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   __root.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => setSet(b.dataset.set)));
   $('namebox').addEventListener('submit', e => {
     e.preventDefault();
-    const v = ($('nameInput').value || '').toUpperCase().replace(/[^A-Z]/g, '').slice(0, 10);
+    const v = ($('nameInput').value || '').toUpperCase().replace(/[^A-Z]/g, '').slice(0, 12);
     if (!v) { $('nameInput').focus(); return; }
     st.name = v; save(); $('nameInput').value = v; $('nameInput').blur();
     startWord(v);
@@ -2105,7 +2105,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   })($('nextBtn'), () => startWord(st.set === 'name' && st.name ? st.name : pickWord()));
 
   function meetingSet() {
-    SETS.meeting = MA.words().filter(w => /^[A-Z]{3,10}$/.test(w));
+    SETS.meeting = MA.words().filter(w => /^[A-Z]{3,12}$/.test(w));
     if (SETS.meeting.length < 3) SETS.meeting = SETS.short.slice();
   }
   meetingSet();
