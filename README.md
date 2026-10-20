@@ -2,7 +2,7 @@
 
 Quiet games for young kids and a note-taking page for older kids and teens, for congregation meetings and assemblies.
 
-Live site: https://utabacon81.github.io/meeting-activities/
+Live site: https://meeting-activities.pages.dev/ (served by Cloudflare Pages, which redeploys on every push to main)
 
 A personal family project. Not an official jw.org site.
 
