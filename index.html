@@ -34,6 +34,8 @@
   --h1: rgba(242,183,5,.55); --h2: rgba(79,160,230,.45); --h3: rgba(235,110,150,.42); --h4: rgba(80,190,120,.45); --h5: rgba(170,120,230,.42); --h6: rgba(245,140,60,.45); --h7: rgba(60,190,190,.45);
   --t1: #fff1c2; --t2: #d9ecff; --t3: #ffd9e4; --t4: #d6f2df; --t5: #eadcff; --t6: #ffe0c7; --t7: #cff1f1; --t8: #f0f0c8;
   --tone0: #dce8fb; --tone1: #e3f2e6; --tone2: #ece4fb; --tone3: #fbefd9; --tone4: #fbe0e6; --tone5: #dff3f3; --tone6: #f3ecd9;
+  --guide: #dfe5ef; --dash: #6b7a92;
+  --text: system-ui, -apple-system, 'Segoe UI', sans-serif;
   --display: 'Fredoka', 'Trebuchet MS', sans-serif;
   --body: 'Andika', 'Verdana', sans-serif;
 }
@@ -44,7 +46,7 @@
     --dot: #e8edf7; --next: #ff8a4f; --line: #7fb0f0;
     --h1: rgba(242,183,5,.45); --h2: rgba(79,160,230,.45); --h3: rgba(235,110,150,.45); --h4: rgba(80,190,120,.45); --h5: rgba(170,120,230,.45); --h6: rgba(245,140,60,.45); --h7: rgba(60,190,190,.45);
     --t1: #4a3d10; --t2: #1d3550; --t3: #4a2232; --t4: #1d3d29; --t5: #33275a; --t6: #4a2e18; --t7: #173f40; --t8: #3c3c18;
-    --tone0: #1c2c4a; --tone1: #1a3328; --tone2: #2a2346; --tone3: #3a2f18; --tone4: #44222c; --tone5: #15383a; --tone6: #3a3420;
+    --tone0: #1c2c4a; --tone1: #1a3328; --tone2: #2a2346; --tone3: #3a2f18; --tone4: #44222c; --tone5: #15383a; --tone6: #3a3420; --guide: #26334f; --dash: #8fa0bd;
     color-scheme: dark;
   }
 }
@@ -54,7 +56,7 @@
   --dot: #e8edf7; --next: #ff8a4f; --line: #7fb0f0;
   --h1: rgba(242,183,5,.45); --h2: rgba(79,160,230,.45); --h3: rgba(235,110,150,.45); --h4: rgba(80,190,120,.45); --h5: rgba(170,120,230,.45); --h6: rgba(245,140,60,.45); --h7: rgba(60,190,190,.45);
   --t1: #4a3d10; --t2: #1d3550; --t3: #4a2232; --t4: #1d3d29; --t5: #33275a; --t6: #4a2e18; --t7: #173f40; --t8: #3c3c18;
-  --tone0: #1c2c4a; --tone1: #1a3328; --tone2: #2a2346; --tone3: #3a2f18; --tone4: #44222c; --tone5: #15383a; --tone6: #3a3420;
+  --tone0: #1c2c4a; --tone1: #1a3328; --tone2: #2a2346; --tone3: #3a2f18; --tone4: #44222c; --tone5: #15383a; --tone6: #3a3420; --guide: #26334f; --dash: #8fa0bd;
   color-scheme: dark;
 }
 html, body { height: 100%; }
@@ -1710,7 +1712,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   const SETS = {
     meeting: [],
     short: ['GOD', 'LOVE', 'PRAY', 'KING', 'ARK', 'LION', 'SONG', 'FISH', 'DOVE', 'STAR', 'SUN', 'NOAH', 'ADAM', 'EVE', 'RUTH', 'PAUL'],
-    long: ['JEHOVAH', 'JESUS', 'BIBLE', 'HAPPY', 'TRUST', 'HEART', 'SHEEP', 'PEACE', 'FAMILY', 'FRIEND', 'DAVID', 'MOSES', 'DANIEL', 'JONAH', 'ESTHER']
+    long: ['JEHOVAH', 'KINGDOM', 'PARADISE', 'SCRIPTURE', 'BROTHERS', 'SISTERS', 'PRAYER', 'FAMILY', 'FRIENDS', 'DANIEL', 'ABRAHAM', 'JEREMIAH', 'BAPTISM', 'RAINBOW', 'SHEPHERD', 'BLESSING', 'PROMISE', 'MEETING', 'ASSEMBLY', 'FOREVER']
   };
   const COLORS = ['#e53935', '#fb8c00', '#f2b705', '#43a047', '#1e88e5', '#8e24aa', '#ec407a', '#00897b'];
   const KEY = 'trace-the-word-v1';
@@ -1727,7 +1729,9 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 
   function pickWord() {
     if (st.set === 'name' && st.name) return st.name;
-    const list = SETS[st.set === 'name' ? 'short' : st.set];
+    let list = SETS[st.set === 'name' ? 'short' : st.set];
+    // this meeting's list mixes in plenty of longer words
+    if (st.set === 'meeting') { const longs = list.filter(w => w.length >= 5); if (longs.length >= 2 && Math.random() < 0.7) list = longs; }
     let pool = list.filter(w => !st.recent.includes(w));
     if (!pool.length) pool = list.slice();
     const w = pool[Math.floor(Math.random() * pool.length)];
@@ -1753,7 +1757,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     const cut = Math.ceil(chars.length / 2);
     const two = { rows: [chars.slice(0, cut), chars.slice(cut)], W: Math.max(rowW(chars.slice(0, cut)), rowW(chars.slice(cut))), H: 160 + ROWH };
     const sc = L => Math.min(AW / L.W, AH / L.H);
-    const lay = chars.length > 3 && sc(two) > sc(one) * 1.15 ? two : one;
+    const lay = one; // always one line, left to right
     const total = lay.W, H = lay.H;
     pad.setAttribute('viewBox', `0 0 ${total} ${H}`);
     aspect = total / H;
@@ -1774,6 +1778,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       const color = COLORS[li % COLORS.length];
       const strokes = paths.map(d => {
         const guide = el('path', { d, fill: 'none', stroke: 'var(--guide)', 'stroke-width': 18, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, g);
+        // dashed line down the middle shows exactly where to draw
+        el('path', { d, fill: 'none', stroke: 'var(--dash)', 'stroke-width': 2.2, 'stroke-dasharray': '6 5', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, g);
         const len = guide.getTotalLength();
         const n = Math.max(4, Math.ceil(len / 3));
         const pts = [];
@@ -1906,7 +1912,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   })($('nextBtn'), () => startWord(st.set === 'name' && st.name ? st.name : pickWord()));
 
   function meetingSet() {
-    SETS.meeting = MA.words().filter(w => /^[A-Z]{2,8}$/.test(w));
+    SETS.meeting = MA.words().filter(w => /^[A-Z]{3,10}$/.test(w));
     if (SETS.meeting.length < 3) SETS.meeting = SETS.short.slice();
   }
   meetingSet();
