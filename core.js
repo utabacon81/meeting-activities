@@ -117,7 +117,7 @@
   if (!DATA.meetings.some(m => m.id === curId)) curId = auto();
 
   const uniq = a => a.filter((w, i) => a.indexOf(w) === i);
-  window.MA = {
+  const MA = window.MA = {
     data: DATA,
     icon, hasIcon,
     meetings: () => DATA.meetings,
@@ -134,6 +134,15 @@
     // all the words for the selected meeting, longest lists first
     words() { const m = MA.current(); return uniq([].concat(m.words || [], ...(m.parts || []).map(p => p.words || []))); },
     countWords() { const m = MA.current(); return uniq([].concat(m.count || [], DATA.common)); },
+    // [{ w, goal, mine }] for Count the Word: everyday words with their usual goals, this meeting's words, and a few part words at 1
+    countPool() {
+      const m = MA.current(), G = DATA.commonGoals || {}, mg = m.goals || {};
+      const out = DATA.common.map(w => ({ w, goal: G[w] || 2, mine: false }));
+      (m.count || []).forEach(w => { if (!out.some(x => x.w === w)) out.push({ w, goal: mg[w] || 2, mine: true }); });
+      const partWords = uniq([].concat(...(m.parts || []).map(p => p.words || []))).filter(w => /^[A-Z]{3,10}$/.test(w) && !out.some(x => x.w === w));
+      partWords.forEach(w => out.push({ w, goal: mg[w] || 1, mine: true, part: true }));
+      return out;
+    },
     labelOf: m => m.dates ? `${m.label} · ${m.dates}` : m.label
   };
 })();

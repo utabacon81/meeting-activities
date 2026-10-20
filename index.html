@@ -205,47 +205,61 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 12px;
   -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none;
 }
-#game-count .screen { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center; }
+#game-count .scoreRow { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+#game-count .pill { display: inline-flex; align-items: center; gap: 8px; background: var(--panel); border: 2px solid var(--edge); border-radius: 999px; padding: 6px 16px; font-weight: 600; font-size: 17px; font-variant-numeric: tabular-nums; }
+#game-count .pill svg { width: 24px; height: 24px; color: var(--sel); }
+#game-count .pill b { font-size: 22px; }
+#game-count .pill.bump { animation: cw-bump .5s ease; }
+@keyframes cw-bump { 40% { transform: scale(1.18); } }
+#game-count .screen { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; }
 #game-count .screen[hidden] { display: none; }
 #game-count .eyebrow { margin: 0; font-size: 20px; font-weight: 600; color: var(--muted); }
-#game-count .wordcard { background: var(--panel); border: 3px solid var(--edge); border-radius: 28px; padding: 26px 34px; display: flex; flex-direction: column; align-items: center; gap: 10px; max-width: 100%; box-sizing: border-box; }
-#game-count .wordcard svg { width: 110px; height: 110px; color: var(--accent); }
-#game-count .big { font-weight: 700; font-size: clamp(40px, 10vw, 76px); line-height: 1.05; letter-spacing: 1px; overflow-wrap: anywhere; }
-#game-count .row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+#game-count .lead { margin: 0; font-weight: 700; font-size: clamp(30px, 7vw, 48px); line-height: 1.1; text-wrap: balance; }
+#game-count .tip { margin: 0; color: var(--muted); font-size: 17px; max-width: 36ch; }
 #game-count .btn { border: 0; border-radius: 999px; background: var(--accent); color: #ffffff; font-family: var(--display); font-weight: 600; font-size: 21px; padding: 14px 30px; min-height: 56px; cursor: pointer; }
-#game-count .btn.soft { background: var(--bar); color: var(--ink); }
 #game-count .btn:focus-visible, #game-count .tap:focus-visible, #game-count .hold:focus-visible, #game-count .minus:focus-visible { outline: 3px solid var(--sel); outline-offset: 3px; }
-#game-count .tip { margin: 0; color: var(--muted); font-size: 16px; max-width: 34ch; }
-#game-count .count { font-weight: 700; font-size: clamp(64px, 16vw, 120px); line-height: 1; font-variant-numeric: tabular-nums; }
-#game-count .count.bump { animation: cw-bump .25s ease; }
-@keyframes cw-bump { 40% { transform: scale(1.18); } }
+#game-count .ringwrap { position: relative; width: min(74vw, 44vh, 400px); aspect-ratio: 1; max-width: 100%; }
+#game-count .ringwrap svg.ring { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); pointer-events: none; }
+#game-count .ring .track { fill: none; stroke: var(--bar); stroke-width: 7; }
+#game-count .ring .prog { fill: none; stroke: var(--sel); stroke-width: 7; stroke-linecap: round; transition: stroke-dashoffset .35s ease; }
 #game-count .tap {
-  width: min(78vw, 46vh, 400px); aspect-ratio: 1; max-width: 100%; border-radius: 50%;
-  border: 0; background: var(--accent); color: #ffffff; cursor: pointer; font: inherit;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
-  box-shadow: 0 10px 0 color-mix(in srgb, var(--accent) 60%, #000000), 0 14px 30px rgba(0,0,0,.18);
-  transition: transform .08s ease, box-shadow .08s ease; touch-action: manipulation; position: relative;
+  position: absolute; inset: 9%; border-radius: 50%; border: 0; background: var(--accent); color: #ffffff; cursor: pointer; font: inherit;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  box-shadow: 0 8px 0 color-mix(in srgb, var(--accent) 60%, #000000), 0 12px 26px rgba(0,0,0,.18);
+  transition: transform .08s ease, box-shadow .08s ease, background .3s ease; touch-action: manipulation;
 }
-#game-count .tap:active, #game-count .tap.down { transform: translateY(8px); box-shadow: 0 2px 0 color-mix(in srgb, var(--accent) 60%, #000000), 0 6px 14px rgba(0,0,0,.18); }
-#game-count .tap svg { width: 34%; height: auto; }
-#game-count .tap span { font-weight: 700; font-size: clamp(24px, 6vw, 44px); letter-spacing: 1px; padding-inline: 10%; overflow-wrap: anywhere; }
-#game-count .tap small { font-size: 16px; font-weight: 600; opacity: .8; }
-#game-count .pop { position: absolute; left: 50%; top: 10%; font-weight: 700; font-size: 34px; color: var(--sel); pointer-events: none; animation: cw-rise .7s ease-out forwards; }
-@keyframes cw-rise { from { transform: translate(-50%, 0); opacity: 1; } to { transform: translate(-50%, -70px); opacity: 0; } }
-#game-count .bottom { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-#game-count .minus { border: 2px solid var(--edge); background: var(--panel); color: var(--muted); border-radius: 999px; min-height: 48px; padding: 0 18px; font-family: var(--display); font-weight: 600; font-size: 16px; cursor: pointer; }
-#game-count .hold { position: relative; overflow: hidden; border: 0; border-radius: 999px; background: var(--bar); color: var(--muted); font-family: var(--display); font-weight: 600; font-size: 16px; padding: 0 20px; min-height: 48px; cursor: pointer; touch-action: none; }
+#game-count .tap:active { transform: translateY(6px); box-shadow: 0 2px 0 color-mix(in srgb, var(--accent) 60%, #000000), 0 6px 14px rgba(0,0,0,.18); }
+#game-count .tap.won { background: var(--win); }
+#game-count .tap svg { width: 32%; height: auto; }
+#game-count .tap span { font-weight: 700; font-size: clamp(22px, 5.6vw, 42px); letter-spacing: 1px; padding-inline: 10%; overflow-wrap: anywhere; line-height: 1.05; }
+#game-count .tap small { font-size: 15px; font-weight: 600; opacity: .85; }
+#game-count .tap.swap { animation: cw-swap .45s ease; }
+@keyframes cw-swap { from { transform: scale(.6) rotate(-8deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
+#game-count .pop { position: absolute; left: 50%; top: 4%; font-weight: 700; font-size: 32px; color: var(--sel); pointer-events: none; animation: cw-rise .7s ease-out forwards; text-shadow: 0 2px 0 rgba(0,0,0,.15); }
+@keyframes cw-rise { from { transform: translate(-50%, 0); opacity: 1; } to { transform: translate(-50%, -60px); opacity: 0; } }
+#game-count .pips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+#game-count .pips i { width: 26px; height: 26px; border-radius: 50%; border: 3px solid var(--edge); background: var(--panel); transition: background .2s ease, border-color .2s ease, transform .2s ease; }
+#game-count .pips i.on { background: var(--sel); border-color: var(--sel); transform: scale(1.12); }
+#game-count .goalText { font-size: 18px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; margin: 0; }
+#game-count .goalText b { color: var(--ink); }
+#game-count .bottom { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+#game-count .minus { border: 2px solid var(--edge); background: var(--panel); color: var(--muted); border-radius: 999px; min-height: 46px; padding: 0 16px; font-family: var(--display); font-weight: 600; font-size: 15px; cursor: pointer; }
+#game-count .hold { position: relative; overflow: hidden; border: 0; border-radius: 999px; background: var(--bar); color: var(--muted); font-family: var(--display); font-weight: 600; font-size: 15px; padding: 0 16px; min-height: 46px; cursor: pointer; touch-action: none; }
 #game-count .hold .fill { position: absolute; inset: 0; background: var(--sel); transform-origin: left; transform: scaleX(0); opacity: .55; }
 #game-count .hold .lbl { position: relative; }
-#game-count .badge { width: 150px; height: 150px; color: var(--sel); animation: cw-spin 1s cubic-bezier(.3,1.4,.5,1); }
+#game-count .banner { position: fixed; left: 50%; top: 38%; transform: translate(-50%, -50%); z-index: 20; background: var(--win); color: #ffffff; font-weight: 700; font-size: clamp(30px, 8vw, 54px); padding: 16px 30px; border-radius: 24px; box-shadow: 0 14px 40px rgba(0,0,0,.25); pointer-events: none; animation: cw-banner 1.4s ease forwards; white-space: nowrap; }
+#game-count .banner[hidden] { display: none; }
+@keyframes cw-banner { 0% { transform: translate(-50%, -50%) scale(.4); opacity: 0; } 18% { transform: translate(-50%, -50%) scale(1.08); opacity: 1; } 30% { transform: translate(-50%, -50%) scale(1); } 80% { opacity: 1; } 100% { opacity: 0; } }
+#game-count .found { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 560px; }
+#game-count .found li { background: var(--panel); border: 2px solid var(--edge); border-radius: 999px; padding: 6px 14px; font-weight: 600; font-size: 16px; }
+#game-count .found li b { color: var(--win); }
+#game-count .badge { width: 130px; height: 130px; color: var(--sel); animation: cw-spin 1s cubic-bezier(.3,1.4,.5,1); }
 @keyframes cw-spin { from { transform: scale(.2) rotate(-90deg); } to { transform: scale(1) rotate(0); } }
-#game-count .history { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-size: 16px; color: var(--muted); }
-#game-count .history b { color: var(--ink); font-variant-numeric: tabular-nums; }
 #game-count .stars { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 21; }
 #game-count .stars i { position: absolute; top: -40px; width: 24px; height: 24px; background: var(--sel);
   clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); animation: cw-fall linear forwards; }
 @keyframes cw-fall { to { transform: translateY(110vh) rotate(360deg); } }
-@media (prefers-reduced-motion: reduce) {#game-count .count.bump, #game-count .pop, #game-count .badge, #game-count .tap { animation: none; transition: none; }
+@media (prefers-reduced-motion: reduce) {#game-count .pill.bump, #game-count .pop, #game-count .badge, #game-count .tap, #game-count .tap.swap, #game-count .banner, #game-count .ring .prog, #game-count .pips i { animation: none; transition: none; }
 #game-count .stars { display: none; }}
 #game-words {
   background: var(--bg); color: var(--ink); font-family: var(--body);
@@ -586,33 +600,41 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 <div class="stars" id="bg-stars"></div>
 </section>
 <section class="game" id="game-count" hidden aria-label="count">
+<div class="scoreRow">
+  <span class="pill" aria-live="polite"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4l8 17 18 2-13 13 4 19-17-10-17 10 4-19L6 23l18-2z" fill="currentColor"/></svg><b id="cw-total">0</b> points</span>
+  <span class="pill" id="cw-sessionPill" hidden>This meeting: <b id="cw-session">0</b></span>
+</div>
+
 <section class="screen" id="cw-startScr">
-  <p class="eyebrow">Your word to listen for is</p>
-  <div class="wordcard"><svg viewBox="0 0 64 64" aria-hidden="true" id="cw-startPic"></svg><div class="big" id="cw-startWord">JEHOVAH</div></div>
-  <p class="tip">Every time you hear it in the talk, tap the big button!</p>
-  <div class="row">
-    <button type="button" class="btn" id="cw-go">Start listening</button>
-    <button type="button" class="btn soft" id="cw-swap">Different word</button>
-  </div>
-  <ul class="history" id="cw-history" aria-label="Last games"></ul>
+  <p class="eyebrow">Count the Word</p>
+  <p class="lead">Listen for the word.<br>Tap each time you hear it!</p>
+  <p class="tip">Fill the circle to win a point. Then you get a new word.</p>
+  <button type="button" class="btn" id="cw-go">Start listening</button>
 </section>
 
 <section class="screen" id="cw-playScr" hidden>
-  <p class="eyebrow" id="cw-playLabel">Times you heard it</p>
-  <div class="count" id="cw-count" aria-live="polite">0</div>
-  <button type="button" class="tap" id="cw-tap"><svg viewBox="0 0 64 64" aria-hidden="true" id="cw-playPic"></svg><span id="cw-playWord">JEHOVAH</span><small>Tap when you hear it</small></button>
+  <p class="eyebrow">Listen for</p>
+  <div class="ringwrap" id="cw-ringwrap">
+    <svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle class="track" cx="50" cy="50" r="46"/><circle class="prog" id="cw-prog" cx="50" cy="50" r="46"/></svg>
+    <button type="button" class="tap" id="cw-tap"><svg viewBox="0 0 64 64" aria-hidden="true" id="cw-pic"></svg><span id="cw-word">JEHOVAH</span><small id="cw-tapHint">Tap when you hear it</small></button>
+  </div>
+  <div class="pips" id="cw-pips" aria-hidden="true"></div>
+  <p class="goalText" id="cw-goalText" aria-live="polite"><b>0</b> of 5</p>
   <div class="bottom">
     <button type="button" class="minus" id="cw-minus">Oops, minus 1</button>
-    <button type="button" class="hold" id="cw-finish"><span class="fill"></span><span class="lbl">Hold when the talk is over</span></button>
+    <button type="button" class="hold" id="cw-skip"><span class="fill"></span><span class="lbl">Hold for a different word</span></button>
+    <button type="button" class="hold" id="cw-finish"><span class="fill"></span><span class="lbl">Hold when the meeting is over</span></button>
   </div>
 </section>
 
 <section class="screen" id="cw-doneScr" hidden>
   <svg class="badge" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4l8 17 18 2-13 13 4 19-17-10-17 10 4-19L6 23l18-2z" fill="currentColor"/></svg>
-  <div class="big" id="cw-doneText">23 times!</div>
-  <p class="tip" id="cw-doneTip">You listened for JEHOVAH the whole talk. Great listening!</p>
-  <button type="button" class="btn" id="cw-again">Play again with a new word</button>
+  <p class="lead" id="cw-doneText">You earned 3 points!</p>
+  <ul class="found" id="cw-found" aria-label="Words you finished"></ul>
+  <p class="tip" id="cw-doneTip"></p>
+  <button type="button" class="btn" id="cw-again">Play again</button>
 </section>
+<div class="banner" id="cw-banner" hidden>+1 point!</div>
 <div class="stars" id="cw-stars"></div>
 </section>
 <section class="game" id="game-words" hidden aria-label="words">
@@ -964,79 +986,103 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 (function () {
   const $ = id => document.getElementById('cw-' + id);
   const __root = document.getElementById('game-count');
-  const S = 'stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"';
-  const F = 'fill="currentColor"';
-  let WORDS = [];
-  function loadWords() { WORDS = MA.countWords().map(w => [w, MA.icon(w)]); }
-  loadWords();
-  const KEY = 'count-the-word-v1';
-  let st = { word: null, count: 0, playing: false, last: [], history: [] };
+  const KEY = 'count-the-word-v2';
+  const C = 2 * Math.PI * 46;
+  let st = { total: 0, active: false, meeting: '', points: 0, word: '', goal: 2, count: 0, done: [], recent: [] };
   try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && typeof s === 'object') st = Object.assign(st, s); } catch (e) {}
   function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
-  const find = w => WORDS.find(x => x[0] === w) || WORDS[0];
+  let busy = false;
 
-  function pickWord() {
-    const recent = st.last.slice(-4);
-    let pool = WORDS.filter(w => !recent.includes(w[0]));
-    const mine = (MA.current().count || []).filter(w => !recent.includes(w));
-    if (mine.length && Math.random() < 0.4) pool = pool.filter(w => mine.includes(w[0]));
-    const w = pool[Math.floor(Math.random() * pool.length)][0];
-    st.word = w; st.last = recent.concat(w).slice(-4);
-  }
-  function show(id) { ['startScr', 'playScr', 'doneScr'].forEach(s => { $(s).hidden = s !== id; }); }
-  function paintWord() {
-    const [w, pic] = find(st.word);
-    $('startWord').textContent = w; $('startPic').innerHTML = pic;
-    $('playWord').textContent = w; $('playPic').innerHTML = pic;
-    $('tap').setAttribute('aria-label', 'I heard ' + w.toLowerCase());
-  }
-  function paintHistory() {
-    const h = $('history');
-    h.innerHTML = st.history.slice(-3).reverse().map(x => `<li>Last time: <b>${x.word}</b>, ${x.count} ${x.count === 1 ? 'time' : 'times'}</li>`).join('');
-  }
-  function paintCount(bump) {
-    const c = $('count');
-    c.textContent = st.count;
-    if (bump) { c.classList.remove('bump'); void c.offsetWidth; c.classList.add('bump'); }
+  function pick() {
+    const pool = MA.countPool();
+    const avoid = st.recent.slice(-5).concat(st.word);
+    const fresh = pool.filter(x => !avoid.includes(x.w));
+    const common = fresh.filter(x => !x.mine), mine = fresh.filter(x => x.mine && !x.part);
+    const part = fresh.filter(x => x.part && MA.hasIcon(x.w) && MA.icon(x.w) !== MA.icon('PERSON'));
+    // mostly everyday words, often this meeting's words, now and then a word from one part
+    const r = Math.random();
+    let from = r < 0.55 ? common : r < 0.9 ? mine : part;
+    if (!from.length) from = fresh.length ? fresh : pool;
+    const x = from[Math.floor(Math.random() * from.length)];
+    st.word = x.w; st.goal = Math.max(1, Math.min(8, x.goal | 0)); st.count = 0;
+    st.recent = st.recent.concat(x.w).slice(-6);
   }
 
-  $('swap').addEventListener('click', () => { pickWord(); save(); paintWord(); });
-  $('go').addEventListener('click', () => { st.playing = true; st.count = 0; save(); paintCount(false); show('playScr'); wake(); });
+  function show(id) { ['startScr', 'playScr', 'doneScr'].forEach(s => { $(s).hidden = s !== id; }); $('sessionPill').hidden = !st.active; }
+  function paintScore(bump) {
+    $('total').textContent = st.total;
+    $('session').textContent = st.points;
+    if (bump) __root.querySelectorAll('.pill').forEach(p => { p.classList.remove('bump'); void p.offsetWidth; p.classList.add('bump'); });
+  }
+  function paintWord(anim) {
+    $('word').textContent = st.word;
+    $('pic').innerHTML = MA.icon(st.word);
+    $('tap').setAttribute('aria-label', 'I heard ' + st.word.toLowerCase());
+    $('tap').classList.remove('won');
+    $('pips').innerHTML = Array.from({ length: st.goal }, () => '<i></i>').join('');
+    if (anim) { const t = $('tap'); t.classList.remove('swap'); void t.offsetWidth; t.classList.add('swap'); }
+    paintProgress();
+  }
+  function paintProgress() {
+    const p = Math.min(1, st.count / st.goal);
+    const prog = $('prog');
+    prog.style.strokeDasharray = C.toFixed(1);
+    prog.style.strokeDashoffset = (C * (1 - p)).toFixed(1);
+    [...$('pips').children].forEach((el, i) => el.classList.toggle('on', i < st.count));
+    $('goalText').innerHTML = `<b>${Math.min(st.count, st.goal)}</b> of ${st.goal}`;
+    $('tapHint').textContent = st.goal - st.count > 1 ? `${st.goal - st.count} more to go` : st.count < st.goal ? 'One more!' : 'You did it!';
+  }
+
+  $('go').addEventListener('click', () => {
+    st.active = true; st.meeting = MA.current().id; st.points = 0; st.done = [];
+    pick(); save(); paintScore(false); paintWord(true); show('playScr'); wake();
+  });
 
   let lastTap = 0;
   $('tap').addEventListener('pointerdown', e => {
     e.preventDefault();
+    if (busy) return;
     const now = performance.now();
     if (now - lastTap < 450) return; // a held or bouncing finger counts once
     lastTap = now;
-    st.count++; save(); paintCount(true);
-    const p = document.createElement('span'); p.className = 'pop'; p.textContent = '+1'; $('tap').appendChild(p);
+    st.count++; save(); paintProgress();
+    const p = document.createElement('span'); p.className = 'pop'; p.textContent = '+1'; $('ringwrap').appendChild(p);
     setTimeout(() => p.remove(), 750);
-    if (st.count % 10 === 0) stars(12);
+    if (st.count >= st.goal) win();
     wake();
   });
   $('tap').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $('tap').dispatchEvent(new PointerEvent('pointerdown')); } });
-  $('minus').addEventListener('click', () => { if (st.count > 0) { st.count--; save(); paintCount(false); } });
+  $('minus').addEventListener('click', () => { if (!busy && st.count > 0) { st.count--; save(); paintProgress(); } });
+
+  function win() {
+    busy = true;
+    st.points++; st.total++;
+    st.done = st.done.concat({ w: st.word, goal: st.goal });
+    save(); paintScore(true);
+    $('tap').classList.add('won');
+    const b = $('banner'); b.hidden = false; b.style.animation = 'none'; void b.offsetWidth; b.style.animation = '';
+    stars(16);
+    setTimeout(() => { b.hidden = true; pick(); save(); paintWord(true); busy = false; }, 1500);
+  }
 
   function finish() {
-    st.playing = false;
-    st.history = st.history.concat({ word: st.word, count: st.count }).slice(-10);
-    save();
-    const w = st.word;
-    $('doneText').textContent = st.count === 1 ? '1 time!' : `${st.count} times!`;
-    $('doneTip').textContent = st.count ? `You heard ${w} ${st.count === 1 ? 'one time' : st.count + ' times'}. Great listening!` : `Next time, listen extra closely for ${w}!`;
-    show('doneScr'); stars(24);
+    st.active = false; save();
+    const n = st.points;
+    $('doneText').textContent = n === 0 ? 'Good listening!' : n === 1 ? 'You earned 1 point!' : `You earned ${n} points!`;
+    $('found').innerHTML = st.done.map(d => `<li>${d.w} <b>${d.goal}x</b></li>`).join('');
+    $('doneTip').textContent = n ? `That makes ${st.total} points in all. Great listening!` : 'Next time, see how many words you can fill up!';
+    show('doneScr'); paintScore(false); if (n) stars(26);
   }
-  $('again').addEventListener('click', () => { pickWord(); save(); paintWord(); paintHistory(); show('startScr'); });
+  $('again').addEventListener('click', () => show('startScr'));
 
   function stars(n) {
     const s = $('stars');
-    for (let k = 0; k < n; k++) { const i = document.createElement('i'); i.style.left = Math.random() * 100 + '%'; i.style.animationDuration = (1.8 + Math.random() * 1.6) + 's'; i.style.animationDelay = Math.random() * .5 + 's'; s.appendChild(i); setTimeout(() => i.remove(), 4200); }
+    for (let k = 0; k < n; k++) { const i = document.createElement('i'); i.style.left = Math.random() * 100 + '%'; i.style.animationDuration = (1.8 + Math.random() * 1.6) + 's'; i.style.animationDelay = Math.random() * .4 + 's'; s.appendChild(i); setTimeout(() => i.remove(), 4000); }
   }
 
-  (function holdButton(btn, action) {
+  function holdButton(btn, action, ms) {
     const fill = btn.querySelector('.fill'); let t0 = 0, raf = 0;
-    function tick(t) { const p = Math.min(1, (t - t0) / 1200); fill.style.transform = `scaleX(${p})`; if (p >= 1) { stop(); action(); return; } raf = requestAnimationFrame(tick); }
+    function tick(t) { const p = Math.min(1, (t - t0) / ms); fill.style.transform = `scaleX(${p})`; if (p >= 1) { stop(); action(); return; } raf = requestAnimationFrame(tick); }
     function go(e) { if ((e && e.repeat) || raf) return; t0 = performance.now(); raf = requestAnimationFrame(tick); }
     function stop() { cancelAnimationFrame(raf); raf = 0; fill.style.transform = 'scaleX(0)'; }
     btn.addEventListener('pointerdown', e => { e.preventDefault(); try { btn.setPointerCapture(e.pointerId); } catch (x) {} go(); });
@@ -1044,19 +1090,23 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     btn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(e); } });
     btn.addEventListener('keyup', e => { if (e.key === 'Enter' || e.key === ' ') stop(); });
     btn.addEventListener('contextmenu', e => e.preventDefault());
-  })($('finish'), finish);
+  }
+  holdButton($('skip'), () => { if (busy) return; pick(); save(); paintWord(true); }, 900);
+  holdButton($('finish'), finish, 1200);
 
   let lock = null;
   async function wake() {
     if (lock || !('wakeLock' in navigator)) return;
     try { lock = await navigator.wakeLock.request('screen'); lock.addEventListener('release', () => { lock = null; }); } catch (e) {}
   }
-  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && st.playing) wake(); });
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && st.active) wake(); });
 
-  MA.on(() => { loadWords(); if (!st.playing) { pickWord(); save(); paintWord(); } });
-  if (!st.word || !WORDS.some(w => w[0] === st.word)) pickWord();
-  save(); paintWord(); paintHistory(); paintCount(false);
-  show(st.playing ? 'playScr' : 'startScr');
+  // a different meeting picked on the home page starts a fresh word list
+  MA.on(m => { if (st.active && st.meeting !== m.id) { st.meeting = m.id; pick(); save(); paintWord(true); } });
+
+  paintScore(false);
+  if (st.active && st.word) { paintWord(false); show('playScr'); }
+  else show('startScr');
 })();
 /* words */
 (function () {

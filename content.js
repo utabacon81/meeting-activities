@@ -8,13 +8,16 @@ window.MEETING_CONTENT = {
   // Words heard in nearly every meeting. Used on every bingo card and for Count the Word.
   core: ['JEHOVAH', 'JESUS', 'BIBLE', 'SCRIPTURE', 'PRAY', 'LOVE', 'HEART', 'KINGDOM', 'HAPPY'],
   common: ['JEHOVAH', 'JESUS', 'BIBLE', 'GOD', 'KINGDOM', 'LOVE', 'PRAYER', 'SCRIPTURE', 'BROTHERS', 'FATHER', 'PARADISE', 'HEART', 'CHRIST', 'FAITH'],
+  // Count the Word: how many times a word is likely to be heard in one talk. Words not listed default to 2.
+  commonGoals: { JEHOVAH: 5, JESUS: 4, GOD: 3, BIBLE: 3, LOVE: 3, KINGDOM: 2, PRAYER: 2, SCRIPTURE: 2, BROTHERS: 2, FATHER: 2, PARADISE: 2, HEART: 2, CHRIST: 2, FAITH: 2 },
   general: ['SONG', 'FAMILY', 'FRIENDS', 'KING', 'PARADISE', 'WORLD', 'CHILD', 'SUN', 'STAR', 'TALK', 'HELP', 'FATHER'],
   meetings: [
     {
       id: 'mw-2026-10-19', kind: 'midweek', label: 'Midweek', dates: 'Oct 19-25',
       title: 'Life and Ministry Meeting', reading: 'Jeremiah 45-46', songs: [21, 117, 87],
       words: ['HOPE', 'BARUCH', 'JEREMIAH', 'EGYPT', 'SNAKE', 'SHARE', 'KIND', 'GIVE', 'HAPPY', 'DOOR', 'SMILE', 'JESUS', 'FATHER', 'TREE', 'KING'],
-      count: ['SHARE', 'HOPE'],
+      count: ['SHARE', 'HOPE', 'BARUCH', 'EGYPT'],
+      goals: { SHARE: 3, HOPE: 3, BARUCH: 2, EGYPT: 2 },
       parts: [
         { section: 'Treasures From God’s Word', title: 'Hope Is Key to Contentment', time: '10 min', scriptures: ['Jeremiah 45:3, 5'],
           kid: 'Baruch learns to be happy', words: ['HOPE', 'HAPPY', 'BARUCH', 'JEREMIAH', 'SCROLL', 'PARADISE', 'LIFE', 'PROMISE'] },
@@ -36,7 +39,8 @@ window.MEETING_CONTENT = {
       id: 'we-2026-10-25', kind: 'weekend', label: 'Weekend', dates: 'Oct 24-25',
       title: 'Public Talk and Watchtower Study', reading: '', songs: [106, 154],
       words: ['PAUL', 'LETTER', 'LOVE', 'FORGIVE', 'FRIEND', 'KIND', 'PEACE', 'SORRY', 'THANK', 'WELCOME', 'HOME', 'BROTHER', 'HELP', 'CHAIN'],
-      count: ['LOVE', 'PAUL'],
+      count: ['LOVE', 'PAUL', 'FORGIVE', 'LETTER', 'ONESIMUS'],
+      goals: { LOVE: 4, PAUL: 4, FORGIVE: 2, LETTER: 2, ONESIMUS: 2 },
       parts: [
         { section: 'Public Talk', title: 'Public Bible Talk', time: '30 min', scriptures: [],
           kid: 'Listen to the speaker', words: ['BIBLE', 'KINGDOM', 'PARADISE', 'WORLD', 'FAMILY', 'LISTEN', 'FUTURE', 'PEACE'] },
@@ -50,6 +54,7 @@ window.MEETING_CONTENT = {
       title: '“Happy Is the One Trusting in Jehovah”', reading: 'Proverbs 16:20', songs: [31, 57, 29, 8, 135, 54],
       words: ['TRUST', 'BARAK', 'DANIEL', 'LION', 'FIRE', 'KING', 'BAPTISM', 'WATER', 'HAPPY', 'SONG', 'WISDOM', 'FAMILY'],
       count: ['TRUST', 'HAPPY'],
+      goals: { TRUST: 4, HAPPY: 3 },
       parts: [
         { section: 'Morning', title: 'Why “Trust in Jehovah With All Your Heart”?', scriptures: ['Proverbs 3:5'], kid: 'Trust Jehovah with all your heart', words: ['HEART', 'WISDOM', 'FATHER', 'FRIENDS', 'HELP', 'PATH', 'FAMILY', 'STRONG'] },
         { section: 'Symposium', title: 'Imitate Those Who Trusted in Jehovah: Barak', scriptures: ['Judges 4, 5'], kid: 'Barak and the big storm', words: ['MOUNTAIN', 'STORM', 'WATER', 'SWORD', 'CHARIOT', 'WOMAN', 'STAR', 'STRONG'] },
