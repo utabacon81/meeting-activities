@@ -445,10 +445,15 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 #game-trace .seg { display: flex; border: 2px solid var(--edge); border-radius: 12px; overflow: hidden; }
 #game-trace .seg button { border: 0; background: var(--panel); color: var(--muted); font-family: var(--display); font-weight: 600; font-size: 15px; padding: 0 14px; min-height: 44px; cursor: pointer; }
 #game-trace .seg button[aria-pressed="true"] { background: var(--accent); color: #ffffff; }
-#game-trace .namebox { display: flex; gap: 6px; flex: 1 1 220px; }
+#game-trace .namebox { display: flex; gap: 6px; flex: 1 1 320px; min-width: 0; max-width: 100%; }
 #game-trace .namebox[hidden] { display: none; }
 #game-trace .namebox label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-#game-trace .namebox input { flex: 1; min-width: 0; min-height: 44px; border-radius: 12px; border: 2px solid var(--edge); background: var(--panel); color: var(--ink); font-family: var(--display); font-weight: 600; font-size: 18px; padding: 0 12px; text-transform: uppercase; }
+#game-trace .namebox .field { position: relative; flex: 1; min-width: 0; display: flex; }
+#game-trace .namebox .clear { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); cursor: pointer; display: grid; place-items: center; padding: 0; }
+#game-trace .namebox .clear[hidden] { display: none; }
+#game-trace .namebox .clear svg { width: 24px; height: 24px; }
+#game-trace .namebox .clear:focus-visible { outline: 3px solid var(--sel); outline-offset: 0; }
+#game-trace .namebox input { flex: 1; min-width: 0; width: 100%; min-height: 44px; border-radius: 12px; border: 2px solid var(--edge); background: var(--panel); color: var(--ink); font-family: var(--display); font-weight: 600; font-size: 18px; padding: 0 46px 0 12px; text-transform: uppercase; }
 #game-trace .go { border: 0; border-radius: 12px; background: var(--accent); color: #ffffff; font-family: var(--display); font-weight: 600; font-size: 16px; padding: 0 16px; min-height: 44px; cursor: pointer; }
 #game-trace .word { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
 #game-trace .word svg.pic { width: 44px; height: 44px; color: var(--accent); flex: none; }
@@ -825,7 +830,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     </div>
     <form class="namebox" id="tw-namebox" hidden>
       <label for="tw-nameInput">Word to trace</label>
-      <input id="tw-nameInput" maxlength="12" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Type a word">
+      <span class="field"><input id="tw-nameInput" maxlength="12" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Type a word">
+      <button type="button" class="clear" id="tw-clearBtn" aria-label="Clear the box" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor" opacity=".18"/><path d="M8 8l8 8M16 8l-8 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button></span>
       <button type="submit" class="go">Trace it</button>
     </form>
   </div>
@@ -2080,15 +2086,18 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     st.set = name; save();
     __root.querySelectorAll('.seg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.set === name));
     $('namebox').hidden = name !== 'name';
-    if (name === 'name') { $('nameInput').value = st.name || ''; if (!st.name) { $('nameInput').focus(); return; } }
+    if (name === 'name') { $('nameInput').value = st.name || ''; showClear(); if (!st.name) { $('nameInput').focus(); return; } }
     startWord(pickWord());
   }
   __root.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => setSet(b.dataset.set)));
+  function showClear() { $('clearBtn').hidden = !$('nameInput').value; }
+  $('nameInput').addEventListener('input', showClear);
+  $('clearBtn').addEventListener('click', () => { $('nameInput').value = ''; showClear(); $('nameInput').focus(); });
   $('namebox').addEventListener('submit', e => {
     e.preventDefault();
     const v = ($('nameInput').value || '').toUpperCase().replace(/[^A-Z]/g, '').slice(0, 12);
     if (!v) { $('nameInput').focus(); return; }
-    st.name = v; save(); $('nameInput').value = v; $('nameInput').blur();
+    st.name = v; save(); $('nameInput').value = v; showClear(); $('nameInput').blur();
     startWord(v);
   });
 
