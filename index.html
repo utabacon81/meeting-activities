@@ -619,6 +619,159 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 #game-spot .found i { width: 16px; height: 16px; border-width: 2px; }}
 @media (prefers-reduced-motion: reduce) {#game-spot .ring.hint, #game-spot .miss { animation: none; }
 #game-spot .stars { display: none; }}
+#game-maze {
+  background: var(--bg); color: var(--ink); font-family: var(--display);
+  display: flex; flex-direction: column; gap: 10px; overflow: hidden; box-sizing: border-box;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 10px;
+  -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none;
+}
+#game-maze .wrap { width: min(100%, 900px); margin-inline: auto; display: flex; flex-direction: column; gap: 10px; flex: 1; min-height: 0; }
+#game-maze header { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+#game-maze h1 { margin: 0; font-weight: 700; font-size: clamp(22px, 5.5vw, 30px); }
+#game-maze .score { font-weight: 600; color: var(--muted); font-size: 17px; font-variant-numeric: tabular-nums; }
+#game-maze .level { display: flex; border: 2px solid var(--edge); border-radius: 12px; overflow: hidden; }
+#game-maze .level button { border: 0; background: var(--panel); color: var(--muted); font-family: var(--display); font-weight: 600; font-size: 15px; padding: 0 14px; min-height: 42px; cursor: pointer; }
+#game-maze .level button[aria-pressed="true"] { background: var(--accent); color: #ffffff; }
+#game-maze .goal { display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600; font-size: clamp(17px, 4vw, 22px); text-align: center; text-wrap: balance; }
+#game-maze .goal svg { width: 40px; height: 40px; flex: none; color: var(--accent); }
+#game-maze main { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
+#game-maze svg.maze { display: block; background: var(--panel); border: 2px solid var(--edge); border-radius: 18px; touch-action: none; }
+#game-maze .walls { stroke: var(--ink); stroke-linecap: round; fill: none; }
+#game-maze .trail { stroke: var(--sel); stroke-linecap: round; stroke-linejoin: round; fill: none; }
+#game-maze .hint { stroke: var(--win); stroke-linecap: round; stroke-linejoin: round; fill: none; stroke-dasharray: 0.1 2.2; opacity: .9; }
+#game-maze .startpad { fill: var(--t1); }
+#game-maze .endpad { fill: var(--t4); }
+#game-maze .hero, #game-maze .prize { color: var(--accent); }
+#game-maze .prize { color: var(--win); }
+#game-maze footer { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+#game-maze .btn { border: 2px solid var(--edge); background: var(--panel); color: var(--ink); border-radius: 999px; min-height: 46px; padding: 0 18px; font-family: var(--display); font-weight: 600; font-size: 16px; cursor: pointer; }
+#game-maze .hold { position: relative; overflow: hidden; border: 0; border-radius: 999px; background: var(--bar); color: var(--muted); font-family: var(--display); font-weight: 600; font-size: 16px; padding: 0 18px; min-height: 46px; cursor: pointer; touch-action: none; }
+#game-maze .hold .fill { position: absolute; inset: 0; background: var(--sel); transform-origin: left; transform: scaleX(0); opacity: .55; }
+#game-maze .hold .lbl { position: relative; }
+#game-maze .level button:focus-visible, #game-maze .btn:focus-visible, #game-maze .hold:focus-visible, #game-maze .done button:focus-visible, #game-maze svg.maze:focus-visible { outline: 3px solid var(--sel); outline-offset: 2px; }
+#game-maze .done { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; background: color-mix(in srgb, var(--bg) 86%, transparent);
+  padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+#game-maze .done[hidden] { display: none; }
+#game-maze .done > div { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+#game-maze .done svg { width: 110px; height: 110px; color: var(--win); }
+#game-maze .done strong { font-weight: 700; font-size: clamp(40px, 11vw, 72px); color: var(--win); line-height: 1.05; animation: mz-pop .45s cubic-bezier(.3,1.6,.5,1); }
+#game-maze .done p { margin: 0; font-size: 19px; font-weight: 500; max-width: 30ch; }
+#game-maze .done button { border: 0; border-radius: 999px; background: var(--accent); color: #ffffff; font-family: var(--display); font-weight: 600; font-size: 20px; padding: 14px 28px; min-height: 52px; cursor: pointer; }
+@keyframes mz-pop { from { transform: scale(.3); } to { transform: scale(1); } }
+#game-maze .stars { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 21; }
+#game-maze .stars i { position: absolute; top: -40px; width: 26px; height: 26px; background: var(--sel);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); animation: mz-fall linear forwards; }
+@keyframes mz-fall { to { transform: translateY(110vh) rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {#game-maze .done strong { animation: none; }
+#game-maze .stars { display: none; }}
+#game-pop {
+  background: var(--bg); color: var(--ink); font-family: var(--display);
+  display: flex; flex-direction: column; gap: 10px; overflow: hidden; box-sizing: border-box;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 10px;
+  -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none;
+}
+#game-pop .wrap { width: min(100%, 900px); margin-inline: auto; display: flex; flex-direction: column; gap: 10px; flex: 1; min-height: 0; }
+#game-pop header { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+#game-pop h1 { margin: 0; font-weight: 700; font-size: clamp(22px, 5.5vw, 30px); }
+#game-pop .score { font-weight: 600; color: var(--muted); font-size: 17px; font-variant-numeric: tabular-nums; }
+#game-pop .level { display: flex; border: 2px solid var(--edge); border-radius: 12px; overflow: hidden; }
+#game-pop .level button { border: 0; background: var(--panel); color: var(--muted); font-family: var(--display); font-weight: 600; font-size: 15px; padding: 0 14px; min-height: 42px; cursor: pointer; }
+#game-pop .level button[aria-pressed="true"] { background: var(--accent); color: #ffffff; }
+#game-pop .word { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+#game-pop .word svg { width: 48px; height: 48px; color: var(--accent); flex: none; }
+#game-pop .slots { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; }
+#game-pop .slots span { min-width: 40px; height: 52px; display: grid; place-items: center; border-radius: 12px; font-weight: 700; font-size: 32px; padding-inline: 4px; box-sizing: border-box;
+  background: var(--panel); border: 2px dashed var(--edge); color: color-mix(in srgb, var(--muted) 45%, transparent); }
+#game-pop .slots span.now { border: 3px solid var(--sel); color: var(--muted); }
+#game-pop .slots span.got { background: var(--win); border: 2px solid var(--win); color: #ffffff; animation: pl-pop .3s cubic-bezier(.3,1.6,.5,1); }
+#game-pop main { flex: 1; min-height: 0; position: relative; overflow: hidden; border-radius: 22px; border: 2px solid var(--edge);
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--t2) 80%, var(--panel)), var(--panel)); touch-action: manipulation; }
+#game-pop .bubble { position: absolute; left: 0; top: 0; border-radius: 50%; border: 3px solid rgba(255,255,255,.85); padding: 0; margin: 0; cursor: pointer;
+  display: grid; place-items: center; font-family: var(--display); font-weight: 700; color: var(--ink); touch-action: manipulation;
+  box-shadow: inset -6px -8px 0 rgba(0,0,0,.06), inset 8px 8px 0 rgba(255,255,255,.55), 0 2px 6px rgba(0,0,0,.12); will-change: transform; }
+#game-pop .bubble.nope { animation: pl-wobble .35s ease; }
+#game-pop .bubble.popped { pointer-events: none; animation: pl-burst .3s ease forwards; }
+@keyframes pl-wobble { 25% { translate: -6px 0; } 75% { translate: 6px 0; } }
+@keyframes pl-burst { to { opacity: 0; scale: 1.6; } }
+#game-pop .paused { position: absolute; inset: 0; z-index: 5; display: grid; place-items: center; background: color-mix(in srgb, var(--panel) 70%, transparent); }
+#game-pop .paused[hidden] { display: none; }
+#game-pop .paused button { border: 0; border-radius: 999px; background: var(--accent); color: #ffffff; font-family: var(--display); font-weight: 600; font-size: 22px; padding: 16px 32px; min-height: 56px; cursor: pointer; }
+#game-pop footer { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+#game-pop .hold { position: relative; overflow: hidden; border: 0; border-radius: 999px; background: var(--bar); color: var(--muted); font-family: var(--display); font-weight: 600; font-size: 16px; padding: 0 18px; min-height: 46px; cursor: pointer; touch-action: none; }
+#game-pop .hold .fill { position: absolute; inset: 0; background: var(--sel); transform-origin: left; transform: scaleX(0); opacity: .55; }
+#game-pop .hold .lbl { position: relative; }
+#game-pop .level button:focus-visible, #game-pop .hold:focus-visible, #game-pop .done button:focus-visible, #game-pop .bubble:focus-visible, #game-pop .paused button:focus-visible { outline: 3px solid var(--sel); outline-offset: 2px; }
+#game-pop .done { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; background: color-mix(in srgb, var(--bg) 86%, transparent);
+  padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+#game-pop .done[hidden] { display: none; }
+#game-pop .done > div { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+#game-pop .done svg { width: 110px; height: 110px; color: var(--accent); }
+#game-pop .done strong { font-weight: 700; font-size: clamp(40px, 11vw, 76px); color: var(--win); line-height: 1.05; animation: pl-pop .45s cubic-bezier(.3,1.6,.5,1); overflow-wrap: anywhere; }
+#game-pop .done p { margin: 0; font-size: 19px; font-weight: 500; }
+#game-pop .done button { border: 0; border-radius: 999px; background: var(--accent); color: #ffffff; font-family: var(--display); font-weight: 600; font-size: 20px; padding: 14px 28px; min-height: 52px; cursor: pointer; }
+@keyframes pl-pop { from { transform: scale(.3); } to { transform: scale(1); } }
+#game-pop .stars { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 21; }
+#game-pop .stars i { position: absolute; top: -40px; width: 26px; height: 26px; background: var(--sel);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); animation: pl-fall linear forwards; }
+@keyframes pl-fall { to { transform: translateY(110vh) rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {#game-pop .done strong, #game-pop .slots span.got, #game-pop .bubble.nope { animation: none; }
+#game-pop .stars { display: none; }}
+#game-shapes {
+  background: var(--bg); color: var(--ink); font-family: var(--display);
+  display: flex; flex-direction: column; gap: 10px; overflow: hidden; box-sizing: border-box;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 10px;
+  -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none;
+}
+#game-shapes .wrap { width: min(100%, 960px); margin-inline: auto; display: flex; flex-direction: column; gap: 10px; flex: 1; min-height: 0; }
+#game-shapes header { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+#game-shapes h1 { margin: 0; font-weight: 700; font-size: clamp(22px, 5.5vw, 30px); }
+#game-shapes .score { font-weight: 600; color: var(--muted); font-size: 17px; font-variant-numeric: tabular-nums; }
+#game-shapes .level { display: flex; border: 2px solid var(--edge); border-radius: 12px; overflow: hidden; }
+#game-shapes .level button { border: 0; background: var(--panel); color: var(--muted); font-family: var(--display); font-weight: 600; font-size: 15px; padding: 0 14px; min-height: 42px; cursor: pointer; }
+#game-shapes .level button[aria-pressed="true"] { background: var(--accent); color: #ffffff; }
+#game-shapes .goal { text-align: center; font-weight: 600; font-size: clamp(18px, 4.2vw, 24px); margin: 0; }
+#game-shapes .goal b { color: var(--accent); }
+#game-shapes main { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
+#game-shapes svg.play { display: block; touch-action: none; overflow: visible; }
+#game-shapes .board { fill: var(--panel); stroke: var(--edge); stroke-width: .6; }
+#game-shapes .trayBox { fill: var(--bar); }
+#game-shapes .slot { fill: var(--guide); }
+#game-shapes .slotline { fill: none; stroke: var(--dash); stroke-width: .7; stroke-dasharray: 2 1.6; stroke-linejoin: round; }
+#game-shapes .piece { cursor: grab; transition: transform .25s ease; }
+#game-shapes .piece.held { cursor: grabbing; transition: none; }
+#game-shapes .piece .shape { stroke: rgba(0,0,0,.28); stroke-width: .6; stroke-linejoin: round; }
+#game-shapes .piece.placed { cursor: default; pointer-events: none; }
+#game-shapes .piece.placed .shape { stroke: rgba(0,0,0,.18); }
+#game-shapes .piece:focus-visible { outline: none; }
+#game-shapes .piece:focus-visible .shape { stroke: var(--sel); stroke-width: 1.6; }
+#game-shapes .label { font-family: var(--display); font-weight: 700; fill: var(--win); text-anchor: middle; }
+#game-shapes footer { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+#game-shapes .hold { position: relative; overflow: hidden; border: 0; border-radius: 999px; background: var(--bar); color: var(--muted); font-family: var(--display); font-weight: 600; font-size: 16px; padding: 0 18px; min-height: 46px; cursor: pointer; touch-action: none; }
+#game-shapes .hold .fill { position: absolute; inset: 0; background: var(--sel); transform-origin: left; transform: scaleX(0); opacity: .55; }
+#game-shapes .hold .lbl { position: relative; }
+#game-shapes .level button:focus-visible, #game-shapes .hold:focus-visible, #game-shapes .done button:focus-visible { outline: 3px solid var(--sel); outline-offset: 2px; }
+#game-shapes .done { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; background: color-mix(in srgb, var(--bg) 80%, transparent);
+  padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+#game-shapes .done[hidden] { display: none; }
+#game-shapes .done > div { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+#game-shapes .done svg { width: min(260px, 60vw); height: auto; }
+#game-shapes .done strong { font-weight: 700; font-size: clamp(36px, 10vw, 64px); color: var(--win); line-height: 1.05; animation: sb-pop .45s cubic-bezier(.3,1.6,.5,1); }
+#game-shapes .done p { margin: 0; font-size: 19px; font-weight: 500; }
+#game-shapes .done button { border: 0; border-radius: 999px; background: var(--accent); color: #ffffff; font-family: var(--display); font-weight: 600; font-size: 20px; padding: 14px 28px; min-height: 52px; cursor: pointer; }
+@keyframes sb-pop { from { transform: scale(.3); } to { transform: scale(1); } }
+#game-shapes .stars { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 21; }
+#game-shapes .stars i { position: absolute; top: -40px; width: 26px; height: 26px; background: var(--sel);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); animation: sb-fall linear forwards; }
+@keyframes sb-fall { to { transform: translateY(110vh) rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {#game-shapes .piece { transition: none; }
+#game-shapes .done strong { animation: none; }
+#game-shapes .stars { display: none; }}
 #game-notes {
   background: var(--bg); color: var(--ink); font-family: var(--text);
   display: flex; flex-direction: column; overflow-y: auto; box-sizing: border-box;
@@ -661,13 +814,13 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 <header class="appbar">
   <button type="button" class="brand" data-go="home" aria-label="Home"><svg viewBox="0 0 64 64" aria-hidden="true" class="logo"><path d="M32 22c-7-5-18-5-26-1v34c8-4 19-4 26 1 7-5 18-5 26-1V21c-8-4-19-4-26 1zM32 22v34" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><path d="M32 3l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" fill="var(--sel)"/></svg><b>Meeting Activities</b></button>
   <button type="button" class="meetpill" data-go="home" id="meetPill" aria-label="Change meeting"></button>
-  <nav class="nav" aria-label="Games"><button type="button" class="navbtn" data-go="bingo" aria-label="Bingo"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="48" height="48" rx="8"/><path d="M24 8v48M40 8v48M8 24h48M8 40h48"/><circle cx="32" cy="32" r="5" fill="currentColor"/></svg><span>Bingo</span></button><button type="button" class="navbtn" data-go="count" aria-label="Count the Word"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 46c-6-4-10-11-10-19a20 20 0 0 1 40 0c0 9-6 12-9 16-3 3-3 6-3 9a8 8 0 0 1-14 4"/><path d="M24 27a8 8 0 0 1 16 0c0 5-5 6-5 10"/></svg><span>Count the Word</span></button><button type="button" class="navbtn" data-go="words" aria-label="Word Search"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="27" cy="27" r="16"/><path d="M39 39l15 15"/><path d="M20 27h14"/></svg><span>Word Search</span></button><button type="button" class="navbtn" data-go="memory" aria-label="Memory Match"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="14" width="22" height="34" rx="4"/><rect x="34" y="14" width="22" height="34" rx="4"/><path d="M14 31l4 4 7-8"/></svg><span>Memory Match</span></button><button type="button" class="navbtn" data-go="dots" aria-label="Dot to Dot"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="48" r="3" fill="currentColor"/><circle cx="24" cy="18" r="3" fill="currentColor"/><circle cx="40" cy="38" r="3" fill="currentColor"/><circle cx="54" cy="12" r="3" fill="currentColor"/><path d="M12 48L24 18l16 20L54 12"/></svg><span>Dot to Dot</span></button><button type="button" class="navbtn" data-go="trace" aria-label="Trace the Word"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 54L24 12l14 42M15 40h18"/><path d="M44 50l10-30 4 2-10 30-5 3z"/></svg><span>Trace the Word</span></button><button type="button" class="navbtn" data-go="color" aria-label="Coloring"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6C17 6 6 17 6 31c0 13 10 25 22 25 4 0 5-3 4-6s1-6 5-6h7c7 0 14-6 14-14C58 17 46 6 32 6z"/><circle cx="20" cy="26" r="3.5" fill="currentColor"/><circle cx="30" cy="17" r="3.5" fill="currentColor"/><circle cx="43" cy="20" r="3.5" fill="currentColor"/></svg><span>Coloring</span></button><button type="button" class="navbtn" data-go="puzzle" aria-label="Puzzles"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 18h12a6 6 0 1 1 12 0h12v12a6 6 0 1 1 0 12v12H34a6 6 0 1 0-12 0H10V42a6 6 0 1 0 0-12z"/></svg><span>Puzzles</span></button><button type="button" class="navbtn" data-go="spot" aria-label="Spot the Difference"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="14" width="24" height="30" rx="4"/><rect x="36" y="14" width="24" height="30" rx="4"/><circle cx="48" cy="29" r="6"/><path d="M16 24v10M48 50v6"/></svg><span>Spot the Difference</span></button><button type="button" class="navbtn" data-go="notes" aria-label="Meeting Notes"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="6" width="40" height="52" rx="5"/><path d="M20 20h24M20 30h24M20 40h16"/></svg><span>Meeting Notes</span></button></nav>
+  <nav class="nav" aria-label="Games"><button type="button" class="navbtn" data-go="bingo" aria-label="Bingo"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="48" height="48" rx="8"/><path d="M24 8v48M40 8v48M8 24h48M8 40h48"/><circle cx="32" cy="32" r="5" fill="currentColor"/></svg><span>Bingo</span></button><button type="button" class="navbtn" data-go="count" aria-label="Count the Word"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 46c-6-4-10-11-10-19a20 20 0 0 1 40 0c0 9-6 12-9 16-3 3-3 6-3 9a8 8 0 0 1-14 4"/><path d="M24 27a8 8 0 0 1 16 0c0 5-5 6-5 10"/></svg><span>Count the Word</span></button><button type="button" class="navbtn" data-go="words" aria-label="Word Search"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="27" cy="27" r="16"/><path d="M39 39l15 15"/><path d="M20 27h14"/></svg><span>Word Search</span></button><button type="button" class="navbtn" data-go="memory" aria-label="Memory Match"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="14" width="22" height="34" rx="4"/><rect x="34" y="14" width="22" height="34" rx="4"/><path d="M14 31l4 4 7-8"/></svg><span>Memory Match</span></button><button type="button" class="navbtn" data-go="dots" aria-label="Dot to Dot"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="48" r="3" fill="currentColor"/><circle cx="24" cy="18" r="3" fill="currentColor"/><circle cx="40" cy="38" r="3" fill="currentColor"/><circle cx="54" cy="12" r="3" fill="currentColor"/><path d="M12 48L24 18l16 20L54 12"/></svg><span>Dot to Dot</span></button><button type="button" class="navbtn" data-go="trace" aria-label="Trace the Word"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 54L24 12l14 42M15 40h18"/><path d="M44 50l10-30 4 2-10 30-5 3z"/></svg><span>Trace the Word</span></button><button type="button" class="navbtn" data-go="color" aria-label="Coloring"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6C17 6 6 17 6 31c0 13 10 25 22 25 4 0 5-3 4-6s1-6 5-6h7c7 0 14-6 14-14C58 17 46 6 32 6z"/><circle cx="20" cy="26" r="3.5" fill="currentColor"/><circle cx="30" cy="17" r="3.5" fill="currentColor"/><circle cx="43" cy="20" r="3.5" fill="currentColor"/></svg><span>Coloring</span></button><button type="button" class="navbtn" data-go="puzzle" aria-label="Puzzles"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 18h12a6 6 0 1 1 12 0h12v12a6 6 0 1 1 0 12v12H34a6 6 0 1 0-12 0H10V42a6 6 0 1 0 0-12z"/></svg><span>Puzzles</span></button><button type="button" class="navbtn" data-go="spot" aria-label="Spot the Difference"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="14" width="24" height="30" rx="4"/><rect x="36" y="14" width="24" height="30" rx="4"/><circle cx="48" cy="29" r="6"/><path d="M16 24v10M48 50v6"/></svg><span>Spot the Difference</span></button><button type="button" class="navbtn" data-go="maze" aria-label="Mazes"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="48" height="48" rx="6"/><path d="M20 8v24h12M32 20h12v24M8 44h24v12M44 56V44"/></svg><span>Mazes</span></button><button type="button" class="navbtn" data-go="pop" aria-label="Pop the Letters"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="38" r="17"/><circle cx="46" cy="17" r="10"/><path d="M17 47l7-18 7 18M19.5 41h9"/></svg><span>Pop the Letters</span></button><button type="button" class="navbtn" data-go="shapes" aria-label="Shape Builder"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 5l14 23H18z"/><rect x="7" y="35" width="22" height="22" rx="2"/><circle cx="45" cy="46" r="11"/></svg><span>Shape Builder</span></button><button type="button" class="navbtn" data-go="notes" aria-label="Meeting Notes"><svg viewBox="0 0 64 64" aria-hidden="true" class="gi" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="6" width="40" height="52" rx="5"/><path d="M20 20h24M20 30h24M20 40h16"/></svg><span>Meeting Notes</span></button></nav>
 </header>
 <div class="view">
 <section id="home">
   <div class="hello"><svg viewBox="0 0 64 64" aria-hidden="true" class="logo"><path d="M32 22c-7-5-18-5-26-1v34c8-4 19-4 26 1 7-5 18-5 26-1V21c-8-4-19-4-26 1zM32 22v34" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><path d="M32 3l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" fill="var(--sel)"/></svg><h1>Meeting Activities</h1><p>Which meeting are you at?</p></div>
   <div class="meetsel" id="meetSel" role="group" aria-label="Which meeting"></div>
-  <div class="choices"><button type="button" class="pickgame" data-go="bingo" data-tone="0"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="48" height="48" rx="8"/><path d="M24 8v48M40 8v48M8 24h48M8 40h48"/><circle cx="32" cy="32" r="5" fill="currentColor"/></svg><strong>Bingo</strong><small>Listen and tap</small></button><button type="button" class="pickgame" data-go="count" data-tone="1"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 46c-6-4-10-11-10-19a20 20 0 0 1 40 0c0 9-6 12-9 16-3 3-3 6-3 9a8 8 0 0 1-14 4"/><path d="M24 27a8 8 0 0 1 16 0c0 5-5 6-5 10"/></svg><strong>Count the Word</strong><small>Tap each time you hear it</small></button><button type="button" class="pickgame" data-go="words" data-tone="2"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="27" cy="27" r="16"/><path d="M39 39l15 15"/><path d="M20 27h14"/></svg><strong>Word Search</strong><small>Find the hidden words</small></button><button type="button" class="pickgame" data-go="memory" data-tone="3"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="14" width="22" height="34" rx="4"/><rect x="34" y="14" width="22" height="34" rx="4"/><path d="M14 31l4 4 7-8"/></svg><strong>Memory Match</strong><small>Flip and find pairs</small></button><button type="button" class="pickgame" data-go="dots" data-tone="4"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="48" r="3" fill="currentColor"/><circle cx="24" cy="18" r="3" fill="currentColor"/><circle cx="40" cy="38" r="3" fill="currentColor"/><circle cx="54" cy="12" r="3" fill="currentColor"/><path d="M12 48L24 18l16 20L54 12"/></svg><strong>Dot to Dot</strong><small>Connect the numbers</small></button><button type="button" class="pickgame" data-go="trace" data-tone="5"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 54L24 12l14 42M15 40h18"/><path d="M44 50l10-30 4 2-10 30-5 3z"/></svg><strong>Trace the Word</strong><small>Trace Bible words</small></button><button type="button" class="pickgame" data-go="color" data-tone="6"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6C17 6 6 17 6 31c0 13 10 25 22 25 4 0 5-3 4-6s1-6 5-6h7c7 0 14-6 14-14C58 17 46 6 32 6z"/><circle cx="20" cy="26" r="3.5" fill="currentColor"/><circle cx="30" cy="17" r="3.5" fill="currentColor"/><circle cx="43" cy="20" r="3.5" fill="currentColor"/></svg><strong>Coloring</strong><small>Color Bible pictures</small></button><button type="button" class="pickgame" data-go="puzzle" data-tone="7"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 18h12a6 6 0 1 1 12 0h12v12a6 6 0 1 1 0 12v12H34a6 6 0 1 0-12 0H10V42a6 6 0 1 0 0-12z"/></svg><strong>Puzzles</strong><small>Put the picture together</small></button><button type="button" class="pickgame" data-go="spot" data-tone="8"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="14" width="24" height="30" rx="4"/><rect x="36" y="14" width="24" height="30" rx="4"/><circle cx="48" cy="29" r="6"/><path d="M16 24v10M48 50v6"/></svg><strong>Spot the Difference</strong><small>Find what changed</small></button></div>
+  <div class="choices"><button type="button" class="pickgame" data-go="bingo" data-tone="0"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="48" height="48" rx="8"/><path d="M24 8v48M40 8v48M8 24h48M8 40h48"/><circle cx="32" cy="32" r="5" fill="currentColor"/></svg><strong>Bingo</strong><small>Listen and tap</small></button><button type="button" class="pickgame" data-go="count" data-tone="1"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 46c-6-4-10-11-10-19a20 20 0 0 1 40 0c0 9-6 12-9 16-3 3-3 6-3 9a8 8 0 0 1-14 4"/><path d="M24 27a8 8 0 0 1 16 0c0 5-5 6-5 10"/></svg><strong>Count the Word</strong><small>Tap each time you hear it</small></button><button type="button" class="pickgame" data-go="words" data-tone="2"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="27" cy="27" r="16"/><path d="M39 39l15 15"/><path d="M20 27h14"/></svg><strong>Word Search</strong><small>Find the hidden words</small></button><button type="button" class="pickgame" data-go="memory" data-tone="3"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="14" width="22" height="34" rx="4"/><rect x="34" y="14" width="22" height="34" rx="4"/><path d="M14 31l4 4 7-8"/></svg><strong>Memory Match</strong><small>Flip and find pairs</small></button><button type="button" class="pickgame" data-go="dots" data-tone="4"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="48" r="3" fill="currentColor"/><circle cx="24" cy="18" r="3" fill="currentColor"/><circle cx="40" cy="38" r="3" fill="currentColor"/><circle cx="54" cy="12" r="3" fill="currentColor"/><path d="M12 48L24 18l16 20L54 12"/></svg><strong>Dot to Dot</strong><small>Connect the numbers</small></button><button type="button" class="pickgame" data-go="trace" data-tone="5"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 54L24 12l14 42M15 40h18"/><path d="M44 50l10-30 4 2-10 30-5 3z"/></svg><strong>Trace the Word</strong><small>Trace Bible words</small></button><button type="button" class="pickgame" data-go="color" data-tone="6"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 6C17 6 6 17 6 31c0 13 10 25 22 25 4 0 5-3 4-6s1-6 5-6h7c7 0 14-6 14-14C58 17 46 6 32 6z"/><circle cx="20" cy="26" r="3.5" fill="currentColor"/><circle cx="30" cy="17" r="3.5" fill="currentColor"/><circle cx="43" cy="20" r="3.5" fill="currentColor"/></svg><strong>Coloring</strong><small>Color Bible pictures</small></button><button type="button" class="pickgame" data-go="puzzle" data-tone="7"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 18h12a6 6 0 1 1 12 0h12v12a6 6 0 1 1 0 12v12H34a6 6 0 1 0-12 0H10V42a6 6 0 1 0 0-12z"/></svg><strong>Puzzles</strong><small>Put the picture together</small></button><button type="button" class="pickgame" data-go="spot" data-tone="8"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="14" width="24" height="30" rx="4"/><rect x="36" y="14" width="24" height="30" rx="4"/><circle cx="48" cy="29" r="6"/><path d="M16 24v10M48 50v6"/></svg><strong>Spot the Difference</strong><small>Find what changed</small></button><button type="button" class="pickgame" data-go="maze" data-tone="0"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="48" height="48" rx="6"/><path d="M20 8v24h12M32 20h12v24M8 44h24v12M44 56V44"/></svg><strong>Mazes</strong><small>Find the way through</small></button><button type="button" class="pickgame" data-go="pop" data-tone="1"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="38" r="17"/><circle cx="46" cy="17" r="10"/><path d="M17 47l7-18 7 18M19.5 41h9"/></svg><strong>Pop the Letters</strong><small>Spell words with bubbles</small></button><button type="button" class="pickgame" data-go="shapes" data-tone="2"><svg viewBox="0 0 64 64" aria-hidden="true" class="big" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 5l14 23H18z"/><rect x="7" y="35" width="22" height="22" rx="2"/><circle cx="45" cy="46" r="11"/></svg><strong>Shape Builder</strong><small>Build pictures with shapes</small></button></div>
   <button type="button" class="notescard" data-go="notes"><svg viewBox="0 0 64 64" aria-hidden="true" class="nb" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="6" width="40" height="52" rx="5"/><path d="M20 20h24M20 30h24M20 40h16"/></svg><span><strong>Meeting Notes</strong><small>Follow along, mark scriptures and save your notes. For older kids and teens.</small></span></button>
   <p class="note">Quiet games for meetings and assemblies, updated each week from the meeting schedule. A personal family project, not an official jw.org site. Progress is saved on this device.</p>
 </section>
@@ -927,6 +1080,88 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 <div class="done-box" id="sd-doneBox" hidden><div><strong>You found them all!</strong><button type="button" id="sd-nextBtn">Next picture</button></div></div>
 <div class="stars" id="sd-stars"></div>
 </section>
+<section class="game" id="game-maze" hidden aria-label="maze">
+<div class="wrap">
+  <header>
+    <h1>Bible Mazes</h1>
+    <div class="level" role="group" aria-label="Maze size">
+      <button type="button" data-lv="0" aria-pressed="true">Easy</button>
+      <button type="button" data-lv="1" aria-pressed="false">Medium</button>
+      <button type="button" data-lv="2" aria-pressed="false">Hard</button>
+    </div>
+    <div class="score" aria-live="polite"><span id="mz-solved">0 mazes</span></div>
+  </header>
+  <div class="goal"><svg viewBox="0 0 64 64" id="mz-goalPic" aria-hidden="true"></svg><span id="mz-goalText"></span></div>
+  <main id="mz-area"><svg class="maze" id="mz-maze" tabindex="0" role="img" aria-label="Maze. Drag your finger along the path."></svg></main>
+  <footer>
+    <button type="button" class="btn" id="mz-hintBtn">Show me the way</button>
+    <button class="hold" id="mz-newBtn" type="button"><span class="fill"></span><span class="lbl">Hold for a new maze</span></button>
+  </footer>
+</div>
+
+<div class="done" id="mz-done" hidden>
+  <div>
+    <svg viewBox="0 0 64 64" id="mz-donePic" aria-hidden="true"></svg>
+    <strong>You made it!</strong>
+    <p id="mz-doneText"></p>
+    <button type="button" id="mz-again">New maze</button>
+  </div>
+</div>
+<div class="stars" id="mz-stars"></div>
+</section>
+<section class="game" id="game-pop" hidden aria-label="pop">
+<div class="wrap">
+  <header>
+    <h1>Pop the Letters</h1>
+    <div class="level" role="group" aria-label="How hard">
+      <button type="button" data-lv="0" aria-pressed="true">Easy</button>
+      <button type="button" data-lv="1" aria-pressed="false">Medium</button>
+      <button type="button" data-lv="2" aria-pressed="false">Hard</button>
+    </div>
+    <div class="score" aria-live="polite"><span id="pl-count">0 words</span></div>
+  </header>
+  <div class="word"><svg viewBox="0 0 64 64" id="pl-pic" aria-hidden="true"></svg><div class="slots" id="pl-slots" aria-live="polite"></div></div>
+  <main id="pl-sky" aria-label="Letter bubbles. Pop the next letter of the word.">
+    <div class="paused" id="pl-paused" hidden><button type="button" id="pl-resume">Keep popping</button></div>
+  </main>
+  <footer><button class="hold" id="pl-newBtn" type="button"><span class="fill"></span><span class="lbl">Hold for a new word</span></button></footer>
+</div>
+
+<div class="done" id="pl-done" hidden>
+  <div>
+    <svg viewBox="0 0 64 64" id="pl-donePic" aria-hidden="true"></svg>
+    <strong id="pl-doneWord"></strong>
+    <p>You popped every letter!</p>
+    <button type="button" id="pl-again">Next word</button>
+  </div>
+</div>
+<div class="stars" id="pl-stars"></div>
+</section>
+<section class="game" id="game-shapes" hidden aria-label="shapes">
+<div class="wrap">
+  <header>
+    <h1>Shape Builder</h1>
+    <div class="level" role="group" aria-label="How hard">
+      <button type="button" data-lv="0" aria-pressed="true">Easy</button>
+      <button type="button" data-lv="1" aria-pressed="false">Hard</button>
+    </div>
+    <div class="score" aria-live="polite"><span id="sb-count">0 built</span></div>
+  </header>
+  <p class="goal" id="sb-goal">Build the <b></b></p>
+  <main id="sb-area"><svg class="play" id="sb-play" role="application" aria-label="Drag each shape into the picture"></svg></main>
+  <footer><button class="hold" id="sb-newBtn" type="button"><span class="fill"></span><span class="lbl">Hold for a new picture</span></button></footer>
+</div>
+
+<div class="done" id="sb-done" hidden>
+  <div>
+    <svg id="sb-donePic" viewBox="0 0 120 100" aria-hidden="true"></svg>
+    <strong id="sb-doneName"></strong>
+    <p>You built it, shape by shape!</p>
+    <button type="button" id="sb-again">Build another</button>
+  </div>
+</div>
+<div class="stars" id="sb-stars"></div>
+</section>
 <section class="game" id="game-notes" hidden aria-label="notes">
 <div class="book">
   <section class="card head">
@@ -956,7 +1191,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 </section>
 </div>
 
-<script src="content.js?v=76bfae2d"></script>
+<script src="content.js?v=ee44bbe1"></script>
 <script src="core.js?v=8e93b130"></script>
 <script>
 /* bingo */
@@ -2801,6 +3036,621 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   paintDots();
   fit();
 })();
+/* maze */
+(function () {
+  const $ = id => document.getElementById('mz-' + id);
+  const __root = document.getElementById('game-maze');
+  const NS = 'http://www.w3.org/2000/svg';
+  const KEY = 'bible-mazes-v1';
+  // [picture that walks, picture to reach, words for the goal line]
+  const TRIPS = [
+    ['PERSON', 'ARK', 'Help Noah get to the ark'],
+    ['DOVE', 'ARK', 'Help the dove fly back to the ark'],
+    ['DOVE', 'TREE', 'Help the dove find a tree'],
+    ['SHEEP', 'DAVID', 'Help the lost sheep find David'],
+    ['BOAT', 'CITY', 'Sail the boat to the city'],
+    ['FISH', 'BOAT', 'Help the fish find the boat'],
+    ['PERSON', 'MOUNTAIN', 'Help Moses get to the mountain'],
+    ['PERSON', 'STAR', 'Help Abraham see the stars'],
+    ['PERSON', 'HOUSE', 'Help Daniel get home'],
+    ['CHILD', 'BIBLE', 'Help find the Bible'],
+    ['PERSON', 'CROWN', 'Help the king find his crown']
+  ];
+  const SIZES = [[6, 4], [9, 6], [13, 9]];
+  let st = { lv: 0, solved: 0, recent: [] };
+  try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && typeof s === 'object') st = Object.assign(st, s); } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
+
+  const svg = $('maze');
+  let C = 6, R = 4, open = [], trip = null, path = [], won = false, drag = false, hintTimer = 0;
+  // open[cell] holds a set of directions: 1 up, 2 right, 4 down, 8 left
+  const DIRS = [[1, 0, -1, 4], [2, 1, 0, 8], [4, 0, 1, 1], [8, -1, 0, 2]];
+
+  function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+  function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || svg).appendChild(e); return e; }
+
+  function carve() {
+    open = new Array(C * R).fill(0);
+    const seen = new Uint8Array(C * R), stack = [0]; seen[0] = 1;
+    while (stack.length) {
+      const c = stack[stack.length - 1], x = c % C, y = Math.floor(c / C);
+      const next = shuffle(DIRS).filter(([, dx, dy]) => { const nx = x + dx, ny = y + dy; return nx >= 0 && ny >= 0 && nx < C && ny < R && !seen[ny * C + nx]; });
+      if (!next.length) { stack.pop(); continue; }
+      const [b, dx, dy, back] = next[0], n = (y + dy) * C + x + dx;
+      open[c] |= b; open[n] |= back; seen[n] = 1; stack.push(n);
+    }
+  }
+  function nbrs(c) {
+    const x = c % C, y = Math.floor(c / C), out = [];
+    for (const [b, dx, dy] of DIRS) if (open[c] & b) out.push((y + dy) * C + x + dx);
+    return out;
+  }
+  function route(a, b, limit) {
+    // shortest way from a to b along open paths; null when it is longer than limit
+    const prev = new Map([[a, -1]]); let q = [a], d = 0;
+    while (q.length && d <= limit) {
+      const nq = [];
+      for (const c of q) {
+        if (c === b) { const out = []; for (let k = b; k !== -1; k = prev.get(k)) out.unshift(k); return out; }
+        for (const n of nbrs(c)) if (!prev.has(n)) { prev.set(n, c); nq.push(n); }
+      }
+      q = nq; d++;
+    }
+    return null;
+  }
+
+  function pickTrip() {
+    // now and then, walk to a picture from this meeting
+    const mine = MA.words().filter(w => /^[A-Z]+$/.test(w) && MA.hasIcon(w) && MA.icon(w) !== MA.icon('PERSON') && MA.icon(w) !== MA.icon('CHILD'));
+    if (mine.length && Math.random() < 0.35) {
+      const w = mine[Math.floor(Math.random() * mine.length)];
+      return ['CHILD', w, `Help find the ${w.toLowerCase()}`];
+    }
+    let pool = TRIPS.filter(t => !st.recent.includes(t[2]));
+    if (!pool.length) pool = TRIPS;
+    const t = pool[Math.floor(Math.random() * pool.length)];
+    st.recent = st.recent.concat(t[2]).slice(-5); save();
+    return t;
+  }
+
+  function fitSize() {
+    const a = $('area'), W = a.clientWidth || 700, H = a.clientHeight || 500;
+    const [c, r] = SIZES[st.lv];
+    [C, R] = H > W * 1.1 ? [r, c] : [c, r];
+  }
+  function newMaze() {
+    $('done').hidden = true;
+    fitSize(); carve();
+    trip = pickTrip();
+    path = [0]; won = false; clearTimeout(hintTimer);
+    $('goalPic').innerHTML = MA.icon(trip[1]);
+    $('goalText').textContent = trip[2];
+    __root.querySelectorAll('.level button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.lv === st.lv));
+    draw(); fit();
+  }
+
+  const U = 10; // one cell in maze units
+  let trailEl = null, heroEl = null, hintEl = null;
+  function ctr(c) { return [(c % C) * U + U / 2, Math.floor(c / C) * U + U / 2]; }
+  function draw() {
+    const P = 2;
+    svg.setAttribute('viewBox', `${-P} ${-P} ${C * U + P * 2} ${R * U + P * 2}`);
+    svg.innerHTML = '';
+    el('rect', { class: 'startpad', x: 0.6, y: 0.6, width: U - 1.2, height: U - 1.2, rx: 2 });
+    el('rect', { class: 'endpad', x: (C - 1) * U + 0.6, y: (R - 1) * U + 0.6, width: U - 1.2, height: U - 1.2, rx: 2 });
+    let d = `M0 0H${C * U}V${R * U}H0Z`;
+    for (let y = 0; y < R; y++) for (let x = 0; x < C; x++) {
+      const c = y * C + x;
+      if (x < C - 1 && !(open[c] & 2)) d += `M${(x + 1) * U} ${y * U}v${U}`;
+      if (y < R - 1 && !(open[c] & 4)) d += `M${x * U} ${(y + 1) * U}h${U}`;
+    }
+    el('path', { class: 'walls', d, 'stroke-width': 1.3 });
+    hintEl = el('polyline', { class: 'hint', points: '', 'stroke-width': 1.6 });
+    trailEl = el('polyline', { class: 'trail', points: '', 'stroke-width': 3.6, opacity: .85 });
+    const [gx, gy] = ctr(C * R - 1);
+    const prize = el('svg', { class: 'prize', x: gx - 4, y: gy - 4, width: 8, height: 8, viewBox: '0 0 64 64' });
+    prize.innerHTML = MA.icon(trip[1]);
+    heroEl = el('svg', { class: 'hero', width: 8, height: 8, viewBox: '0 0 64 64' });
+    heroEl.innerHTML = MA.icon(trip[0]);
+    paint();
+  }
+  function paint() {
+    trailEl.setAttribute('points', path.map(c => ctr(c).join(',')).join(' '));
+    const [hx, hy] = ctr(path[path.length - 1]);
+    heroEl.setAttribute('x', hx - 4); heroEl.setAttribute('y', hy - 4);
+  }
+  function fit() {
+    const a = $('area'), W = a.clientWidth, H = a.clientHeight;
+    if (!W || !H) return;
+    const asp = (C * U + 4) / (R * U + 4);
+    const w = Math.min(W, H * asp);
+    svg.style.width = w + 'px'; svg.style.height = (w / asp) + 'px';
+  }
+
+  function stepTo(target) {
+    if (won) return;
+    const cur = path[path.length - 1];
+    if (target === cur) return;
+    const way = route(cur, target, 4);
+    if (!way) return;
+    for (const c of way.slice(1)) {
+      if (path.length > 1 && path[path.length - 2] === c) path.pop();
+      else { const k = path.indexOf(c); if (k >= 0) path.length = k + 1; else path.push(c); }
+    }
+    paint();
+    if (path[path.length - 1] === C * R - 1) finish();
+  }
+  function cellAt(e) {
+    const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+    const m = svg.getScreenCTM(); if (!m) return -1;
+    const p = pt.matrixTransform(m.inverse());
+    const x = Math.floor(p.x / U), y = Math.floor(p.y / U);
+    if (x < 0 || y < 0 || x >= C || y >= R) return -1;
+    return y * C + x;
+  }
+  svg.addEventListener('pointerdown', e => {
+    e.preventDefault(); if (won) return;
+    drag = true; try { svg.setPointerCapture(e.pointerId); } catch (x) {}
+    const c = cellAt(e); if (c >= 0) stepTo(c);
+  });
+  svg.addEventListener('pointermove', e => {
+    if (!drag) return;
+    const evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
+    for (const ev of evs) { const c = cellAt(ev); if (c >= 0) stepTo(c); }
+  });
+  const up = () => { drag = false; };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+  svg.addEventListener('keydown', e => {
+    const k = { ArrowUp: 0, ArrowRight: 1, ArrowDown: 2, ArrowLeft: 3 }[e.key];
+    if (k === undefined) return;
+    e.preventDefault();
+    const cur = path[path.length - 1], [b, dx, dy] = DIRS[k];
+    if (open[cur] & b) stepTo(cur + dy * C + dx);
+  });
+
+  function finish() {
+    won = true; st.solved++; save(); paintScore();
+    setTimeout(() => {
+      $('donePic').innerHTML = MA.icon(trip[1]);
+      $('doneText').textContent = trip[2].replace(/^Help /, 'You helped ').replace(/^You helped find/, 'You found') + '!';
+      $('done').hidden = false; $('again').focus();
+      const s = $('stars'); s.innerHTML = '';
+      for (let k = 0; k < 22; k++) { const i = document.createElement('i'); i.style.left = Math.random() * 100 + '%'; i.style.animationDuration = (1.8 + Math.random() * 1.6) + 's'; i.style.animationDelay = Math.random() * .6 + 's'; s.appendChild(i); }
+      setTimeout(() => { s.innerHTML = ''; }, 4200);
+    }, 450);
+  }
+  function paintScore() { $('solved').textContent = st.solved === 1 ? '1 maze' : st.solved + ' mazes'; }
+
+  $('hintBtn').addEventListener('click', () => {
+    if (won) return;
+    const way = route(path[path.length - 1], C * R - 1, C * R);
+    if (!way) return;
+    hintEl.setAttribute('points', way.map(c => ctr(c).join(',')).join(' '));
+    clearTimeout(hintTimer);
+    hintTimer = setTimeout(() => hintEl.setAttribute('points', ''), 2500);
+  });
+  $('again').addEventListener('click', newMaze);
+  __root.querySelectorAll('.level button').forEach(b => b.addEventListener('click', () => { st.lv = +b.dataset.lv; save(); newMaze(); }));
+
+  (function holdButton(btn, action) {
+    const fill = btn.querySelector('.fill'); let t0 = 0, raf = 0;
+    function tick(t) { const p = Math.min(1, (t - t0) / 1000); fill.style.transform = `scaleX(${p})`; if (p >= 1) { stop(); action(); return; } raf = requestAnimationFrame(tick); }
+    function go(e) { if ((e && e.repeat) || raf) return; t0 = performance.now(); raf = requestAnimationFrame(tick); }
+    function stop() { cancelAnimationFrame(raf); raf = 0; fill.style.transform = 'scaleX(0)'; }
+    btn.addEventListener('pointerdown', e => { e.preventDefault(); try { btn.setPointerCapture(e.pointerId); } catch (x) {} go(); });
+    btn.addEventListener('pointerup', stop); btn.addEventListener('pointercancel', stop); btn.addEventListener('lostpointercapture', stop);
+    btn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(e); } });
+    btn.addEventListener('keyup', e => { if (e.key === 'Enter' || e.key === ' ') stop(); });
+    btn.addEventListener('contextmenu', e => e.preventDefault());
+  })($('newBtn'), newMaze);
+
+  // when the screen turns, redo the maze if it has not been started; otherwise just resize it
+  window.addEventListener('resize', () => {
+    const was = [C, R]; fitSize();
+    if ((C !== was[0] || R !== was[1]) && path.length <= 1 && !won) { carve(); path = [0]; draw(); }
+    else [C, R] = was;
+    fit();
+  });
+  MA.on(newMaze);
+  paintScore();
+  newMaze();
+})();
+/* pop */
+(function () {
+  const $ = id => document.getElementById('pl-' + id);
+  const __root = document.getElementById('game-pop');
+  const KEY = 'pop-the-letters-v1';
+  const BACKUP = [
+    ['GOD', 'ARK', 'SUN', 'LOVE', 'LION', 'FISH', 'DOVE', 'STAR', 'KING', 'NOAH', 'PRAY', 'SONG', 'TREE', 'RUTH', 'PAUL'],
+    ['JESUS', 'BIBLE', 'HEART', 'SHEEP', 'JONAH', 'MOSES', 'DAVID', 'CROWN', 'BREAD', 'WATER', 'HAPPY', 'PRAYER', 'FAMILY', 'DANIEL'],
+    ['JEHOVAH', 'KINGDOM', 'PARADISE', 'RAINBOW', 'ABRAHAM', 'PROMISE', 'BROTHERS', 'SISTERS', 'MEETING', 'SHEPHERD', 'JEREMIAH', 'BLESSING']
+  ];
+  const LEN = [[3, 4], [5, 6], [7, 10]];
+  // [bubbles on screen, rise speed in screen heights per second, chance the next bubble has the letter he needs]
+  const PACE = [[4, 0.075, 0.3], [5, 0.095, 0.22], [7, 0.12, 0.16]];
+  const TINTS = ['--t1', '--t2', '--t3', '--t4', '--t5', '--t6', '--t7', '--t8'];
+  const ABC = 'ABCDEFGHIJKLMNOPRSTUVWY';
+  let st = { lv: 0, words: 0, recent: [] };
+  try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && typeof s === 'object') st = Object.assign(st, s); } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
+
+  const sky = $('sky');
+  let word = '', at = 0, bubbles = [], last = 0, raf = 0, tint = 0, finished = false, spawnWait = 0, sizedFor = '';
+
+  function pickWord() {
+    const [lo, hi] = LEN[st.lv];
+    const mine = MA.words().filter(w => /^[A-Z]+$/.test(w) && w.length >= lo && w.length <= hi);
+    let list = mine.length >= 2 && Math.random() < 0.7 ? mine : BACKUP[st.lv];
+    let pool = list.filter(w => !st.recent.includes(w));
+    if (!pool.length) pool = list;
+    const w = pool[Math.floor(Math.random() * pool.length)];
+    st.recent = st.recent.concat(w).slice(-6); save();
+    return w;
+  }
+  function paintSlots() {
+    $('slots').innerHTML = word.split('').map((ch, i) => {
+      const cls = i < at ? 'got' : i === at ? 'now' : '';
+      // the hard level hides letters that are not popped yet
+      const show = i < at || st.lv < 2 ? ch : '';
+      return `<span class="${cls}">${show}</span>`;
+    }).join('');
+    $('slots').setAttribute('aria-label', `${word}: ${at} of ${word.length} letters popped` + (at < word.length ? `. Find ${word[at]}.` : ''));
+  }
+  function newWord() {
+    $('done').hidden = true; finished = false;
+    word = pickWord(); at = 0;
+    $('pic').innerHTML = MA.icon(word);
+    __root.querySelectorAll('.level button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.lv === st.lv));
+    bubbles.forEach(b => b.el.remove()); bubbles = [];
+    paintSlots();
+    spawnWait = 0;
+    // start with a few bubbles already on the way up
+    fill();
+  }
+  function fill() {
+    // fill the sky with a first few bubbles, sized for this screen
+    bubbles.forEach(b => b.el.remove()); bubbles = [];
+    const W = sky.clientWidth, H = sky.clientHeight;
+    sizedFor = W + 'x' + H;
+    if (!W || !H) return;
+    for (let k = 0; k < PACE[st.lv][0]; k++) spawn(W, H, H * (0.25 + 0.75 * k / PACE[st.lv][0]));
+  }
+
+  function need() { return word[at]; }
+  function spawn(W, H, y) {
+    const size = Math.max(64, Math.min(116, Math.min(W, H) / 4.2));
+    const live = bubbles.filter(b => !b.gone);
+    const needs = live.filter(b => b.ch === need()).length, hasNeed = needs > 0;
+    const [, , chance] = PACE[st.lv];
+    let ch;
+    if (!hasNeed || (needs < 2 && Math.random() < chance)) ch = need();
+    else {
+      const rest = word.slice(at + 1).split('');
+      ch = rest.length && Math.random() < 0.4 ? rest[Math.floor(Math.random() * rest.length)] : ABC[Math.floor(Math.random() * ABC.length)];
+      while (ch === need() && needs >= 2) ch = ABC[Math.floor(Math.random() * ABC.length)];
+    }
+    // find a lane that is clear of the bubbles nearby
+    let x = 0, best = -1;
+    for (let k = 0; k < 8; k++) {
+      const cx = Math.random() * Math.max(1, W - size);
+      const room = Math.min(...live.map(b => Math.hypot(b.x - cx, (b.y - y) * 0.7)).concat(9999));
+      if (room > best) { best = room; x = cx; }
+    }
+    const el = document.createElement('button');
+    el.type = 'button'; el.className = 'bubble'; el.textContent = ch;
+    el.setAttribute('aria-label', 'Letter ' + ch);
+    el.style.width = el.style.height = size + 'px';
+    el.style.fontSize = Math.round(size * 0.5) + 'px';
+    el.style.background = `var(${TINTS[tint++ % TINTS.length]})`;
+    const b = { el, ch, x, y, size, sway: Math.random() * 6.28, speed: 0.85 + Math.random() * 0.3, gone: false };
+    el.addEventListener('pointerdown', e => { e.preventDefault(); tap(b); });
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tap(b); } });
+    sky.appendChild(el); bubbles.push(b); place(b);
+  }
+  function place(b) { b.el.style.transform = `translate(${(b.x + Math.sin(b.sway) * 10).toFixed(1)}px, ${b.y.toFixed(1)}px)`; }
+
+  function tap(b) {
+    if (b.gone || finished) return;
+    if (b.ch !== need()) {
+      b.el.classList.remove('nope'); void b.el.offsetWidth; b.el.classList.add('nope');
+      return;
+    }
+    b.gone = true; b.el.classList.add('popped');
+    setTimeout(() => b.el.remove(), 320);
+    at++; paintSlots();
+    if (at >= word.length) { finished = true; setTimeout(win, 450); }
+  }
+  function win() {
+    st.words++; save(); paintCount();
+    $('donePic').innerHTML = MA.icon(word);
+    $('doneWord').textContent = word;
+    $('done').hidden = false; $('again').focus();
+    const s = $('stars'); s.innerHTML = '';
+    for (let k = 0; k < 22; k++) { const i = document.createElement('i'); i.style.left = Math.random() * 100 + '%'; i.style.animationDuration = (1.8 + Math.random() * 1.6) + 's'; i.style.animationDelay = Math.random() * .6 + 's'; s.appendChild(i); }
+    setTimeout(() => { s.innerHTML = ''; }, 4200);
+  }
+  function paintCount() { $('count').textContent = st.words === 1 ? '1 word' : st.words + ' words'; }
+
+  const slow = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches ? 0.6 : 1;
+  function frame(t) {
+    raf = requestAnimationFrame(frame);
+    const W = sky.clientWidth, H = sky.clientHeight;
+    // rest while this game is not on screen
+    if (!W || !H || document.hidden || !$('paused').hidden) { last = 0; return; }
+    const dt = last ? Math.min(0.05, (t - last) / 1000) : 0; last = t;
+    if (finished) return;
+    // the screen changed size (or the game just came on screen): start the sky over
+    if (sizedFor !== W + 'x' + H) { if (!at || !bubbles.length) { fill(); return; } sizedFor = W + 'x' + H; }
+    const [n, v] = PACE[st.lv];
+    for (const b of bubbles) {
+      if (b.gone) continue;
+      b.y -= H * v * b.speed * dt * slow;
+      b.sway += dt * 1.3;
+      if (b.y < -b.size) { b.gone = true; b.el.remove(); continue; }
+      if (b.x > W - b.size) b.x = Math.max(0, W - b.size);
+      place(b);
+    }
+    bubbles = bubbles.filter(b => !b.gone || b.el.isConnected);
+    const live = bubbles.filter(b => !b.gone).length;
+    spawnWait -= dt;
+    if (live < n && spawnWait <= 0) { spawn(W, H, H + 4); spawnWait = 0.9 / (v * 10); }
+  }
+
+  // after a long time with no taps, rest until he wants to keep going (saves the battery)
+  let idle = 0;
+  setInterval(() => {
+    if (!sky.clientWidth || finished || !$('paused').hidden) return;
+    idle++;
+    if (idle >= 12) $('paused').hidden = false;
+  }, 10000);
+  sky.addEventListener('pointerdown', () => { idle = 0; });
+  $('resume').addEventListener('click', () => { idle = 0; $('paused').hidden = true; });
+
+  $('again').addEventListener('click', newWord);
+  __root.querySelectorAll('.level button').forEach(b => b.addEventListener('click', () => { st.lv = +b.dataset.lv; save(); newWord(); }));
+
+  (function holdButton(btn, action) {
+    const fill = btn.querySelector('.fill'); let t0 = 0, raf2 = 0;
+    function tick(t) { const p = Math.min(1, (t - t0) / 1000); fill.style.transform = `scaleX(${p})`; if (p >= 1) { stop(); action(); return; } raf2 = requestAnimationFrame(tick); }
+    function go(e) { if ((e && e.repeat) || raf2) return; t0 = performance.now(); raf2 = requestAnimationFrame(tick); }
+    function stop() { cancelAnimationFrame(raf2); raf2 = 0; fill.style.transform = 'scaleX(0)'; }
+    btn.addEventListener('pointerdown', e => { e.preventDefault(); try { btn.setPointerCapture(e.pointerId); } catch (x) {} go(); });
+    btn.addEventListener('pointerup', stop); btn.addEventListener('pointercancel', stop); btn.addEventListener('lostpointercapture', stop);
+    btn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(e); } });
+    btn.addEventListener('keyup', e => { if (e.key === 'Enter' || e.key === ' ') stop(); });
+    btn.addEventListener('contextmenu', e => e.preventDefault());
+  })($('newBtn'), newWord);
+
+  MA.on(newWord);
+  paintCount();
+  newWord();
+  raf = requestAnimationFrame(frame);
+})();
+/* shapes */
+(function () {
+  const $ = id => document.getElementById('sb-' + id);
+  const __root = document.getElementById('game-shapes');
+  const NS = 'http://www.w3.org/2000/svg';
+  const KEY = 'shape-builder-v1';
+  const COL = { red: '#e8574f', orange: '#f39a3b', yellow: '#f6c945', green: '#4fb36b', blue: '#4b8fe0', purple: '#9b6fd6', pink: '#ef7fa8', teal: '#2fb3a8', brown: '#a8754a', gray: '#9aa4b5' };
+  // each picture is drawn in a 120 x 100 box: [shape, x, y, width, height, color]
+  const PICS = [
+    { name: 'House', parts: [['rect', 30, 45, 60, 45, 'orange'], ['triU', 22, 12, 76, 33, 'red'], ['rect', 52, 62, 16, 28, 'brown'], ['rect', 36, 54, 12, 12, 'blue'], ['rect', 72, 54, 12, 12, 'blue']] },
+    { name: 'Noah’s Ark', parts: [['trapD', 8, 58, 104, 26, 'brown'], ['rect', 32, 36, 56, 22, 'orange'], ['triU', 28, 14, 64, 22, 'red'], ['circle', 40, 41, 12, 12, 'yellow'], ['circle', 68, 41, 12, 12, 'yellow']] },
+    { name: 'Tree', parts: [['circle', 28, 6, 64, 64, 'green'], ['rect', 52, 64, 16, 30, 'brown']] },
+    { name: 'Fish', parts: [['diamond', 14, 26, 64, 48, 'teal'], ['triL', 74, 30, 34, 40, 'blue'], ['circle', 26, 44, 8, 8, 'gray']] },
+    { name: 'Fishing Boat', parts: [['trapD', 12, 64, 96, 24, 'brown'], ['rect', 56, 14, 6, 50, 'gray'], ['sail', 62, 16, 36, 44, 'yellow'], ['triL', 22, 30, 32, 30, 'pink']] },
+    { name: 'Crown', parts: [['rect', 18, 58, 84, 26, 'yellow'], ['triU', 18, 24, 28, 34, 'orange'], ['triU', 46, 24, 28, 34, 'orange'], ['triU', 74, 24, 28, 34, 'orange'], ['circle', 54, 65, 12, 12, 'red']] },
+    { name: 'Tower', parts: [['rect', 14, 74, 92, 20, 'brown'], ['rect', 26, 54, 68, 20, 'orange'], ['rect', 38, 34, 44, 20, 'yellow'], ['triU', 40, 8, 40, 26, 'red']] },
+    { name: 'Sun', parts: [['circle', 38, 28, 44, 44, 'yellow'], ['triU', 48, 4, 24, 22, 'orange'], ['triD', 48, 74, 24, 22, 'orange'], ['triL', 12, 38, 24, 24, 'orange'], ['triR', 84, 38, 24, 24, 'orange']] },
+    { name: 'Sheep', parts: [['circle', 22, 26, 54, 54, 'gray'], ['circle', 74, 22, 28, 28, 'purple'], ['rect', 32, 76, 9, 18, 'purple'], ['rect', 57, 76, 9, 18, 'purple']] },
+    { name: 'Mountains', parts: [['triU', 4, 30, 72, 64, 'purple'], ['triU', 54, 46, 62, 48, 'blue'], ['circle', 88, 6, 22, 22, 'yellow']] },
+    { name: 'Scroll', parts: [['rect', 26, 30, 68, 40, 'yellow'], ['rect', 14, 22, 12, 56, 'brown'], ['rect', 94, 22, 12, 56, 'brown']] },
+    { name: 'Water Well', parts: [['rect', 22, 56, 76, 36, 'gray'], ['rect', 24, 26, 8, 30, 'brown'], ['rect', 88, 26, 8, 30, 'brown'], ['triU', 14, 4, 92, 22, 'red']] },
+    { name: 'Bread Basket', parts: [['trapD', 16, 54, 88, 36, 'brown'], ['semi', 22, 34, 36, 20, 'orange'], ['semi', 62, 34, 36, 20, 'orange'], ['semi', 42, 22, 36, 20, 'yellow']] },
+    { name: 'Tent', parts: [['triU', 14, 18, 92, 72, 'teal'], ['triU', 46, 52, 28, 38, 'brown'], ['rect', 58, 8, 4, 12, 'gray']] }
+  ];
+  let st = { lv: 0, built: 0, recent: [] };
+  try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && typeof s === 'object') st = Object.assign(st, s); } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
+
+  function shapeSVG(kind, w, h, extra) {
+    const pts = a => `<polygon points="${a.map(p => p.map(n => +n.toFixed(2)).join(',')).join(' ')}" ${extra}/>`;
+    switch (kind) {
+      case 'rect': return `<rect width="${w}" height="${h}" rx="1.2" ${extra}/>`;
+      case 'circle': return `<ellipse cx="${w / 2}" cy="${h / 2}" rx="${w / 2}" ry="${h / 2}" ${extra}/>`;
+      case 'semi': return `<path d="M0 ${h}A${w / 2} ${h} 0 0 1 ${w} ${h}Z" ${extra}/>`;
+      case 'triU': return pts([[w / 2, 0], [w, h], [0, h]]);
+      case 'triD': return pts([[0, 0], [w, 0], [w / 2, h]]);
+      case 'triL': return pts([[0, h / 2], [w, 0], [w, h]]);
+      case 'triR': return pts([[0, 0], [w, h / 2], [0, h]]);
+      case 'sail': return pts([[0, 0], [w, h], [0, h]]);
+      case 'trapD': return pts([[0, 0], [w, 0], [w * 0.82, h], [w * 0.18, h]]);
+      case 'diamond': return pts([[w / 2, 0], [w, h / 2], [w / 2, h], [0, h / 2]]);
+    }
+    return '';
+  }
+  const keyOf = p => p[0] + ':' + p[3] + 'x' + p[4];
+
+  const svg = $('play');
+  let pic = null, slots = [], pieces = [], tray = null, held = null, finished = false, placedLayer = null;
+  const NAMES = { rect: 'rectangle', circle: 'circle', semi: 'half circle', triU: 'triangle', triD: 'triangle', triL: 'triangle', triR: 'triangle', sail: 'triangle', trapD: 'boat shape', diamond: 'diamond' };
+
+  function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || svg).appendChild(e); return e; }
+  function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+  function pick() {
+    let pool = PICS.filter(p => !st.recent.includes(p.name));
+    if (!pool.length) pool = PICS;
+    const p = pool[Math.floor(Math.random() * pool.length)];
+    st.recent = st.recent.concat(p.name).slice(-5); save();
+    return p;
+  }
+
+  function newPicture() {
+    $('done').hidden = true; finished = false; held = null;
+    pic = pick();
+    const own = /’s /.test(pic.name);
+    $('goal').innerHTML = own ? 'Build <b></b>' : 'Build the <b></b>';
+    $('goal').querySelector('b').textContent = own ? pic.name.replace(/ (\w)/g, (m, c) => ' ' + c.toLowerCase()) : pic.name.toLowerCase();
+    __root.querySelectorAll('.level button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.lv === st.lv));
+    slots = pic.parts.map((p, i) => ({ p, i, key: keyOf(p), filled: null }));
+    pieces = shuffle(pic.parts.map((p, i) => ({ p, i, key: keyOf(p), slot: null })));
+    draw();
+  }
+
+  // the outline sits in a 120 x 100 board; the tray goes to the right on a wide screen, underneath on a tall one
+  function layout() {
+    const a = $('area'), W = a.clientWidth || 800, H = a.clientHeight || 500;
+    const n = pieces.length;
+    if (W / H >= 1.25) {
+      const tw = 62, cols = n > 4 ? 2 : 1;
+      tray = { x: 126, y: 0, w: tw, h: 100, cols, rows: Math.ceil(n / cols) };
+    } else {
+      const cols = Math.min(n, 3);
+      const rows = Math.ceil(n / cols);
+      tray = { x: 0, y: 106, w: 120, h: rows * 30, cols, rows };
+    }
+    const vw = Math.max(120, tray.x + tray.w), vh = Math.max(100, tray.y + tray.h);
+    svg.setAttribute('viewBox', `-2 -2 ${vw + 4} ${vh + 4}`);
+    const asp = (vw + 4) / (vh + 4);
+    const w = Math.min(W, H * asp);
+    svg.style.width = w + 'px'; svg.style.height = (w / asp) + 'px';
+  }
+  function home(pc, k) {
+    // where a piece rests in the tray, shrunk to fit its cell
+    const c = k % tray.cols, r = Math.floor(k / tray.cols);
+    const cw = tray.w / tray.cols, ch = tray.h / tray.rows;
+    const [, , , w, h] = pc.p;
+    const s = Math.min(1, (cw - 6) / w, (ch - 6) / h);
+    return { x: tray.x + c * cw + (cw - w * s) / 2, y: tray.y + r * ch + (ch - h * s) / 2, s };
+  }
+  function setPos(pc, x, y, s) { pc.x = x; pc.y = y; pc.s = s; pc.g.style.transform = `translate(${x}px, ${y}px) scale(${s})`; }
+
+  function draw() {
+    layout();
+    svg.innerHTML = '';
+    el('rect', { class: 'board', x: 0, y: 0, width: 120, height: 100, rx: 8 });
+    el('rect', { class: 'trayBox', x: tray.x, y: tray.y, width: tray.w, height: tray.h, rx: 8 });
+    const outline = el('g', {});
+    slots.forEach(sl => {
+      const [kind, x, y, w, h] = sl.p;
+      const g = el('g', { transform: `translate(${x} ${y})` }, outline);
+      g.innerHTML = shapeSVG(kind, w, h, 'class="slot"');
+    });
+    // the easy level shows every shape's edge; the hard level shows only the shadow
+    if (st.lv === 0) slots.forEach(sl => {
+      const [kind, x, y, w, h] = sl.p;
+      const g = el('g', { transform: `translate(${x} ${y})` }, outline);
+      g.innerHTML = shapeSVG(kind, w, h, 'class="slotline"');
+    });
+    placedLayer = el('g', {});
+    pieces.forEach((pc, k) => {
+      const [kind, , , w, h, color] = pc.p;
+      const g = el('g', { class: 'piece', tabindex: 0, role: 'button', 'aria-label': `${color} ${NAMES[kind]}` });
+      // a bigger, invisible touch area so thin shapes are easy to pick up
+      const pad = Math.max(4, (14 - Math.min(w, h)) / 2);
+      g.innerHTML = `<rect x="${-pad}" y="${-pad}" width="${w + pad * 2}" height="${h + pad * 2}" fill="transparent" pointer-events="all"/>` + shapeSVG(kind, w, h, `class="shape" fill="${COL[color]}"`);
+      pc.g = g;
+      if (pc.slot) { const [, x, y] = pc.slot.p; setPos(pc, x, y, 1); g.classList.add('placed'); placedLayer.appendChild(g); }
+      else { const hpos = home(pc, k); pc.home = k; setPos(pc, hpos.x, hpos.y, hpos.s); }
+      g.addEventListener('pointerdown', e => grab(e, pc));
+      g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); autoPlace(pc); } });
+    });
+    // placed shapes stack in picture order, so a door sits on its wall
+    stack();
+    svg.appendChild(placedLayer);
+    pieces.filter(pc => !pc.slot).forEach(pc => svg.appendChild(pc.g));
+  }
+
+  function stack() { [...placedLayer.children].sort((a, b) => pieces.find(p => p.g === a).i - pieces.find(p => p.g === b).i).forEach(n => placedLayer.appendChild(n)); }
+  function toLocal(e) {
+    const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+    const m = svg.getScreenCTM(); return m ? pt.matrixTransform(m.inverse()) : { x: 0, y: 0 };
+  }
+  function grab(e, pc) {
+    if (pc.slot || finished) return;
+    e.preventDefault();
+    const p = toLocal(e);
+    const [, , , w, h] = pc.p;
+    // grow to full size around the finger
+    const fx = (p.x - pc.x) / pc.s, fy = (p.y - pc.y) / pc.s;
+    held = { pc, fx, fy, id: e.pointerId };
+    pc.g.classList.add('held');
+    svg.appendChild(pc.g);
+    setPos(pc, p.x - fx, p.y - fy, 1);
+    try { pc.g.setPointerCapture(e.pointerId); } catch (x) {}
+  }
+  svg.addEventListener('pointermove', e => {
+    if (!held || e.pointerId !== held.id) return;
+    const p = toLocal(e);
+    setPos(held.pc, p.x - held.fx, p.y - held.fy, 1);
+  });
+  function drop(e) {
+    if (!held || (e && e.pointerId !== held.id)) return;
+    const pc = held.pc; held = null;
+    pc.g.classList.remove('held');
+    const [, , , w, h] = pc.p;
+    const cx = pc.x + w / 2, cy = pc.y + h / 2;
+    let best = null, bd = 1e9;
+    for (const sl of slots) {
+      if (sl.filled || sl.key !== pc.key) continue;
+      const [, x, y] = sl.p;
+      const d = Math.hypot(x + w / 2 - cx, y + h / 2 - cy);
+      if (d < bd) { bd = d; best = sl; }
+    }
+    if (best && bd < Math.max(14, Math.min(w, h) * 0.6)) settle(pc, best);
+    else { const hp = home(pc, pc.home); setPos(pc, hp.x, hp.y, hp.s); }
+  }
+  svg.addEventListener('pointerup', drop);
+  svg.addEventListener('pointercancel', drop);
+
+  function settle(pc, sl) {
+    sl.filled = pc; pc.slot = sl;
+    const [, x, y] = sl.p;
+    setPos(pc, x, y, 1);
+    pc.g.classList.add('placed');
+    placedLayer.appendChild(pc.g); stack();
+    if (slots.every(s => s.filled)) { finished = true; setTimeout(win, 650); }
+  }
+  function autoPlace(pc) {
+    // keyboard: Enter puts a shape into its place
+    if (pc.slot || finished) return;
+    const sl = slots.find(s => !s.filled && s.key === pc.key);
+    if (sl) settle(pc, sl);
+  }
+
+  function win() {
+    st.built++; save(); paintCount();
+    const d = $('donePic'); d.innerHTML = '';
+    pic.parts.forEach(p => { const g = document.createElementNS(NS, 'g'); g.setAttribute('transform', `translate(${p[1]} ${p[2]})`); g.innerHTML = shapeSVG(p[0], p[3], p[4], `fill="${COL[p[5]]}" stroke="rgba(0,0,0,.25)" stroke-width=".6" stroke-linejoin="round"`); d.appendChild(g); });
+    $('doneName').textContent = pic.name + '!';
+    $('done').hidden = false; $('again').focus();
+    const s = $('stars'); s.innerHTML = '';
+    for (let k = 0; k < 22; k++) { const i = document.createElement('i'); i.style.left = Math.random() * 100 + '%'; i.style.animationDuration = (1.8 + Math.random() * 1.6) + 's'; i.style.animationDelay = Math.random() * .6 + 's'; s.appendChild(i); }
+    setTimeout(() => { s.innerHTML = ''; }, 4200);
+  }
+  function paintCount() { $('count').textContent = st.built + ' built'; }
+
+  $('again').addEventListener('click', newPicture);
+  __root.querySelectorAll('.level button').forEach(b => b.addEventListener('click', () => { st.lv = +b.dataset.lv; save(); newPicture(); }));
+
+  (function holdButton(btn, action) {
+    const fill = btn.querySelector('.fill'); let t0 = 0, raf = 0;
+    function tick(t) { const p = Math.min(1, (t - t0) / 1000); fill.style.transform = `scaleX(${p})`; if (p >= 1) { stop(); action(); return; } raf = requestAnimationFrame(tick); }
+    function go(e) { if ((e && e.repeat) || raf) return; t0 = performance.now(); raf = requestAnimationFrame(tick); }
+    function stop() { cancelAnimationFrame(raf); raf = 0; fill.style.transform = 'scaleX(0)'; }
+    btn.addEventListener('pointerdown', e => { e.preventDefault(); try { btn.setPointerCapture(e.pointerId); } catch (x) {} go(); });
+    btn.addEventListener('pointerup', stop); btn.addEventListener('pointercancel', stop); btn.addEventListener('lostpointercapture', stop);
+    btn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(e); } });
+    btn.addEventListener('keyup', e => { if (e.key === 'Enter' || e.key === ' ') stop(); });
+    btn.addEventListener('contextmenu', e => e.preventDefault());
+  })($('newBtn'), newPicture);
+
+  window.addEventListener('resize', () => { if (!held && pic) draw(); });
+  paintCount();
+  newPicture();
+})();
 /* notes */
 (function () {
   const $ = id => document.getElementById('nt-' + id);
@@ -2925,7 +3775,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 </script>
 <script>
 (function () {
-  const views = ['home', 'bingo', 'count', 'words', 'memory', 'dots', 'trace', 'color', 'puzzle', 'spot', 'notes'];
+  const views = ['home', 'bingo', 'count', 'words', 'memory', 'dots', 'trace', 'color', 'puzzle', 'spot', 'maze', 'pop', 'shapes', 'notes'];
   function paintMeetings() {
     const cur = MA.current();
     const box = document.getElementById('meetSel');
