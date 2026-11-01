@@ -1088,6 +1088,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <button type="button" data-lv="0" aria-pressed="true">Easy</button>
       <button type="button" data-lv="1" aria-pressed="false">Medium</button>
       <button type="button" data-lv="2" aria-pressed="false">Hard</button>
+      <button type="button" data-lv="3" aria-pressed="false">Harder</button>
     </div>
     <div class="score" aria-live="polite"><span id="mz-solved">0 mazes</span></div>
   </header>
@@ -1118,6 +1119,11 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <button type="button" data-lv="1" aria-pressed="false">Medium</button>
       <button type="button" data-lv="2" aria-pressed="false">Hard</button>
     </div>
+    <div class="level" role="group" aria-label="Bubble speed">
+      <button type="button" data-sp="0" aria-pressed="false">Slow</button>
+      <button type="button" data-sp="1" aria-pressed="true">Normal</button>
+      <button type="button" data-sp="2" aria-pressed="false">Fast</button>
+    </div>
     <div class="score" aria-live="polite"><span id="pl-count">0 words</span></div>
   </header>
   <div class="word"><svg viewBox="0 0 64 64" id="pl-pic" aria-hidden="true"></svg><div class="slots" id="pl-slots" aria-live="polite"></div></div>
@@ -1144,6 +1150,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     <div class="level" role="group" aria-label="How hard">
       <button type="button" data-lv="0" aria-pressed="true">Easy</button>
       <button type="button" data-lv="1" aria-pressed="false">Hard</button>
+      <button type="button" data-lv="2" aria-pressed="false">Harder</button>
     </div>
     <div class="score" aria-live="polite"><span id="sb-count">0 built</span></div>
   </header>
@@ -3047,16 +3054,37 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     ['PERSON', 'ARK', 'Help Noah get to the ark'],
     ['DOVE', 'ARK', 'Help the dove fly back to the ark'],
     ['DOVE', 'TREE', 'Help the dove find a tree'],
-    ['SHEEP', 'DAVID', 'Help the lost sheep find David'],
-    ['BOAT', 'CITY', 'Sail the boat to the city'],
-    ['FISH', 'BOAT', 'Help the fish find the boat'],
-    ['PERSON', 'MOUNTAIN', 'Help Moses get to the mountain'],
+    ['CHILD', 'RAINBOW', 'Help find the rainbow'],
+    ['PERSON', 'FLOWER', 'Help Adam explore the garden'],
     ['PERSON', 'STAR', 'Help Abraham see the stars'],
+    ['WOMAN', 'WATER', 'Help Rebekah get to the well'],
+    ['PERSON', 'EGYPT', 'Help Joseph get to Egypt'],
+    ['BABY', 'WOMAN', 'Help baby Moses float to the princess'],
+    ['PERSON', 'MOUNTAIN', 'Help Moses get to the mountain'],
+    ['SHEEP', 'PERSON', 'Help the lost sheep find David'],
+    ['COW', 'HOUSE', 'Help the cow get back to the barn'],
+    ['PROPHET', 'FIRE', 'Help Elijah get to the fire'],
+    ['PROPHET', 'CHARIOT', 'Help Elijah get to the chariot'],
+    ['PERSON', 'CROWN', 'Help the king find his crown'],
+    ['PERSON', 'ANGEL', 'Help Daniel find the angel'],
     ['PERSON', 'HOUSE', 'Help Daniel get home'],
+    ['FISH', 'PERSON', 'Help the big fish find Jonah'],
+    ['BOAT', 'CITY', 'Sail the boat to the city'],
+    ['ANGEL', 'WOMAN', 'Help the angel find Mary'],
+    ['DOVE', 'JESUS', 'Help the dove find Jesus'],
+    ['CHILD', 'JESUS', 'Help the boy bring his lunch to Jesus'],
+    ['PERSON', 'TREE', 'Help Zacchaeus find the tree'],
+    ['PERSON', 'JESUS', 'Help Peter get to Jesus'],
+    ['BOAT', 'FISH', 'Help Peter\u2019s boat find the fish'],
+    ['FISH', 'BOAT', 'Help the fish find the boat'],
+    ['PERSON', 'LETTER', 'Help Paul send his letter'],
+    ['CHARIOT', 'CITY', 'Drive the chariot to the city'],
     ['CHILD', 'BIBLE', 'Help find the Bible'],
-    ['PERSON', 'CROWN', 'Help the king find his crown']
+    ['FAMILY', 'HOUSE', 'Help the family get home'],
+    ['LION', 'MOUNTAIN', 'Help the lion get to the hills'],
+    ['SHEEP', 'FOOD', 'Help the sheep find some food']
   ];
-  const SIZES = [[6, 4], [9, 6], [13, 9]];
+  const SIZES = [[6, 4], [9, 6], [13, 9], [18, 12]];
   let st = { lv: 0, solved: 0, recent: [] };
   try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && typeof s === 'object') st = Object.assign(st, s); } catch (e) {}
   function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
@@ -3109,7 +3137,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     let pool = TRIPS.filter(t => !st.recent.includes(t[2]));
     if (!pool.length) pool = TRIPS;
     const t = pool[Math.floor(Math.random() * pool.length)];
-    st.recent = st.recent.concat(t[2]).slice(-5); save();
+    st.recent = st.recent.concat(t[2]).slice(-12); save();
     return t;
   }
 
@@ -3261,16 +3289,20 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   const __root = document.getElementById('game-pop');
   const KEY = 'pop-the-letters-v1';
   const BACKUP = [
-    ['GOD', 'ARK', 'SUN', 'LOVE', 'LION', 'FISH', 'DOVE', 'STAR', 'KING', 'NOAH', 'PRAY', 'SONG', 'TREE', 'RUTH', 'PAUL'],
-    ['JESUS', 'BIBLE', 'HEART', 'SHEEP', 'JONAH', 'MOSES', 'DAVID', 'CROWN', 'BREAD', 'WATER', 'HAPPY', 'PRAYER', 'FAMILY', 'DANIEL'],
-    ['JEHOVAH', 'KINGDOM', 'PARADISE', 'RAINBOW', 'ABRAHAM', 'PROMISE', 'BROTHERS', 'SISTERS', 'MEETING', 'SHEPHERD', 'JEREMIAH', 'BLESSING']
+    ['GOD', 'ARK', 'SUN', 'LOVE', 'LION', 'FISH', 'DOVE', 'STAR', 'KING', 'NOAH', 'PRAY', 'SONG', 'TREE', 'RUTH', 'PAUL', 'BOAT', 'MOON', 'FIRE', 'COW', 'EYE',
+      'BED', 'GIFT', 'DOOR', 'BABY', 'HOPE', 'HAND', 'KIND', 'PLAY', 'WORK', 'FOOD', 'GEM', 'CITY', 'PATH', 'ADAM', 'EVE', 'LAMB', 'HELP', 'SAD', 'TALK', 'LIFE'],
+    ['JESUS', 'BIBLE', 'HEART', 'SHEEP', 'JONAH', 'MOSES', 'DAVID', 'CROWN', 'BREAD', 'WATER', 'HAPPY', 'PRAYER', 'FAMILY', 'DANIEL', 'ANGEL', 'CHILD', 'STORM',
+      'WOMAN', 'SNAKE', 'EGYPT', 'LETTER', 'FLOWER', 'WORLD', 'MONEY', 'STRONG', 'LISTEN', 'FATHER', 'JOSEPH', 'TRUST', 'HOUSE', 'STATUE', 'WISDOM', 'VIDEO', 'BARUCH', 'ESTHER'],
+    ['JEHOVAH', 'KINGDOM', 'PARADISE', 'RAINBOW', 'ABRAHAM', 'PROMISE', 'BROTHERS', 'SISTERS', 'MEETING', 'SHEPHERD', 'JEREMIAH', 'BLESSING', 'CHARIOT', 'PROPHET',
+      'BAPTISM', 'FORGIVE', 'QUESTION', 'MOUNTAIN', 'SCRIPTURE', 'FRIENDS', 'WATCHTOWER', 'ASSEMBLY', 'FOREVER', 'SAMARITAN', 'NEHEMIAH', 'ZACCHAEUS']
   ];
   const LEN = [[3, 4], [5, 6], [7, 10]];
   // [bubbles on screen, rise speed in screen heights per second, chance the next bubble has the letter he needs]
-  const PACE = [[4, 0.075, 0.3], [5, 0.095, 0.22], [7, 0.12, 0.16]];
+  const PACE = [[4, 0.09, 0.3], [5, 0.09, 0.22], [7, 0.09, 0.16]];
+  const SPEED = [0.55, 1, 1.6];
   const TINTS = ['--t1', '--t2', '--t3', '--t4', '--t5', '--t6', '--t7', '--t8'];
   const ABC = 'ABCDEFGHIJKLMNOPRSTUVWY';
-  let st = { lv: 0, words: 0, recent: [] };
+  let st = { lv: 0, sp: 1, words: 0, recent: [] };
   try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && typeof s === 'object') st = Object.assign(st, s); } catch (e) {}
   function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
 
@@ -3300,7 +3332,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     $('done').hidden = true; finished = false;
     word = pickWord(); at = 0;
     $('pic').innerHTML = MA.icon(word);
-    __root.querySelectorAll('.level button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.lv === st.lv));
+    __root.querySelectorAll('.level button[data-lv]').forEach(b => b.setAttribute('aria-pressed', +b.dataset.lv === st.lv));
+    __root.querySelectorAll('.level button[data-sp]').forEach(b => b.setAttribute('aria-pressed', +b.dataset.sp === st.sp));
     bubbles.forEach(b => b.el.remove()); bubbles = [];
     paintSlots();
     spawnWait = 0;
@@ -3381,7 +3414,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     if (finished) return;
     // the screen changed size (or the game just came on screen): start the sky over
     if (sizedFor !== W + 'x' + H) { if (!at || !bubbles.length) { fill(); return; } sizedFor = W + 'x' + H; }
-    const [n, v] = PACE[st.lv];
+    const n = PACE[st.lv][0], v = PACE[st.lv][1] * (SPEED[st.sp] || 1);
     for (const b of bubbles) {
       if (b.gone) continue;
       b.y -= H * v * b.speed * dt * slow;
@@ -3407,7 +3440,12 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   $('resume').addEventListener('click', () => { idle = 0; $('paused').hidden = true; });
 
   $('again').addEventListener('click', newWord);
-  __root.querySelectorAll('.level button').forEach(b => b.addEventListener('click', () => { st.lv = +b.dataset.lv; save(); newWord(); }));
+  __root.querySelectorAll('.level button[data-lv]').forEach(b => b.addEventListener('click', () => { st.lv = +b.dataset.lv; save(); newWord(); }));
+  // speed changes right away, without a new word
+  __root.querySelectorAll('.level button[data-sp]').forEach(b => b.addEventListener('click', () => {
+    st.sp = +b.dataset.sp; save();
+    __root.querySelectorAll('.level button[data-sp]').forEach(x => x.setAttribute('aria-pressed', +x.dataset.sp === st.sp));
+  }));
 
   (function holdButton(btn, action) {
     const fill = btn.querySelector('.fill'); let t0 = 0, raf2 = 0;
@@ -3448,8 +3486,27 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     { name: 'Scroll', parts: [['rect', 26, 30, 68, 40, 'yellow'], ['rect', 14, 22, 12, 56, 'brown'], ['rect', 94, 22, 12, 56, 'brown']] },
     { name: 'Water Well', parts: [['rect', 22, 56, 76, 36, 'gray'], ['rect', 24, 26, 8, 30, 'brown'], ['rect', 88, 26, 8, 30, 'brown'], ['triU', 14, 4, 92, 22, 'red']] },
     { name: 'Bread Basket', parts: [['trapD', 16, 54, 88, 36, 'brown'], ['semi', 22, 34, 36, 20, 'orange'], ['semi', 62, 34, 36, 20, 'orange'], ['semi', 42, 22, 36, 20, 'yellow']] },
-    { name: 'Tent', parts: [['triU', 14, 18, 92, 72, 'teal'], ['triU', 46, 52, 28, 38, 'brown'], ['rect', 58, 8, 4, 12, 'gray']] }
+    { name: 'Tent', parts: [['triU', 14, 18, 92, 72, 'teal'], ['triU', 46, 52, 28, 38, 'brown'], ['rect', 58, 8, 4, 12, 'gray']] },
+    { name: 'Oil Lamp', parts: [['circle', 14, 50, 64, 32, 'orange'], ['triR', 72, 54, 32, 24, 'orange'], ['diamond', 96, 40, 14, 26, 'yellow'], ['rect', 36, 42, 20, 10, 'brown']] },
+    { name: 'Rainbow', parts: [['semi', 6, 30, 108, 62, 'red'], ['semi', 18, 42, 84, 50, 'yellow'], ['semi', 30, 54, 60, 38, 'green'], ['semi', 42, 66, 36, 26, 'blue']] },
+    { name: 'Flower', parts: [['circle', 48, 4, 24, 24, 'pink'], ['circle', 66, 22, 24, 24, 'pink'], ['circle', 48, 40, 24, 24, 'pink'], ['circle', 30, 22, 24, 24, 'pink'], ['circle', 50, 24, 20, 20, 'yellow'], ['rect', 57, 62, 6, 34, 'green'], ['diamond', 63, 70, 26, 12, 'green']] },
+    { name: 'Stone Tablets', parts: [['semi', 12, 12, 44, 22, 'gray'], ['rect', 12, 34, 44, 56, 'gray'], ['semi', 64, 12, 44, 22, 'gray'], ['rect', 64, 34, 44, 56, 'gray']] },
+    { name: 'Temple', parts: [['triU', 6, 6, 108, 26, 'red'], ['rect', 10, 32, 100, 8, 'brown'], ['rect', 18, 40, 10, 40, 'yellow'], ['rect', 42, 40, 10, 40, 'yellow'], ['rect', 68, 40, 10, 40, 'yellow'], ['rect', 92, 40, 10, 40, 'yellow'], ['rect', 6, 80, 108, 12, 'gray']] },
+    { name: 'Cart', parts: [['rect', 16, 34, 78, 32, 'brown'], ['circle', 20, 60, 28, 28, 'gray'], ['circle', 64, 60, 28, 28, 'gray'], ['rect', 94, 44, 22, 5, 'brown'], ['trapD', 22, 22, 66, 12, 'yellow']] },
+    { name: 'Lion', parts: [['circle', 18, 6, 84, 84, 'orange'], ['circle', 34, 22, 52, 52, 'yellow'], ['circle', 44, 36, 9, 9, 'brown'], ['circle', 67, 36, 9, 9, 'brown'], ['triD', 54, 50, 12, 10, 'brown']] },
+    { name: 'Turtle', parts: [['semi', 18, 30, 72, 40, 'green'], ['circle', 86, 46, 22, 20, 'teal'], ['rect', 28, 70, 12, 14, 'teal'], ['rect', 66, 70, 12, 14, 'teal'], ['triL', 6, 58, 14, 10, 'teal']] },
+    { name: 'Pyramids', parts: [['triU', 4, 30, 72, 62, 'yellow'], ['triU', 58, 46, 58, 46, 'orange'], ['circle', 88, 6, 22, 22, 'red']] },
+    { name: 'Big Fish', parts: [['circle', 8, 22, 82, 54, 'blue'], ['triL', 84, 26, 32, 46, 'teal'], ['circle', 22, 38, 9, 9, 'gray'], ['triU', 42, 10, 22, 14, 'teal']] },
+    { name: 'Butterfly', parts: [['diamond', 14, 12, 42, 38, 'purple'], ['diamond', 64, 12, 42, 38, 'purple'], ['diamond', 22, 48, 32, 32, 'pink'], ['diamond', 66, 48, 32, 32, 'pink'], ['rect', 56, 16, 8, 66, 'brown']] },
+    { name: 'Barn', parts: [['rect', 18, 46, 84, 46, 'red'], ['triU', 12, 12, 96, 34, 'brown'], ['rect', 46, 62, 28, 30, 'brown'], ['diamond', 52, 24, 16, 16, 'yellow']] },
+    { name: 'Pine Tree', parts: [['triU', 32, 4, 56, 30, 'green'], ['triU', 24, 24, 72, 34, 'green'], ['triU', 16, 46, 88, 36, 'green'], ['rect', 52, 82, 16, 14, 'brown']] },
+    { name: 'Dove', parts: [['circle', 24, 42, 58, 32, 'gray'], ['circle', 72, 28, 22, 22, 'gray'], ['triU', 34, 26, 38, 26, 'blue'], ['triR', 4, 46, 24, 22, 'gray'], ['triR', 92, 34, 12, 8, 'orange']] },
+    { name: 'Camp Fire', parts: [['triU', 38, 16, 44, 56, 'orange'], ['triU', 48, 36, 24, 36, 'yellow'], ['rect', 22, 72, 76, 10, 'brown'], ['rect', 30, 82, 60, 10, 'brown']] },
+    { name: 'Window', parts: [['rect', 20, 10, 80, 80, 'brown'], ['rect', 26, 16, 32, 32, 'blue'], ['rect', 62, 16, 32, 32, 'blue'], ['rect', 26, 52, 32, 32, 'blue'], ['rect', 62, 52, 32, 32, 'blue']] }
   ];
+  // extra shapes for the hardest level: they look right but belong nowhere
+  const SPARE = [['rect', 0, 0, 30, 14, 'green'], ['circle', 0, 0, 18, 18, 'red'], ['triU', 0, 0, 26, 20, 'blue'], ['diamond', 0, 0, 20, 28, 'orange'],
+    ['semi', 0, 0, 30, 16, 'purple'], ['rect', 0, 0, 14, 30, 'pink'], ['triD', 0, 0, 30, 22, 'teal'], ['trapD', 0, 0, 40, 14, 'gray'], ['circle', 0, 0, 30, 30, 'blue']];
   let st = { lv: 0, built: 0, recent: [] };
   try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && typeof s === 'object') st = Object.assign(st, s); } catch (e) {}
   function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
@@ -3483,7 +3540,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     let pool = PICS.filter(p => !st.recent.includes(p.name));
     if (!pool.length) pool = PICS;
     const p = pool[Math.floor(Math.random() * pool.length)];
-    st.recent = st.recent.concat(p.name).slice(-5); save();
+    st.recent = st.recent.concat(p.name).slice(-12); save();
     return p;
   }
 
@@ -3495,7 +3552,9 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     $('goal').querySelector('b').textContent = own ? pic.name.replace(/ (\w)/g, (m, c) => ' ' + c.toLowerCase()) : pic.name.toLowerCase();
     __root.querySelectorAll('.level button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.lv === st.lv));
     slots = pic.parts.map((p, i) => ({ p, i, key: keyOf(p), filled: null }));
-    pieces = shuffle(pic.parts.map((p, i) => ({ p, i, key: keyOf(p), slot: null })));
+    const used = new Set(slots.map(sl => sl.key));
+    const extra = st.lv >= 2 ? shuffle(SPARE.filter(p => !used.has(keyOf(p)))).slice(0, 2) : [];
+    pieces = shuffle(pic.parts.concat(extra).map((p, i) => ({ p, i, key: keyOf(p), slot: null })));
     draw();
   }
 
@@ -3504,10 +3563,10 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     const a = $('area'), W = a.clientWidth || 800, H = a.clientHeight || 500;
     const n = pieces.length;
     if (W / H >= 1.25) {
-      const tw = 62, cols = n > 4 ? 2 : 1;
+      const cols = n > 8 ? 3 : n > 4 ? 2 : 1, tw = cols === 3 ? 84 : 62;
       tray = { x: 126, y: 0, w: tw, h: 100, cols, rows: Math.ceil(n / cols) };
     } else {
-      const cols = Math.min(n, 3);
+      const cols = Math.min(n, n > 6 ? 4 : 3);
       const rows = Math.ceil(n / cols);
       tray = { x: 0, y: 106, w: 120, h: rows * 30, cols, rows };
     }
