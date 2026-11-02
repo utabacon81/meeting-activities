@@ -4,7 +4,7 @@
   Sources: wol.jw.org meeting schedule (titles, scripture references and song numbers only).
 */
 window.MEETING_CONTENT = {
-  updated: '2026-10-26',
+  updated: '2026-11-02',
   // Words heard in nearly every meeting. Used on every bingo card and for Count the Word.
   core: ['JEHOVAH', 'JESUS', 'BIBLE', 'SCRIPTURE', 'PRAY', 'LOVE', 'HEART', 'KINGDOM', 'HAPPY'],
   common: ['JEHOVAH', 'JESUS', 'BIBLE', 'GOD', 'KINGDOM', 'LOVE', 'PRAYER', 'SCRIPTURE', 'BROTHERS', 'FATHER', 'PARADISE', 'HEART', 'CHRIST', 'FAITH'],
@@ -13,42 +13,42 @@ window.MEETING_CONTENT = {
   general: ['SONG', 'FAMILY', 'FRIENDS', 'KING', 'PARADISE', 'WORLD', 'CHILD', 'SUN', 'STAR', 'TALK', 'HELP', 'FATHER'],
   meetings: [
     {
-      id: 'mw-2026-10-26', kind: 'midweek', label: 'Midweek', dates: 'Oct 26 - Nov 1',
-      title: 'Life and Ministry Meeting', reading: 'Jeremiah 47-48', songs: [125, 158, 54],
-      words: ['MOAB', 'JUDGE', 'KIND', 'HEART', 'TREE', 'DESERT', 'FLUTE', 'SWORD', 'CITY', 'JEREMIAH', 'DOOR', 'FRIEND', 'PRAY', 'TEACH'],
-      count: ['JUDGE', 'MOAB', 'KIND', 'JEREMIAH'],
-      goals: { JUDGE: 3, MOAB: 3, KIND: 2, JEREMIAH: 2 },
+      id: 'mw-2026-11-02', kind: 'midweek', label: 'Midweek', dates: 'Nov 2-8',
+      title: 'Life and Ministry Meeting', reading: 'Jeremiah 49-50', songs: [1, 44, 33],
+      words: ['MERCY', 'FORGIVE', 'BABYLON', 'ARROW', 'TRAP', 'SWORD', 'HORSE', 'CHARIOT', 'FIRE', 'NAOMI', 'RUTH', 'MOAB', 'REMEMBER', 'DOOR', 'KIND'],
+      count: ['MERCY', 'BABYLON', 'FORGIVE', 'NAOMI', 'RUTH'],
+      goals: { MERCY: 4, BABYLON: 3, FORGIVE: 2, NAOMI: 2, RUTH: 2 },
       parts: [
-        { section: 'Treasures From God’s Word', title: 'Jehovah Is a Righteous and Merciful Judge', time: '10 min', scriptures: ['Jeremiah 48:27, 29, 42', 'Jeremiah 48:31, 36', 'Jeremiah 48:47'],
-          kid: 'Jehovah is fair and kind', words: ['JUDGE', 'FAIR', 'KIND', 'MOAB', 'HEART', 'FLUTE', 'PROUD', 'ISRAEL'] },
-        { section: 'Treasures From God’s Word', title: 'Spiritual Gems', time: '10 min', scriptures: ['Jeremiah 48:6'],
-          kid: 'A little tree in the desert', words: ['TREE', 'DESERT', 'RUN', 'GEMS', 'MOAB', 'PLANT', 'SAFE', 'LIFE'] },
-        { section: 'Treasures From God’s Word', title: 'Bible Reading', time: '4 min', scriptures: ['Jeremiah 48:1-13'],
-          kid: 'A Bible reading about Moab', words: ['MOAB', 'CITY', 'SWORD', 'WINE', 'JAR', 'TREE', 'CHILD', 'READ'] },
+        { section: 'Treasures From God’s Word', title: 'Help Others Benefit From Jehovah’s Mercy', time: '10 min', scriptures: ['Jeremiah 50:14, 29, 31', 'Jeremiah 50:20', 'Jeremiah 50:2, 8'],
+          kid: 'Jehovah forgives people who are sorry', words: ['MERCY', 'FORGIVE', 'SORRY', 'BABYLON', 'ARROW', 'PROUD', 'ISRAEL', 'KIND'] },
+        { section: 'Treasures From God’s Word', title: 'Spiritual Gems', time: '10 min', scriptures: ['Jeremiah 50:24'],
+          kid: 'Babylon gets caught in a trap', words: ['TRAP', 'SNARE', 'CAUGHT', 'BABYLON', 'GEMS', 'CITY', 'BIBLE', 'LEARN'] },
+        { section: 'Treasures From God’s Word', title: 'Bible Reading', time: '4 min', scriptures: ['Jeremiah 50:24-40'],
+          kid: 'A Bible reading about Babylon', words: ['SWORD', 'HORSE', 'CHARIOT', 'FIRE', 'BULL', 'GRAIN', 'WATER', 'OSTRICH'] },
         { section: 'Apply Yourself to the Field Ministry', title: 'Starting a Conversation', time: '3 min', scriptures: [],
-          kid: 'Talking to people at their door', words: ['DOOR', 'HOUSE', 'SMILE', 'KIND', 'HELLO', 'LISTEN', 'TALK', 'BIBLE'] },
+          kid: 'Sharing a Bible truth at the door', words: ['DOOR', 'HOUSE', 'SMILE', 'HELLO', 'TRUTH', 'BIBLE', 'TALK', 'KIND'] },
         { section: 'Apply Yourself to the Field Ministry', title: 'Following Up', time: '4 min', scriptures: [],
-          kid: 'Visiting a new friend again', words: ['FRIEND', 'VISIT', 'AGAIN', 'SHARE', 'BOOK', 'TRUTH', 'SMILE', 'TALK'] },
+          kid: 'Visiting again and listening well', words: ['FRIEND', 'VISIT', 'AGAIN', 'LISTEN', 'QUESTION', 'BIBLE', 'SMILE', 'TALK'] },
         { section: 'Apply Yourself to the Field Ministry', title: 'Making Disciples', time: '5 min', scriptures: [],
-          kid: 'Helping a Bible student pray more', words: ['TEACH', 'PRAY', 'STUDY', 'FRIEND', 'BIBLE', 'LEARN', 'HEART', 'TALK'] },
-        { section: 'Living as Christians', title: 'Local Needs', time: '15 min', scriptures: [],
-          kid: 'A talk for our own congregation', words: ['FRIENDS', 'FAMILY', 'HELP', 'LISTEN', 'LOVE', 'ELDER', 'TALK', 'MEETING'] },
+          kid: 'Teaching someone about the Bible', words: ['TEACH', 'STUDY', 'FRIEND', 'BIBLE', 'LEARN', 'QUESTION', 'HEART', 'TALK'] },
+        { section: 'Living as Christians', title: 'Never Forget What Jehovah Remembers', time: '15 min', scriptures: [],
+          kid: 'A video, then talking about it', words: ['REMEMBER', 'FORGET', 'VIDEO', 'JEHOVAH', 'LISTEN', 'HEART', 'LOVE', 'LEARN'] },
         { section: 'Living as Christians', title: 'Congregation Bible Study', time: '30 min', scriptures: [],
-          kid: 'Questions and answers', words: ['QUESTION', 'ANSWER', 'BOOK', 'READ', 'LISTEN', 'HAND', 'PICTURE', 'LEARN'] }
+          kid: 'Naomi and Ruth stay together', words: ['NAOMI', 'RUTH', 'MOAB', 'FAMILY', 'FRIEND', 'SAD', 'LOVE', 'QUESTION'] }
       ]
     },
     {
-      id: 'we-2026-11-01', kind: 'weekend', label: 'Weekend', dates: 'Oct 31 - Nov 1',
-      title: 'Public Talk and Watchtower Study', reading: '', songs: [62, 159],
-      words: ['ZECHARIAH', 'JOHN', 'SALVATION', 'SERVICE', 'PREACH', 'BRAVE', 'GIFT', 'DAVID', 'ELIZABETH', 'BABY', 'LAMB', 'PARADISE', 'PEACE', 'FAMILY'],
-      count: ['SERVICE', 'SALVATION', 'ZECHARIAH', 'PREACH', 'JOHN'],
-      goals: { SERVICE: 4, SALVATION: 3, ZECHARIAH: 3, PREACH: 2, JOHN: 2 },
+      id: 'we-2026-11-08', kind: 'weekend', label: 'Weekend', dates: 'Nov 7-8',
+      title: 'Public Talk and Watchtower Study', reading: '', songs: [3, 8],
+      words: ['TRUST', 'PROTECT', 'REFUGE', 'SAFE', 'PSALM', 'WINGS', 'SHIELD', 'ARROW', 'LION', 'SNAKE', 'ANGEL', 'PARADISE', 'PEACE', 'FAMILY'],
+      count: ['PROTECT', 'TRUST', 'REFUGE', 'PSALM'],
+      goals: { PROTECT: 4, TRUST: 3, REFUGE: 2, PSALM: 2 },
       parts: [
         { section: 'Public Talk', title: 'Public Bible Talk', time: '30 min', scriptures: [],
           kid: 'Listen to the speaker', words: ['BIBLE', 'KINGDOM', 'PARADISE', 'WORLD', 'FAMILY', 'LISTEN', 'FUTURE', 'PEACE'] },
-        { section: 'Watchtower Study', title: 'Cherish “the Privilege of Fearlessly Rendering Sacred Service”', time: '60 min', scriptures: ['Luke 1:69, 74'],
-          kid: 'Zechariah praises Jehovah for a savior', words: ['ZECHARIAH', 'JOHN', 'SALVATION', 'SERVICE', 'PREACH', 'BRAVE', 'DAVID', 'GIFT'],
-          points: ['The Gift of Salvation', 'The Privilege of Sacred Service', 'The Responsibility to Preach'] }
+        { section: 'Watchtower Study', title: 'Trust In Jehovah for Protection', time: '60 min', scriptures: ['Psalm 91:9'],
+          kid: 'Jehovah keeps his friends safe', words: ['TRUST', 'PROTECT', 'REFUGE', 'SAFE', 'WINGS', 'SHIELD', 'LION', 'ANGEL'],
+          points: ['A Psalm About Trust and Protection', 'What Kind of Protection Does Psalm 91 Promise?', 'How Does Jehovah Protect Us Now?', 'How Will Jehovah Protect Us in the Future?'] }
       ]
     },
     {
