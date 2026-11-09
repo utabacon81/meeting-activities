@@ -4,7 +4,7 @@
   Sources: wol.jw.org meeting schedule (titles, scripture references and song numbers only).
 */
 window.MEETING_CONTENT = {
-  updated: '2026-11-02',
+  updated: '2026-11-09',
   // Words heard in nearly every meeting. Used on every bingo card and for Count the Word.
   core: ['JEHOVAH', 'JESUS', 'BIBLE', 'SCRIPTURE', 'PRAY', 'LOVE', 'HEART', 'KINGDOM', 'HAPPY'],
   common: ['JEHOVAH', 'JESUS', 'BIBLE', 'GOD', 'KINGDOM', 'LOVE', 'PRAYER', 'SCRIPTURE', 'BROTHERS', 'FATHER', 'PARADISE', 'HEART', 'CHRIST', 'FAITH'],
@@ -13,42 +13,40 @@ window.MEETING_CONTENT = {
   general: ['SONG', 'FAMILY', 'FRIENDS', 'KING', 'PARADISE', 'WORLD', 'CHILD', 'SUN', 'STAR', 'TALK', 'HELP', 'FATHER'],
   meetings: [
     {
-      id: 'mw-2026-11-02', kind: 'midweek', label: 'Midweek', dates: 'Nov 2-8',
-      title: 'Life and Ministry Meeting', reading: 'Jeremiah 49-50', songs: [1, 44, 33],
-      words: ['MERCY', 'FORGIVE', 'BABYLON', 'ARROW', 'TRAP', 'SWORD', 'HORSE', 'CHARIOT', 'FIRE', 'NAOMI', 'RUTH', 'MOAB', 'REMEMBER', 'DOOR', 'KIND'],
-      count: ['MERCY', 'BABYLON', 'FORGIVE', 'NAOMI', 'RUTH'],
-      goals: { MERCY: 4, BABYLON: 3, FORGIVE: 2, NAOMI: 2, RUTH: 2 },
+      id: 'mw-2026-11-09', kind: 'midweek', label: 'Midweek', dates: 'Nov 9-15',
+      title: 'Life and Ministry Meeting', reading: 'Jeremiah 51-52', songs: [98, 10, 150],
+      words: ['ZEDEKIAH', 'KING', 'JERUSALEM', 'BABYLON', 'PROMISE', 'TEMPLE', 'FIRE', 'BULL', 'GOLD', 'GIFT', 'DAVID', 'JEWEL', 'BARAK', 'DEBORAH', 'MOUNTAIN'],
+      count: ['ZEDEKIAH', 'BABYLON', 'JERUSALEM', 'BARAK', 'DEBORAH'],
+      goals: { ZEDEKIAH: 3, BABYLON: 3, JERUSALEM: 2, BARAK: 2, DEBORAH: 2 },
       parts: [
-        { section: 'Treasures From God’s Word', title: 'Help Others Benefit From Jehovah’s Mercy', time: '10 min', scriptures: ['Jeremiah 50:14, 29, 31', 'Jeremiah 50:20', 'Jeremiah 50:2, 8'],
-          kid: 'Jehovah forgives people who are sorry', words: ['MERCY', 'FORGIVE', 'SORRY', 'BABYLON', 'ARROW', 'PROUD', 'ISRAEL', 'KIND'] },
-        { section: 'Treasures From God’s Word', title: 'Spiritual Gems', time: '10 min', scriptures: ['Jeremiah 50:24'],
-          kid: 'Babylon gets caught in a trap', words: ['TRAP', 'SNARE', 'CAUGHT', 'BABYLON', 'GEMS', 'CITY', 'BIBLE', 'LEARN'] },
-        { section: 'Treasures From God’s Word', title: 'Bible Reading', time: '4 min', scriptures: ['Jeremiah 50:24-40'],
-          kid: 'A Bible reading about Babylon', words: ['SWORD', 'HORSE', 'CHARIOT', 'FIRE', 'BULL', 'GRAIN', 'WATER', 'OSTRICH'] },
-        { section: 'Apply Yourself to the Field Ministry', title: 'Starting a Conversation', time: '3 min', scriptures: [],
-          kid: 'Sharing a Bible truth at the door', words: ['DOOR', 'HOUSE', 'SMILE', 'HELLO', 'TRUTH', 'BIBLE', 'TALK', 'KIND'] },
-        { section: 'Apply Yourself to the Field Ministry', title: 'Following Up', time: '4 min', scriptures: [],
-          kid: 'Visiting again and listening well', words: ['FRIEND', 'VISIT', 'AGAIN', 'LISTEN', 'QUESTION', 'BIBLE', 'SMILE', 'TALK'] },
-        { section: 'Apply Yourself to the Field Ministry', title: 'Making Disciples', time: '5 min', scriptures: [],
-          kid: 'Teaching someone about the Bible', words: ['TEACH', 'STUDY', 'FRIEND', 'BIBLE', 'LEARN', 'QUESTION', 'HEART', 'TALK'] },
-        { section: 'Living as Christians', title: 'Never Forget What Jehovah Remembers', time: '15 min', scriptures: [],
-          kid: 'A video, then talking about it', words: ['REMEMBER', 'FORGET', 'VIDEO', 'JEHOVAH', 'LISTEN', 'HEART', 'LOVE', 'LEARN'] },
+        { section: 'Treasures From God’s Word', title: 'Learn From the Warning Example of Zedekiah', time: '10 min', scriptures: ['Jeremiah 52:1, 2', 'Jeremiah 52:3', 'Jeremiah 52:8-11'],
+          kid: 'King Zedekiah did not keep his promise', words: ['ZEDEKIAH', 'KING', 'JERUSALEM', 'BABYLON', 'PROMISE', 'RIGHT', 'ARMY', 'CHAIN'] },
+        { section: 'Treasures From God’s Word', title: 'Spiritual Gems', time: '10 min', scriptures: ['Jeremiah 51:6, 7, 36'],
+          kid: 'Babylon was like a gold cup', words: ['BABYLON', 'GOLD', 'CUP', 'RUN', 'SEA', 'WATER', 'GEMS', 'LEARN'] },
+        { section: 'Treasures From God’s Word', title: 'Bible Reading', time: '4 min', scriptures: ['Jeremiah 52:6-20'],
+          kid: 'The temple in Jerusalem is burned', words: ['TEMPLE', 'FIRE', 'WALL', 'HOUSE', 'PILLAR', 'BULL', 'GOLD', 'BOWL'] },
+        { section: 'Apply Yourself to the Field Ministry', title: 'Starting a Conversation (demonstrations)', time: '7 min', scriptures: [],
+          kid: 'Talking about the Bible at the door', words: ['DOOR', 'HOUSE', 'SMILE', 'HELLO', 'BIBLE', 'TALK', 'KIND', 'LISTEN'] },
+        { section: 'Apply Yourself to the Field Ministry', title: 'Talk', time: '5 min', scriptures: [],
+          kid: 'God’s Kingdom is a real government', words: ['KINGDOM', 'CROWN', 'JESUS', 'HEAVEN', 'RULE', 'WORLD', 'PARADISE', 'PEACE'] },
+        { section: 'Living as Christians', title: 'Our Donations Glorify God’s Beautiful Name', time: '15 min', scriptures: ['1 Chronicles 29:8-10', 'Psalm 96:8', '1 Chronicles 29:14-16', 'Isaiah 12:5'],
+          kid: 'Giving gifts to praise Jehovah', words: ['GIVE', 'GIFT', 'DAVID', 'JEWEL', 'HAPPY', 'SONG', 'PRAISE', 'VIDEO'] },
         { section: 'Living as Christians', title: 'Congregation Bible Study', time: '30 min', scriptures: [],
-          kid: 'Naomi and Ruth stay together', words: ['NAOMI', 'RUTH', 'MOAB', 'FAMILY', 'FRIEND', 'SAD', 'LOVE', 'QUESTION'] }
+          kid: 'Brave Barak and Deborah trust Jehovah', words: ['BARAK', 'DEBORAH', 'MOUNTAIN', 'CHARIOT', 'STORM', 'RIVER', 'STAR', 'BRAVE'] }
       ]
     },
     {
-      id: 'we-2026-11-08', kind: 'weekend', label: 'Weekend', dates: 'Nov 7-8',
-      title: 'Public Talk and Watchtower Study', reading: '', songs: [3, 8],
-      words: ['TRUST', 'PROTECT', 'REFUGE', 'SAFE', 'PSALM', 'WINGS', 'SHIELD', 'ARROW', 'LION', 'SNAKE', 'ANGEL', 'PARADISE', 'PEACE', 'FAMILY'],
-      count: ['PROTECT', 'TRUST', 'REFUGE', 'PSALM'],
-      goals: { PROTECT: 4, TRUST: 3, REFUGE: 2, PSALM: 2 },
+      id: 'we-2026-11-15', kind: 'weekend', label: 'Weekend', dates: 'Nov 14-15',
+      title: 'Public Talk and Watchtower Study', reading: '', songs: [36, 88],
+      words: ['OBEY', 'HEART', 'LISTEN', 'SOLOMON', 'MOSES', 'EGYPT', 'SEA', 'KING', 'HUMBLE', 'JEHOSHAPHAT', 'BIBLE', 'PARADISE', 'PEACE', 'FAMILY'],
+      count: ['OBEY', 'JEHOSHAPHAT', 'SOLOMON', 'MOSES'],
+      goals: { OBEY: 4, JEHOSHAPHAT: 3, SOLOMON: 2, MOSES: 2 },
       parts: [
         { section: 'Public Talk', title: 'Public Bible Talk', time: '30 min', scriptures: [],
           kid: 'Listen to the speaker', words: ['BIBLE', 'KINGDOM', 'PARADISE', 'WORLD', 'FAMILY', 'LISTEN', 'FUTURE', 'PEACE'] },
-        { section: 'Watchtower Study', title: 'Trust In Jehovah for Protection', time: '60 min', scriptures: ['Psalm 91:9'],
-          kid: 'Jehovah keeps his friends safe', words: ['TRUST', 'PROTECT', 'REFUGE', 'SAFE', 'WINGS', 'SHIELD', 'LION', 'ANGEL'],
-          points: ['A Psalm About Trust and Protection', 'What Kind of Protection Does Psalm 91 Promise?', 'How Does Jehovah Protect Us Now?', 'How Will Jehovah Protect Us in the Future?'] }
+        { section: 'Watchtower Study', title: 'How to Develop “an Obedient Heart”', time: '60 min', scriptures: ['1 Kings 3:9'],
+          kid: 'Listen to Jehovah and obey him', words: ['OBEY', 'HEART', 'LISTEN', 'SOLOMON', 'MOSES', 'EGYPT', 'KING', 'HUMBLE'],
+          points: ['First Obedient and Then Rebellious', 'Learn From the Israelites’ Warning Example', 'Imitate King Jehoshaphat’s Obedience', 'How Would You Answer?'] }
       ]
     },
     {
